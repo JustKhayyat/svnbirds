@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,89 +11,87 @@
       color: white;
       font-family: sans-serif;
       margin: 0;
-      padding: 0;
+      padding: 20px;
       display: flex;
       flex-direction: column;
-      justify-content: center;
       align-items: center;
       min-height: 100vh;
-      text-align: center;
-      padding: 20px;
     }
-
-    img.logo {
-      width: 50%;
-      max-width: 250px;
+    .logo {
+      width: 200px;
       height: auto;
-      margin-bottom: 20px;
+      margin-top: 30px;
     }
-
     h1 {
       font-size: 2rem;
-      margin-bottom: 20px;
+      margin: 20px 0;
+      text-align: center;
     }
-
     .socials {
-      margin-top: 20px;
+      margin: 15px 0;
     }
-
-    .socials a {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      background-color: white;
-      border-radius: 50%;
-      width: 48px;
-      height: 48px;
-      margin: 0 10px;
-      text-decoration: none;
+    .form-wrapper {
+      background: #111;
+      padding: 20px;
+      border-radius: 10px;
+      max-width: 400px;
+      width: 100%;
+      margin-top: 30px;
     }
-
-    .socials svg {
-      width: 24px;
-      height: 24px;
-      fill: #000;
+    .form-wrapper input,
+    .form-wrapper textarea {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: none;
+      border-radius: 5px;
+      font-size: 1rem;
     }
-
-    .contact {
-      margin-top: 20px;
-      font-size: 0.95rem;
-      color: #ccc;
-    }
-
-    .contact a {
-      color: #ffc40a;
-      text-decoration: none;
-    }
-
-    @media (max-width: 480px) {
-      h1 {
-        font-size: 1.5rem;
-      }
-
-      .contact {
-        font-size: 0.85rem;
-      }
+    .form-wrapper button {
+      background: #ffc40a;
+      color: black;
+      padding: 10px;
+      width: 100%;
+      font-size: 1rem;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
     }
   </style>
 </head>
 <body>
-  <img class="logo" src="SB_LOGO TRANSPARENT (white).png" alt="SVNBIRDS Logo" />
+  <img class="logo" src="SB_LOGO TRANSPARENT (white).png" alt="SVNBIRDS Logo">
   <h1>Launching Soon</h1>
 
   <div class="socials">
     <a href="https://instagram.com/svnbirdspro" target="_blank" aria-label="Instagram">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
-        <path d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9 0 63.6 51.3 114.9 114.9 114.9 63.6 0 114.9-51.3 114.9-114.9 0-63.6-51.3-114.9-114.9-114.9zm0 186.6c-39.5 0-71.6-32.1-71.6-71.6s32.1-71.6 71.6-71.6 71.6 32.1 71.6 71.6-32.1 71.6-71.6 71.6zm146.4-194.3c0 14.9-12.1 27-27 27-14.9 0-27-12.1-27-27 0-14.9 12.1-27 27-27 14.9 0 27 12.1 27 27zm76.1 27.2c-.9-19.6-5.2-37-19.1-50.9s-31.3-18.2-50.9-19.1c-20-1.1-80-1.1-100 0-19.6.9-37 5.2-50.9 19.1s-18.2 31.3-19.1 50.9c-1.1 20-1.1 80 0 100 0.9 19.6 5.2 37 19.1 50.9s31.3 18.2 50.9 19.1c20 1.1 80 1.1 100 0 19.6-.9 37-5.2 50.9-19.1s18.2-31.3 19.1-50.9c1.1-20 1.1-80 0-100zM398.8 388c-7.8 19.6-23.2 35-42.8 42.8-29.6 11.8-100 9.1-133.9 9.1s-104.3 2.6-133.9-9.1c-19.6-7.8-35-23.2-42.8-42.8-11.8-29.6-9.1-100-9.1-133.9s-2.6-104.3 9.1-133.9c7.8-19.6 23.2-35 42.8-42.8 29.6-11.8 100-9.1 133.9-9.1s104.3-2.6 133.9 9.1c19.6 7.8 35 23.2 42.8 42.8 11.8 29.6 9.1 100 9.1 133.9s2.7 104.3-9.1 133.9z"/>
-      </svg>
-    </a>
-  </div>
+      
+<svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="40" height="40" viewBox="0 0 48 48">
+<radialGradient id="instaGradient" cx="19.38" cy="42.035" r="44.899" gradientUnits="userSpaceOnUse">
+  <stop offset="0" stop-color="#fd5"/>
+  <stop offset=".328" stop-color="#ff543f"/>
+  <stop offset=".348" stop-color="#fc5245"/>
+  <stop offset=".504" stop-color="#e64771"/>
+  <stop offset=".643" stop-color="#d53e91"/>
+  <stop offset=".761" stop-color="#cc39a4"/>
+  <stop offset=".841" stop-color="#c837ab"/>
+</radialGradient>
+<path fill="url(#instaGradient)" d="M34.017,41.99l-20,0.019c-4.4,0.004-8.003-3.592-8.008-7.992l-0.019-20	c-0.004-4.4,3.592-8.003,7.992-8.008l20-0.019c4.4-0.004,8.003,3.592,8.008,7.992l0.019,20	C42.014,38.383,38.417,41.986,34.017,41.99z"/>
+<path fill="#fff" d="M24,31c-3.859,0-7-3.14-7-7s3.141-7,7-7s7,3.14,7,7S27.859,31,24,31z M24,19c-2.757,0-5,2.243-5,5	s2.243,5,5,5s5-2.243,5-5S26.757,19,24,19z"/>
+<circle cx="31.5" cy="16.5" r="1.5" fill="#fff"/>
+<path fill="#fff" d="M30,37H18c-3.859,0-7-3.14-7-7V18c0-3.86,3.141-7,7-7h12c3.859,0,7,3.14,7,7v12	C37,33.86,33.859,37,30,37z M18,13c-2.757,0-5,2.243-5,5v12c0,2.757,2.243,5,5,5h12c2.757,0,5-2.243,5-5V18c0-2.757-2.243-5-5-5H18z"/>
+</svg>
 
-  <div class="contact">
-    For Talent Bookings: <a href="mailto:booking@svnbirds.com">booking@svnbirds.com</a>
+    </a>
+  
+
+  <div class="form-wrapper" style="margin-top: 30px; background: #111; padding: 20px; border-radius: 10px; max-width: 400px; width: 100%;">
+    <form action="https://formspree.io/f/xaygkqad" method="POST">
+      <input type="email" name="_replyto" placeholder="Enter your email to get notified" required style="width: 100%; padding: 10px; margin-bottom: 10px; border: none; border-radius: 5px;">
+      <button type="submit" style="background: #ffc40a; color: black; padding: 10px; width: 100%; font-size: 1rem; border: none; border-radius: 5px; cursor: pointer;">Notify Me</button>
+    </form>
   </div>
 </body>
 </html>
 
-
-
+</html>
