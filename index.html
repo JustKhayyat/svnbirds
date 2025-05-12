@@ -17,12 +17,14 @@
       flex-direction: column;
       justify-content: space-between;
       align-items: center;
-      background-color: #000;
+      background: radial-gradient(circle at center, #111 0%, #000 100%);
       color: white;
       font-family: sans-serif;
       text-align: center;
       padding: 20px;
       cursor: crosshair;
+      position: relative;
+      z-index: 1;
     }
 
     audio {
@@ -107,7 +109,7 @@
   <div class="footer">
     <div class="socials">
       <a href="https://instagram.com/svnbirdspro" target="_blank" aria-label="Instagram">
-        <!-- Instagram SVG as before -->
+        <!-- Instagram SVG -->
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
           <radialGradient id="instaGradient" cx="19.38" cy="42.035" r="44.899" gradientUnits="userSpaceOnUse">
             <stop offset="0" stop-color="#fd5"/>
