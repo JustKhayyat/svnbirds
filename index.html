@@ -11,12 +11,13 @@
   <meta property="og:url" content="https://svnbirds.com">
   <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="sb_logo_white.png" type="image/png"/>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;700&display=swap" rel="stylesheet">
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       background-color: #000;
       color: #fff;
-      font-family: sans-serif;
+      font-family: 'Montserrat', sans-serif;
       overflow-x: hidden;
       caret-color: transparent;
     }
@@ -49,7 +50,7 @@
     .enter-btn {
       background-color: #fff; color: #000; border: none;
       padding: 10px 20px; margin-top: 30px; margin-bottom: 60px;
-      font-size: 0.9rem; cursor: pointer;
+      font-size: 0.9rem; cursor: pointer; font-weight: 700;
     }
 
     .social-icons {
@@ -94,40 +95,36 @@
     .press-section {
       margin-top: 60px;
       width: 100%;
-      max-width: 800px;
-      text-align: left;
-    }
-
-    .press-section h2 {
-      font-size: 1.5rem;
-      margin-bottom: 20px;
-      color: #fff;
-      border-bottom: 1px solid #444;
-      padding-bottom: 10px;
-    }
-
-    .press-section ul {
-      list-style: none;
-      padding-left: 0;
-      margin-bottom: 20px;
+      max-width: 900px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
     }
 
     .press-section li {
-      margin-bottom: 12px;
       display: none;
+      background-color: #111;
+      border: 1px solid #222;
+      border-radius: 8px;
+      padding: 16px 20px;
+      line-height: 1.4;
+      font-weight: 300;
+      transition: all 0.3s ease;
     }
 
     .press-section li.visible {
-      display: list-item;
+      display: block;
     }
 
     .press-section a {
-      color: #1db954;
+      color: #fff;
       text-decoration: none;
-      font-weight: 500;
+      font-weight: 700;
+      display: block;
     }
 
     .press-section a:hover {
+      color: #1db954;
       text-decoration: underline;
     }
 
@@ -135,8 +132,12 @@
       background: none;
       border: none;
       color: #1db954;
-      font-size: 0.9rem;
+      font-size: 0.85rem;
       cursor: pointer;
+      margin-top: 30px;
+      font-weight: 300;
+      text-align: center;
+      width: 100%;
     }
 
     @media (max-width: 480px) {
@@ -178,11 +179,8 @@
     </div>
     <div class="grid"></div>
 
-    <div class="press-section">
-      <h2>Press</h2>
-      <ul id="pressList"></ul>
-      <button class="toggle-press-btn" onclick="togglePress()">Show More</button>
-    </div>
+    <ul class="press-section" id="pressList"></ul>
+    <button class="toggle-press-btn" onclick="togglePress()">Show More</button>
   </div>
 
   <script>
@@ -231,18 +229,18 @@
     ];
 
     const pressLinks = [
-      { title: "GRAMMYS – 5 Independent Record Labels Bringing The Sounds Of The Middle East & North Africa To The World", url: "https://www.grammy.com/news/5-middle-east-north-africa-independent-record-labels-to-know-beirut-red-diamond" },
-      { title: "Hard Knock Radio – Suhel Nafar on Empowering Palestinian & Arab Music Artists", url: "https://hardknockradio.org/suhel-nafar-speaks-on-empowering-palestinian-and-arab-music-hip-hop-artists/" },
-      { title: "SceneNoise – 77: The Egyptian Producer Bringing SWANA Together from Malaysia", url: "https://scenenoise.com/Features/77-The-Egyptian-Producer-Bringing-SWANA-Together-from-Malaysia" },
-      { title: "SceneNoise – Artist Spotlight: Soulja, Sudan's Suave Rap Superstar", url: "https://scenenoise.com/Features/Artist-Spotlight-Soulja-Sudan-s-Suave-Rap-Superstar" },
-      { title: "CairoScene – Labels & Collectives Taking Over XP Nite in Riyadh", url: "https://cairoscene.com/Noise/The-Labels-Collectives-Taking-Over-XP-Nite-in-Riyadh-Dec-7th-9th" },
-      { title: "MDLBEAST – Labels & Collectives at XP Nite in Riyadh", url: "https://mdlbeast.com/xp-feed/music-industry/the-labels-collectives-taking-over-xp-nite-in-riyadh-dec-7th-9th" },
-      { title: "YUNG – Fresh Sounds from Sudan: 10 New Releases", url: "https://thisisyungmea.com/fresh-sounds-from-sudan-10-new-releases-you-need-to-hear/" },
-      { title: "OkayAfrica – The Rise of Sudanese Rap Breaking Down Racist Stereotypes", url: "https://www.okayafrica.com/sudanese-rap-racism-music-industry/" },
-      { title: "SceneNoise – Montiyago Releases Debut Single 'Kalam Kteer'", url: "https://m.scenenoise.com/New-Music/Sudanese-Rapper-Montiyago-Releases-Debut-Single-Kalam-Ktee" },
-      { title: "MILLE WORLD – Introducing Genre-Bending Rapper Montiyago", url: "https://www.milleworld.com/introducing-genre-bending-sudanese-rapper-montiyago/" },
-      { title: "SceneNoise – Arab Songs Featured on Season 3 of Ramy", url: "https://scenenoise.com/Features/Here-are-All-the-Arab-Songs-You-Can-Hear-on-Season-Three-of-Ramy" },
-      { title: "SceneNoise – Dafencii & Soulja Unite for 'Godzilla x Kong' Anthem", url: "https://scenenoise.com/News/Dafencii-Soulja-Unite-for-Godzilla-x-Kong-The-New-Empire-Anthem" }
+      { title: "GRAMMYS – 5 Independent Record Labels Bringing The Sounds Of The Middle East & North Africa", url: "https://www.grammy.com/news/5-middle-east-north-africa-independent-record-labels-to-know-beirut-red-diamond" },
+      { title: "Hard Knock Radio – Suhel Nafar on Empowering Palestinian & Arab Artists", url: "https://hardknockradio.org/suhel-nafar-speaks-on-empowering-palestinian-and-arab-music-hip-hop-artists/" },
+      { title: "SceneNoise – 77: The Egyptian Producer Bringing SWANA Together", url: "https://scenenoise.com/Features/77-The-Egyptian-Producer-Bringing-SWANA-Together-from-Malaysia" },
+      { title: "SceneNoise – Artist Spotlight: Soulja, Sudan's Suave Rap Star", url: "https://scenenoise.com/Features/Artist-Spotlight-Soulja-Sudan-s-Suave-Rap-Superstar" },
+      { title: "CairoScene – Labels & Collectives Taking Over XP Nite", url: "https://cairoscene.com/Noise/The-Labels-Collectives-Taking-Over-XP-Nite-in-Riyadh-Dec-7th-9th" },
+      { title: "MDLBEAST – Labels at XP Nite in Riyadh", url: "https://mdlbeast.com/xp-feed/music-industry/the-labels-collectives-taking-over-xp-nite-in-riyadh-dec-7th-9th" },
+      { title: "YUNG – Fresh Sounds from Sudan: 10 Releases", url: "https://thisisyungmea.com/fresh-sounds-from-sudan-10-new-releases-you-need-to-hear/" },
+      { title: "OkayAfrica – Rise of Sudanese Rap", url: "https://www.okayafrica.com/sudanese-rap-racism-music-industry/" },
+      { title: "SceneNoise – Montiyago Drops 'Kalam Kteer'", url: "https://m.scenenoise.com/New-Music/Sudanese-Rapper-Montiyago-Releases-Debut-Single-Kalam-Ktee" },
+      { title: "MILLE WORLD – Introducing Rapper Montiyago", url: "https://www.milleworld.com/introducing-genre-bending-sudanese-rapper-montiyago/" },
+      { title: "SceneNoise – Arab Songs on Ramy S3", url: "https://scenenoise.com/Features/Here-are-All-the-Arab-Songs-You-Can-Hear-on-Season-Three-of-Ramy" },
+      { title: "SceneNoise – Dafencii & Soulja Unite for Godzilla x Kong", url: "https://scenenoise.com/News/Dafencii-Soulja-Unite-for-Godzilla-x-Kong-The-New-Empire-Anthem" }
     ];
 
     const grid = document.querySelector(".grid");
@@ -259,7 +257,7 @@
     pressLinks.forEach(({ title, url }, index) => {
       const li = document.createElement("li");
       li.innerHTML = `<a href="${url}" target="_blank" rel="noopener noreferrer">${title}</a>`;
-      if (index < 5) li.classList.add("visible");
+      if (index < 6) li.classList.add("visible");
       pressList.appendChild(li);
     });
 
@@ -268,12 +266,13 @@
       const items = document.querySelectorAll("#pressList li");
       showAllPress = !showAllPress;
       items.forEach((item, i) => {
-        item.classList.toggle("visible", showAllPress || i < 5);
+        item.classList.toggle("visible", showAllPress || i < 6);
       });
       document.querySelector(".toggle-press-btn").innerText = showAllPress ? "Show Less" : "Show More";
     }
   </script>
 </body>
 </html>
+
 
 
