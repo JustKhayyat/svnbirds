@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+l<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -62,7 +62,8 @@
       transition: transform 0.3s ease;
     }
 
-    .socials a:hover {
+    .socials a:hover,
+    .socials a:active {
       transform: scale(1.1);
     }
 
@@ -79,12 +80,6 @@
     .contact a {
       color: #ffc40a;
       text-decoration: none;
-    }
-
-    #countdown {
-      font-size: 0.85rem;
-      color: #aaa;
-      margin-top: 8px;
     }
 
     #clock {
@@ -111,11 +106,10 @@
   <img class="logo" src="SB_LOGO_Flattened_BlackBG.png" alt="SVNBIRDS Logo" />
   <h1>Launching Soon</h1>
 
-  <p id="countdown">Loading reveal countdown...</p>
-
   <div class="footer">
     <div class="socials">
       <a href="https://instagram.com/svnbirdspro" target="_blank" aria-label="Instagram">
+        <!-- Instagram SVG as before -->
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
           <radialGradient id="instaGradient" cx="19.38" cy="42.035" r="44.899" gradientUnits="userSpaceOnUse">
             <stop offset="0" stop-color="#fd5"/>
@@ -153,23 +147,11 @@
   </div>
 
   <script>
-    // Countdown
-    const countdownTarget = new Date("2025-06-01").getTime();
-    const countdownEl = document.getElementById("countdown");
+    document.getElementById("clock").innerText = new Date().toLocaleTimeString();
     setInterval(() => {
-      const now = new Date().getTime();
-      const dist = countdownTarget - now;
-      const days = Math.max(0, Math.floor(dist / (1000 * 60 * 60 * 24)));
-      countdownEl.innerText = "First artist reveal in " + days + " days";
-    }, 1000 * 60 * 60);
-
-    // Clock
-    const clockEl = document.getElementById("clock");
-    setInterval(() => {
-      clockEl.innerText = new Date().toLocaleTimeString();
+      document.getElementById("clock").innerText = new Date().toLocaleTimeString();
     }, 1000);
 
-    // Keyboard shortcut
     document.addEventListener('keydown', e => {
       if (e.key.toLowerCase() === 's') {
         window.open('https://open.spotify.com/playlist/4VhoqaH12QhTY6UKxayjzI', '_blank');
