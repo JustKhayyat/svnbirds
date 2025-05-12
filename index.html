@@ -96,7 +96,103 @@
       .grid { gap: 10px; }
       .enter-btn { margin-bottom: 80px; }
     }
-  </style>
+    .press-section {
+    width: 100%;
+    max-width: 1000px;
+    margin: 80px auto 40px;
+    text-align: center;
+  }
+
+  .section-title {
+    font-size: 2rem;
+    margin-bottom: 20px;
+  }
+
+  .press-scroll {
+    display: flex;
+    overflow-x: auto;
+    gap: 20px;
+    padding: 10px 0;
+    scrollbar-width: none;
+  }
+
+  .press-scroll::-webkit-scrollbar {
+    display: none;
+  }
+
+  .press-item {
+    background-color: #111;
+    border-radius: 12px;
+    padding: 20px;
+    min-width: 180px;
+    flex-shrink: 0;
+    text-align: center;
+    transition: transform 0.3s ease;
+  }
+
+  .press-item:hover {
+    transform: scale(1.05);
+  }
+
+  .press-item span {
+    display: block;
+    font-size: 0.9rem;
+    margin-bottom: 8px;
+    font-weight: bold;
+  }
+
+  .press-item a {
+    color: #ffc40a;
+    text-decoration: none;
+    font-size: 0.85rem;
+  }
+
+  .press-section {
+    width: 100%;
+    max-width: 1000px;
+    margin: 80px auto 40px;
+    text-align: center;
+  }
+
+  .press-scroll {
+    display: flex;
+    overflow-x: auto;
+    gap: 20px;
+    padding: 10px 0;
+    scrollbar-width: none;
+  }
+
+  .press-scroll::-webkit-scrollbar {
+    display: none;
+  }
+
+  .press-item {
+    background-color: #111;
+    border-radius: 12px;
+    padding: 20px;
+    min-width: 180px;
+    flex-shrink: 0;
+    text-align: center;
+    transition: transform 0.3s ease;
+  }
+
+  .press-item:hover {
+    transform: scale(1.05);
+  }
+
+  .press-item img {
+    max-width: 100px;
+    height: auto;
+    margin-bottom: 10px;
+  }
+
+  .press-item a {
+    color: #ffc40a;
+    text-decoration: none;
+    font-size: 0.85rem;
+  }
+
+</style>
 </head>
 <body>
   <div class="preloader" id="preloader">
@@ -120,7 +216,62 @@
     </div>
   </div>
 
-  <div class="main-content" id="main">
+  $1
+
+<!-- PRESS SECTION -->
+<div class="press-section">
+  <div class="press-scroll">
+    <div class="press-item">
+      <img src="press/GRAMMYs.jpg" alt="GRAMMYs logo">
+      <a href="https://www.grammy.com/news/5-middle-east-north-africa-independent-record-labels-to-know-beirut-red-diamond" target="_blank">5 MENA Labels Bringing the Sound</a>
+    </div>
+    <div class="press-item">
+      <img src="press/Hard Knock Radio.jpg" alt="Hard Knock Radio logo">
+      <a href="https://hardknockradio.org/suhel-nafar-speaks-on-empowering-palestinian-and-arab-music-hip-hop-artists/" target="_blank">Empowering Arab Artists</a>
+    </div>
+    <div class="press-item">
+      <img src="press/SceneNoise.jpg" alt="SceneNoise logo">
+      <a href="https://scenenoise.com/Features/77-The-Egyptian-Producer-Bringing-SWANA-Together-from-Malaysia" target="_blank">77: SWANA from Malaysia</a>
+    </div>
+    <div class="press-item">
+      <img src="press/SceneNoise.jpg" alt="SceneNoise logo">
+      <a href="https://scenenoise.com/Features/Artist-Spotlight-Soulja-Sudan-s-Suave-Rap-Superstar" target="_blank">Soulja Spotlight</a>
+    </div>
+    <div class="press-item">
+      <img src="press/CairoScene.jpg" alt="CairoScene logo">
+      <a href="https://cairoscene.com/Noise/The-Labels-Collectives-Taking-Over-XP-Nite-in-Riyadh-Dec-7th-9th" target="_blank">XP Nite Takeover</a>
+    </div>
+    <div class="press-item">
+      <img src="press/MDLBEAST.jpg" alt="MDLBEAST logo">
+      <a href="https://mdlbeast.com/xp-feed/music-industry/the-labels-collectives-taking-over-xp-nite-in-riyadh-dec-7th-9th" target="_blank">XP Nite Lineup</a>
+    </div>
+    <div class="press-item">
+      <img src="press/YUNG.jpg" alt="YUNG logo">
+      <a href="https://thisisyungmea.com/fresh-sounds-from-sudan-10-new-releases-you-need-to-hear/" target="_blank">Fresh Sounds from Sudan</a>
+    </div>
+    <div class="press-item">
+      <img src="press/OkayAfrica.jpg" alt="OkayAfrica logo">
+      <a href="https://www.okayafrica.com/sudanese-rap-racism-music-industry/" target="_blank">Sudanese Rap & Racism</a>
+    </div>
+    <div class="press-item">
+      <img src="press/SceneNoise.jpg" alt="SceneNoise logo">
+      <a href="https://m.scenenoise.com/New-Music/Sudanese-Rapper-Montiyago-Releases-Debut-Single-Kalam-Ktee" target="_blank">Montiyago Debut</a>
+    </div>
+    <div class="press-item">
+      <img src="press/MILLE WORLD.jpg" alt="MILLE WORLD logo">
+      <a href="https://www.milleworld.com/introducing-genre-bending-sudanese-rapper-montiyago/" target="_blank">Introducing Montiyago</a>
+    </div>
+    <div class="press-item">
+      <img src="press/SceneNoise.jpg" alt="SceneNoise logo">
+      <a href="https://scenenoise.com/Features/Here-are-All-the-Arab-Songs-You-Can-Hear-on-Season-Three-of-Ramy" target="_blank">Songs on Ramy Season 3</a>
+    </div>
+    <div class="press-item">
+      <img src="press/SceneNoise.jpg" alt="SceneNoise logo">
+      <a href="https://scenenoise.com/News/Dafencii-Soulja-Unite-for-Godzilla-x-Kong-The-New-Empire-Anthem" target="_blank">Soulja x Godzilla Anthem</a>
+    </div>
+  </div>
+</div>
+
     <div class="social-icons">
       <a href="https://open.spotify.com/playlist/4VhoqaH12QhTY6UKxayjzI" target="_blank" rel="noopener noreferrer"><img src="spotify.png" alt="Spotify"/></a>
       <a href="https://instagram.com/svnbirdspro" target="_blank" rel="noopener noreferrer"><img src="instagram.svg" alt="Instagram"/></a>
@@ -128,29 +279,163 @@
     <div onclick="goBack()" style="cursor: pointer;">
       <img src="SB.png" alt="SVNBIRDS Logo" class="logo-img-small"/>
     </div>
-    <div class="grid">
-      <a href="https://music.empi.re/argeen" target="_blank" rel="noopener noreferrer"><img loading="lazy" src="covers/argeen.jpg" alt="Argeen"/></a>
-      <a href="https://music.empi.re/thetopfreestyle" target="_blank" rel="noopener noreferrer"><img loading="lazy" src="covers/the-top-freestyle.jpg" alt="The Top Freestyle"/></a>
-      <a href="https://music.empi.re/suits" target="_blank" rel="noopener noreferrer"><img loading="lazy" src="covers/suits.jpg" alt="Suits"/></a>
-      <a href="https://music.empi.re/ducati" target="_blank" rel="noopener noreferrer"><img loading="lazy" src="covers/ducati.jpg" alt="Ducati"/></a>
-      <a href="https://music.empi.re/ntitled" target="_blank" rel="noopener noreferrer"><img loading="lazy" src="covers/ntitled.jpg" alt="Ntitled"/></a>
-      <a href="https://music.empi.re/cimamontiyago" target="_blank" rel="noopener noreferrer"><img loading="lazy" src="covers/cima-montiyago.jpg" alt="Cima Montiyago"/></a>
-      <a href="https://music.empi.re/messi" target="_blank" rel="noopener noreferrer"><img loading="lazy" src="covers/messi.jpg" alt="Messi"/></a>
-      <a href="https://music.empi.re/Tshreen" target="_blank" rel="noopener noreferrer"><img loading="lazy" src="covers/tshreen.jpg" alt="Tshreen"/></a>
-      <a href="https://music.empi.re/decor" target="_blank" rel="noopener noreferrer"><img loading="lazy" src="covers/decor.jpg" alt="Decor"/></a>
-      <a href="https://music.empi.re/dejavusoulja" target="_blank" rel="noopener noreferrer"><img loading="lazy" src="covers/dejavu-soulja.jpg" alt="Dejavu Soulja"/></a>
-      <a href="https://music.empi.re/baderkhol3a" target="_blank" rel="noopener noreferrer"><img loading="lazy" src="covers/bader-khol3a.jpg" alt="Bader Khol3A"/></a>
-      <a href="https://music.empi.re/boba" target="_blank" rel="noopener noreferrer"><img loading="lazy" src="covers/boba.jpg" alt="Boba"/></a>
-      <a href="https://music.empi.re/LkLk" target="_blank" rel="noopener noreferrer"><img loading="lazy" src="covers/lk-lk.jpg" alt="Lk Lk"/></a>
-      <a href="https://music.empi.re/fantasticsoulja" target="_blank" rel="noopener noreferrer"><img loading="lazy" src="covers/fantastic-soulja.jpg" alt="Fantastic Soulja"/></a>
-      <a href="https://music.empi.re/Caribby" target="_blank" rel="noopener noreferrer"><img loading="lazy" src="covers/caribby.jpg" alt="Caribby"/></a>
-      <a href="https://music.empi.re/figures" target="_blank" rel="noopener noreferrer"><img loading="lazy" src="covers/figures.jpg" alt="Figures"/></a>
-      <a href="https://music.empi.re/MoyawaZait" target="_blank" rel="noopener noreferrer"><img loading="lazy" src="covers/moyawa-zait.jpg" alt="Moyawa Zait"/></a>
-      <a href="https://music.empi.re/langa" target="_blank" rel="noopener noreferrer"><img loading="lazy" src="covers/langa.jpg" alt="Langa"/></a>
+    $1
+
+<!-- PRESS SECTION -->
+<div class="press-section">
+  <div class="press-scroll">
+    <div class="press-item">
+      <img src="press/GRAMMYs.jpg" alt="GRAMMYs logo">
+      <a href="https://www.grammy.com/news/5-middle-east-north-africa-independent-record-labels-to-know-beirut-red-diamond" target="_blank">5 MENA Labels Bringing the Sound</a>
+    </div>
+    <div class="press-item">
+      <img src="press/Hard Knock Radio.jpg" alt="Hard Knock Radio logo">
+      <a href="https://hardknockradio.org/suhel-nafar-speaks-on-empowering-palestinian-and-arab-music-hip-hop-artists/" target="_blank">Empowering Arab Artists</a>
+    </div>
+    <div class="press-item">
+      <img src="press/SceneNoise.jpg" alt="SceneNoise logo">
+      <a href="https://scenenoise.com/Features/77-The-Egyptian-Producer-Bringing-SWANA-Together-from-Malaysia" target="_blank">77: SWANA from Malaysia</a>
+    </div>
+    <div class="press-item">
+      <img src="press/SceneNoise.jpg" alt="SceneNoise logo">
+      <a href="https://scenenoise.com/Features/Artist-Spotlight-Soulja-Sudan-s-Suave-Rap-Superstar" target="_blank">Soulja Spotlight</a>
+    </div>
+    <div class="press-item">
+      <img src="press/CairoScene.jpg" alt="CairoScene logo">
+      <a href="https://cairoscene.com/Noise/The-Labels-Collectives-Taking-Over-XP-Nite-in-Riyadh-Dec-7th-9th" target="_blank">XP Nite Takeover</a>
+    </div>
+    <div class="press-item">
+      <img src="press/MDLBEAST.jpg" alt="MDLBEAST logo">
+      <a href="https://mdlbeast.com/xp-feed/music-industry/the-labels-collectives-taking-over-xp-nite-in-riyadh-dec-7th-9th" target="_blank">XP Nite Lineup</a>
+    </div>
+    <div class="press-item">
+      <img src="press/YUNG.jpg" alt="YUNG logo">
+      <a href="https://thisisyungmea.com/fresh-sounds-from-sudan-10-new-releases-you-need-to-hear/" target="_blank">Fresh Sounds from Sudan</a>
+    </div>
+    <div class="press-item">
+      <img src="press/OkayAfrica.jpg" alt="OkayAfrica logo">
+      <a href="https://www.okayafrica.com/sudanese-rap-racism-music-industry/" target="_blank">Sudanese Rap & Racism</a>
+    </div>
+    <div class="press-item">
+      <img src="press/SceneNoise.jpg" alt="SceneNoise logo">
+      <a href="https://m.scenenoise.com/New-Music/Sudanese-Rapper-Montiyago-Releases-Debut-Single-Kalam-Ktee" target="_blank">Montiyago Debut</a>
+    </div>
+    <div class="press-item">
+      <img src="press/MILLE WORLD.jpg" alt="MILLE WORLD logo">
+      <a href="https://www.milleworld.com/introducing-genre-bending-sudanese-rapper-montiyago/" target="_blank">Introducing Montiyago</a>
+    </div>
+    <div class="press-item">
+      <img src="press/SceneNoise.jpg" alt="SceneNoise logo">
+      <a href="https://scenenoise.com/Features/Here-are-All-the-Arab-Songs-You-Can-Hear-on-Season-Three-of-Ramy" target="_blank">Songs on Ramy Season 3</a>
+    </div>
+    <div class="press-item">
+      <img src="press/SceneNoise.jpg" alt="SceneNoise logo">
+      <a href="https://scenenoise.com/News/Dafencii-Soulja-Unite-for-Godzilla-x-Kong-The-New-Empire-Anthem" target="_blank">Soulja x Godzilla Anthem</a>
+    </div>
+  </div>
+</div>
+
+    $1  <img src="press/$1.jpg" alt="$3 logo">
+
+      <a href="https://www.grammy.com/news/5-middle-east-north-africa-independent-record-labels-to-know-beirut-red-diamond" target="_blank">5 MENA Labels Bringing the Sound</a>
+    </div>
+    $1  <img src="press/$1.jpg" alt="$3 logo">
+
+      <a href="https://hardknockradio.org/suhel-nafar-speaks-on-empowering-palestinian-and-arab-music-hip-hop-artists/" target="_blank">Empowering Arab Artists</a>
+    </div>
+    $1  <img src="press/$1.jpg" alt="$3 logo">
+
+      <a href="https://scenenoise.com/Features/77-The-Egyptian-Producer-Bringing-SWANA-Together-from-Malaysia" target="_blank">77: SWANA from Malaysia</a>
+    </div>
+    $1  <img src="press/$1.jpg" alt="$3 logo">
+
+      <a href="https://scenenoise.com/Features/Artist-Spotlight-Soulja-Sudan-s-Suave-Rap-Superstar" target="_blank">Soulja Spotlight</a>
+    </div>
+    $1  <img src="press/$1.jpg" alt="$3 logo">
+
+      <a href="https://cairoscene.com/Noise/The-Labels-Collectives-Taking-Over-XP-Nite-in-Riyadh-Dec-7th-9th" target="_blank">XP Nite Takeover</a>
+    </div>
+    $1  <img src="press/$1.jpg" alt="$3 logo">
+
+      <a href="https://mdlbeast.com/xp-feed/music-industry/the-labels-collectives-taking-over-xp-nite-in-riyadh-dec-7th-9th" target="_blank">XP Nite Lineup</a>
+    </div>
+    $1  <img src="press/$1.jpg" alt="$3 logo">
+
+      <a href="https://thisisyungmea.com/fresh-sounds-from-sudan-10-new-releases-you-need-to-hear/" target="_blank">Fresh Sounds from Sudan</a>
+    </div>
+    $1  <img src="press/$1.jpg" alt="$3 logo">
+
+      <a href="https://www.okayafrica.com/sudanese-rap-racism-music-industry/" target="_blank">Sudanese Rap & Racism</a>
+    </div>
+    $1  <img src="press/$1.jpg" alt="$3 logo">
+
+      <a href="https://m.scenenoise.com/New-Music/Sudanese-Rapper-Montiyago-Releases-Debut-Single-Kalam-Ktee" target="_blank">Montiyago Debut</a>
+    </div>
+    $1  <img src="press/$1.jpg" alt="$3 logo">
+
+      <a href="https://www.milleworld.com/introducing-genre-bending-sudanese-rapper-montiyago/" target="_blank">Introducing Montiyago</a>
+    </div>
+    $1  <img src="press/$1.jpg" alt="$3 logo">
+
+      <a href="https://scenenoise.com/Features/Here-are-All-the-Arab-Songs-You-Can-Hear-on-Season-Three-of-Ramy" target="_blank">Songs on Ramy Season 3</a>
     </div>
   </div>
 
-  <script>
+<!-- PRESS SECTION -->
+<div class="press-section">
+  <div class="press-scroll">
+    <div class="press-item">
+      <img src="press/GRAMMYs.jpg" alt="GRAMMYs logo">
+      <a href="https://www.grammy.com/news/5-middle-east-north-africa-independent-record-labels-to-know-beirut-red-diamond" target="_blank">5 MENA Labels Bringing the Sound</a>
+    </div>
+    <div class="press-item">
+      <img src="press/Hard Knock Radio.jpg" alt="Hard Knock Radio logo">
+      <a href="https://hardknockradio.org/suhel-nafar-speaks-on-empowering-palestinian-and-arab-music-hip-hop-artists/" target="_blank">Empowering Arab Artists</a>
+    </div>
+    <div class="press-item">
+      <img src="press/SceneNoise.jpg" alt="SceneNoise logo">
+      <a href="https://scenenoise.com/Features/77-The-Egyptian-Producer-Bringing-SWANA-Together-from-Malaysia" target="_blank">77: SWANA from Malaysia</a>
+    </div>
+    <div class="press-item">
+      <img src="press/SceneNoise.jpg" alt="SceneNoise logo">
+      <a href="https://scenenoise.com/Features/Artist-Spotlight-Soulja-Sudan-s-Suave-Rap-Superstar" target="_blank">Soulja Spotlight</a>
+    </div>
+    <div class="press-item">
+      <img src="press/CairoScene.jpg" alt="CairoScene logo">
+      <a href="https://cairoscene.com/Noise/The-Labels-Collectives-Taking-Over-XP-Nite-in-Riyadh-Dec-7th-9th" target="_blank">XP Nite Takeover</a>
+    </div>
+    <div class="press-item">
+      <img src="press/MDLBEAST.jpg" alt="MDLBEAST logo">
+      <a href="https://mdlbeast.com/xp-feed/music-industry/the-labels-collectives-taking-over-xp-nite-in-riyadh-dec-7th-9th" target="_blank">XP Nite Lineup</a>
+    </div>
+    <div class="press-item">
+      <img src="press/YUNG.jpg" alt="YUNG logo">
+      <a href="https://thisisyungmea.com/fresh-sounds-from-sudan-10-new-releases-you-need-to-hear/" target="_blank">Fresh Sounds from Sudan</a>
+    </div>
+    <div class="press-item">
+      <img src="press/OkayAfrica.jpg" alt="OkayAfrica logo">
+      <a href="https://www.okayafrica.com/sudanese-rap-racism-music-industry/" target="_blank">Sudanese Rap & Racism</a>
+    </div>
+    <div class="press-item">
+      <img src="press/SceneNoise.jpg" alt="SceneNoise logo">
+      <a href="https://m.scenenoise.com/New-Music/Sudanese-Rapper-Montiyago-Releases-Debut-Single-Kalam-Ktee" target="_blank">Montiyago Debut</a>
+    </div>
+    <div class="press-item">
+      <img src="press/MILLE WORLD.jpg" alt="MILLE WORLD logo">
+      <a href="https://www.milleworld.com/introducing-genre-bending-sudanese-rapper-montiyago/" target="_blank">Introducing Montiyago</a>
+    </div>
+    <div class="press-item">
+      <img src="press/SceneNoise.jpg" alt="SceneNoise logo">
+      <a href="https://scenenoise.com/Features/Here-are-All-the-Arab-Songs-You-Can-Hear-on-Season-Three-of-Ramy" target="_blank">Songs on Ramy Season 3</a>
+    </div>
+    <div class="press-item">
+      <img src="press/SceneNoise.jpg" alt="SceneNoise logo">
+      <a href="https://scenenoise.com/News/Dafencii-Soulja-Unite-for-Godzilla-x-Kong-The-New-Empire-Anthem" target="_blank">Soulja x Godzilla Anthem</a>
+    </div>
+  </div>
+</div>
+
+<script>
     function enterSite() {
       localStorage.setItem('entered', 'true');
       document.getElementById('landing').style.display = 'none';
@@ -176,3 +461,4 @@
   </script>
 </body>
 </html>
+
