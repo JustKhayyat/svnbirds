@@ -1,4 +1,4 @@
-l<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -23,6 +23,10 @@ l<!DOCTYPE html>
       text-align: center;
       padding: 20px;
       cursor: crosshair;
+    }
+
+    audio {
+      display: none;
     }
 
     img.logo {
@@ -82,12 +86,6 @@ l<!DOCTYPE html>
       text-decoration: none;
     }
 
-    #clock {
-      font-size: 0.75rem;
-      color: #666;
-      margin-top: 4px;
-    }
-
     @keyframes fadeIn {
       to { opacity: 1; }
     }
@@ -142,16 +140,9 @@ l<!DOCTYPE html>
     <div class="contact">
       For Talent Bookings: <a href="mailto:booking@svnbirds.com">booking@svnbirds.com</a>
     </div>
-
-    <div id="clock"></div>
   </div>
 
   <script>
-    document.getElementById("clock").innerText = new Date().toLocaleTimeString();
-    setInterval(() => {
-      document.getElementById("clock").innerText = new Date().toLocaleTimeString();
-    }, 1000);
-
     document.addEventListener('keydown', e => {
       if (e.key.toLowerCase() === 's') {
         window.open('https://open.spotify.com/playlist/4VhoqaH12QhTY6UKxayjzI', '_blank');
