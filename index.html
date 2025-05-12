@@ -82,6 +82,9 @@
       gap: 20px;
     }
     .footer img {
+      height: auto;
+      width: auto;
+      max-height: 60px;
       max-height: 40px;
       max-width: 120px;
       object-fit: contain;
@@ -115,7 +118,13 @@
         gap: 10px;
       }
     }
-  </style>
+  .footer-logos {
+      display: flex;
+      gap: 30px;
+      align-items: center;
+      justify-content: center;
+    }
+    </style>
 </head>
 <body>
   <!-- Preloader -->
@@ -130,11 +139,18 @@
       <a href="https://instagram.com/svnbirdspro" target="_blank"><img src="instagram.svg" alt="Instagram"></a>
     </div>
     <img src="SB.png" alt="SVNBIRDS Logo" style="max-width: 300px; height: auto;">
-    <button class="enter-btn" onclick="enterSite()">Enter Here</button>
-    <div class="footer">
+    <button class="enter-btn" onclick="enterSite()">Press Play</button>
+    <div class="footer"><div class="footer-logos">
       <img src="sb_logo_white.png" alt="SVNBIRDS">
-      <img src="empire-clean.png" alt="EMPIRE">
+      <img src="empire-clean.png" alt="EMPIRE"></div>
     </div>
+  
+<a href="#" onclick="goBack()" class="back-link" aria-label="Back"
+   style="position:absolute; top:20px; left:20px;">
+  <svg xmlns="http://www.w3.org/2000/svg" height="24" width="24" fill="#ccc" viewBox="0 0 24 24">
+    <path d="M15.41 7.41 14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
+  </svg>
+</a>
   </div>
 
   <!-- Page 2 -->
@@ -166,6 +182,10 @@
       document.getElementById('landing').style.display = 'none';
       document.getElementById('main').style.display = 'flex';
     }
+    function goBack() {
+    document.getElementById('main').style.display = 'none';
+    document.getElementById('landing').style.display = 'flex';
+  }
   </script>
 </body>
 </html>
