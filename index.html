@@ -96,7 +96,58 @@
       .grid { gap: 10px; }
       .enter-btn { margin-bottom: 80px; }
     }
-  </style>
+    .press-section {
+    width: 100%;
+    max-width: 1000px;
+    margin: 80px auto 40px;
+    text-align: center;
+  }
+
+  .section-title {
+    font-size: 2rem;
+    margin-bottom: 20px;
+  }
+
+  .press-scroll {
+    display: flex;
+    overflow-x: auto;
+    gap: 20px;
+    padding: 10px 0;
+    scrollbar-width: none;
+  }
+
+  .press-scroll::-webkit-scrollbar {
+    display: none;
+  }
+
+  .press-item {
+    background-color: #111;
+    border-radius: 12px;
+    padding: 20px;
+    min-width: 180px;
+    flex-shrink: 0;
+    text-align: center;
+    transition: transform 0.3s ease;
+  }
+
+  .press-item:hover {
+    transform: scale(1.05);
+  }
+
+  .press-item span {
+    display: block;
+    font-size: 0.9rem;
+    margin-bottom: 8px;
+    font-weight: bold;
+  }
+
+  .press-item a {
+    color: #ffc40a;
+    text-decoration: none;
+    font-size: 0.85rem;
+  }
+
+</style>
 </head>
 <body>
   <div class="preloader" id="preloader">
@@ -148,9 +199,63 @@
       <a href="https://music.empi.re/MoyawaZait" target="_blank" rel="noopener noreferrer"><img loading="lazy" src="covers/moyawa-zait.jpg" alt="Moyawa Zait"/></a>
       <a href="https://music.empi.re/langa" target="_blank" rel="noopener noreferrer"><img loading="lazy" src="covers/langa.jpg" alt="Langa"/></a>
     </div>
-  </div>
 
-  <script>
+<!-- PRESS SECTION -->
+<div class="press-section">
+  <h2 class="section-title">Press</h2>
+  $1
+    <div class="press-item">
+      <span>SceneNoise</span>
+      <a href="https://scenenoise.com/News/Dafencii-Soulja-Unite-for-Godzilla-x-Kong-The-New-Empire-Anthem" target="_blank">Soulja x Godzilla Anthem</a>
+    </div>
+    <div class="press-item">
+      <span>GRAMMYs</span>
+      <a href="https://www.grammy.com/news/5-middle-east-north-africa-independent-record-labels-to-know-beirut-red-diamond" target="_blank">5 MENA Labels Bringing the Sound</a>
+    </div>
+    <div class="press-item">
+      <span>Hard Knock Radio</span>
+      <a href="https://hardknockradio.org/suhel-nafar-speaks-on-empowering-palestinian-and-arab-music-hip-hop-artists/" target="_blank">Empowering Arab Artists</a>
+    </div>
+    <div class="press-item">
+      <span>SceneNoise</span>
+      <a href="https://scenenoise.com/Features/77-The-Egyptian-Producer-Bringing-SWANA-Together-from-Malaysia" target="_blank">77: SWANA from Malaysia</a>
+    </div>
+    <div class="press-item">
+      <span>SceneNoise</span>
+      <a href="https://scenenoise.com/Features/Artist-Spotlight-Soulja-Sudan-s-Suave-Rap-Superstar" target="_blank">Soulja Spotlight</a>
+    </div>
+    <div class="press-item">
+      <span>CairoScene</span>
+      <a href="https://cairoscene.com/Noise/The-Labels-Collectives-Taking-Over-XP-Nite-in-Riyadh-Dec-7th-9th" target="_blank">XP Nite Takeover</a>
+    </div>
+    <div class="press-item">
+      <span>MDLBEAST</span>
+      <a href="https://mdlbeast.com/xp-feed/music-industry/the-labels-collectives-taking-over-xp-nite-in-riyadh-dec-7th-9th" target="_blank">XP Nite Lineup</a>
+    </div>
+    <div class="press-item">
+      <span>YUNG</span>
+      <a href="https://thisisyungmea.com/fresh-sounds-from-sudan-10-new-releases-you-need-to-hear/" target="_blank">Fresh Sounds from Sudan</a>
+    </div>
+    <div class="press-item">
+      <span>OkayAfrica</span>
+      <a href="https://www.okayafrica.com/sudanese-rap-racism-music-industry/" target="_blank">Sudanese Rap & Racism</a>
+    </div>
+    <div class="press-item">
+      <span>SceneNoise</span>
+      <a href="https://m.scenenoise.com/New-Music/Sudanese-Rapper-Montiyago-Releases-Debut-Single-Kalam-Ktee" target="_blank">Montiyago Debut</a>
+    </div>
+    <div class="press-item">
+      <span>MILLE WORLD</span>
+      <a href="https://www.milleworld.com/introducing-genre-bending-sudanese-rapper-montiyago/" target="_blank">Introducing Montiyago</a>
+    </div>
+    <div class="press-item">
+      <span>SceneNoise</span>
+      <a href="https://scenenoise.com/Features/Here-are-All-the-Arab-Songs-You-Can-Hear-on-Season-Three-of-Ramy" target="_blank">Songs on Ramy Season 3</a>
+    </div>
+  </div>
+</div>
+
+<script>
     function enterSite() {
       localStorage.setItem('entered', 'true');
       document.getElementById('landing').style.display = 'none';
@@ -176,3 +281,4 @@
   </script>
 </body>
 </html>
+
