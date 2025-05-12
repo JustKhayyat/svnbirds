@@ -1,193 +1,132 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SVNBIRDS</title>
-  <link rel="icon" type="image/png" href="favicon.png">
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      outline: none;
-      -webkit-tap-highlight-color: transparent;
-    }
-    body {
-      background-color: #000;
-      color: #fff;
-      font-family: sans-serif;
-      height: 100vh;
-      overflow: hidden;
-    }
-    @media (prefers-color-scheme: dark) {
-      body {
-        background-color: #000;
-        color: #fff;
-      }
-    }
-    @keyframes pulse {
-      from { opacity: 0.4; transform: scale(0.96); }
-      to { opacity: 1; transform: scale(1); }
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SVNBIRDS</title>
+<link href="sb_logo_white.png" rel="icon" type="image/png"/>
+<style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background-color: #000; color: #fff; font-family: sans-serif; overflow-x: hidden; }
+*:focus { outline: none !important; }
     .preloader {
-      position: fixed;
-      inset: 0;
-      background-color: #000;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 9999;
+      position: fixed; inset: 0; background-color: #000;
+      display: flex; align-items: center; justify-content: center; z-index: 9999;
     }
     .preloader img {
       width: 150px;
       animation: pulse 1.2s ease-in-out infinite alternate;
     }
+    @keyframes pulse {
+      from { opacity: 0.4; transform: scale(0.96); }
+      to { opacity: 1; transform: scale(1); }
+    }
     .container {
-      display: none;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      padding: 20px;
-      text-align: center;
-      animation: fadeIn 0.5s ease-in-out;
+      display: none; flex-direction: column; align-items: center;
+      justify-content: flex-start; min-height: 100vh;
+      padding: 20px; text-align: center; position: relative;
     }
     .enter-btn {
-      background-color: #fff;
-      color: #000;
-      border: none;
-      padding: 10px 20px;
-      margin-top: 20px;
-      font-size: 0.9rem;
-      cursor: pointer;
-      transition: 0.3s;
-    }
-    .enter-btn:hover {
-      background-color: #ffc40a;
-      color: #000;
+      background-color: #fff; color: #000; border: none;
+      padding: 10px 20px; margin-top: 30px; margin-bottom: 60px;
+      font-size: 0.9rem; cursor: pointer;
     }
     .social-icons {
-      position: absolute;
-      top: 20px;
-      width: 100%;
-      display: flex;
-      justify-content: space-between;
-      padding: 0 20px;
+      position: absolute; top: 20px; width: 100%;
+      display: flex; justify-content: space-between;
+      padding: 0 20px; z-index: 10;
     }
-    .social-icons img {
-      width: 24px;
-      height: 24px;
-    }
+    .social-icons img { width: 24px; height: 24px; }
     .footer {
-      margin-top: 40px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 20px;
+      margin-top: auto; padding-bottom: 20px;
+      display: flex; align-items: center; justify-content: center; width: 100%;
     }
-    .footer img {
-      height: 32px;
+    .footer-logos {
+      display: flex; gap: 30px;
+      align-items: center; justify-content: center;
     }
+    .sb-logo { height: 80px; }
+    .empire-logo { height: 60px; }
     .main-content {
-      display: none;
-      flex-direction: column;
-      align-items: center;
-      justify-content: flex-start;
+      display: none; flex-direction: column;
+      align-items: center; justify-content: flex-start;
       padding: 40px 20px;
-      animation: fadeIn 0.5s ease-in-out;
     }
     .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-      gap: 20px;
-      margin-top: 30px;
-      width: 100%;
-      max-width: 1000px;
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 20px; margin-top: 30px; width: 100%; max-width: 1000px;
     }
-    .grid img {
-      width: 100%;
-      height: auto;
-      border-radius: 4px;
-    }
-    .center-block {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      flex-grow: 1;
-    }
+    .grid img { width: 100%; height: auto; border-radius: 4px; }
     @media (max-width: 480px) {
-      .container {
-        padding: 10px;
-        padding-bottom: 60px;
-      }
-      .grid {
-        gap: 10px;
-      }
-    }
-    @media (max-width: 320px) {
-      .center-block img {
-        max-width: 220px;
-      }
+      .container { padding: 10px; }
+      .grid { gap: 10px; }
+      .enter-btn { margin-bottom: 80px; }
     }
   </style>
 </head>
 <body>
-  <div class="preloader" id="preloader">
-    <img src="SB%20LOGO%20WHITE.png" alt="Loading...">
-  </div>
+<div class="preloader" id="preloader">
+<img alt="Loading..." src="sb_logo_white.png"/>
+</div>
+<div class="container" id="landing">
+<div class="social-icons">
+<a href="https://open.spotify.com/playlist/4VhoqaH12QhTY6UKxayjzI" target="_blank"><img alt="Spotify" src="spotify.png"/></a>
+<a href="https://instagram.com/svnbirdspro" target="_blank"><img alt="Instagram" src="instagram.svg"/></a>
+</div>
 
-  <div class="container" id="landing">
-    <div class="social-icons">
-      <a href="https://open.spotify.com/playlist/4VhoqaH12QhTY6UKxayjzI" target="_blank"><img src="spotify.png" alt="Spotify"></a>
-      <a href="https://instagram.com/svnbirdspro" target="_blank"><img src="instagram.svg" alt="Instagram"></a>
-    </div>
-    <div class="center-block">
-      <img src="SB.png" alt="SVNBIRDS Logo" style="max-width: 300px; height: auto;">
-      <button class="enter-btn" onclick="enterSite()">Press Play</button>
-    </div>
-    <div class="footer">
-      <img src="SB%20LOGO%20WHITE.png" alt="SVNBIRDS">
-      <img src="empire-clean.png" alt="EMPIRE">
-    </div>
-  </div>
 
-  <div class="main-content" id="main">
-    <div class="social-icons">
-      <a href="https://open.spotify.com/playlist/4VhoqaH12QhTY6UKxayjzI" target="_blank"><img src="spotify.png" alt="Spotify"></a>
-      <a href="https://instagram.com/svnbirdspro" target="_blank"><img src="instagram.svg" alt="Instagram"></a>
-    </div>
-    <a href="#" onclick="backToLanding()">
-      <img src="SB.png" alt="SVNBIRDS Logo" style="max-width: 200px; height: auto; margin-bottom: 20px;">
-    </a>
-    <div class="grid">
-      <!-- Grid images will be here -->
-    </div>
-  </div>
-
-  <script>
+<div class="center-block" style="display: flex; flex-direction: column; align-items: center; justify-content: center; flex-grow: 1; height: 100%;"><img alt="SVNBIRDS Logo" src="SB.png" style="max-width: 300px; height: auto; margin-bottom: 20px;"/><button class="enter-btn" onclick="enterSite()">Press Play</button></div><div class="footer">
+<div class="footer-logos">
+<img alt="SVNBIRDS" class="sb-logo" src="sb_logo_white.png"/>
+<img alt="EMPIRE" class="empire-logo" src="empire-clean.png"/>
+</div>
+</div>
+</div>
+<div class="main-content" id="main">
+<div class="social-icons">
+<a href="https://open.spotify.com/playlist/4VhoqaH12QhTY6UKxayjzI" target="_blank"><img alt="Spotify" src="spotify.png"/></a>
+<a href="https://instagram.com/svnbirdspro" target="_blank"><img alt="Instagram" src="instagram.svg"/></a>
+</div>
+<a href="#" onclick="goBack()" style="display:inline-block;">
+<img alt="SVNBIRDS Logo" src="SB.png" style="max-width: 200px; height: auto; margin-bottom: 20px;"/>
+</a>
+<div class="grid">
+<a href="https://music.empi.re/argeen" target="_blank"><img alt="Argeen" src="covers/argeen.jpg"/></a>
+<a href="https://music.empi.re/thetopfreestyle" target="_blank"><img alt="The Top Freestyle" src="covers/the-top-freestyle.jpg"/></a>
+<a href="https://music.empi.re/suits" target="_blank"><img alt="Suits" src="covers/suits.jpg"/></a>
+<a href="https://music.empi.re/ducati" target="_blank"><img alt="Ducati" src="covers/ducati.jpg"/></a>
+<a href="https://music.empi.re/ntitled" target="_blank"><img alt="Ntitled" src="covers/ntitled.jpg"/></a>
+<a href="https://music.empi.re/cimamontiyago" target="_blank"><img alt="Cima Montiyago" src="covers/cima-montiyago.jpg"/></a>
+<a href="https://music.empi.re/messi" target="_blank"><img alt="Messi" src="covers/messi.jpg"/></a>
+<a href="https://music.empi.re/Tshreen" target="_blank"><img alt="Tshreen" src="covers/tshreen.jpg"/></a>
+<a href="https://music.empi.re/decor" target="_blank"><img alt="Decor" src="covers/decor.jpg"/></a>
+<a href="https://music.empi.re/dejavusoulja" target="_blank"><img alt="Dejavu Soulja" src="covers/dejavu-soulja.jpg"/></a>
+<a href="https://music.empi.re/baderkhol3a" target="_blank"><img alt="Bader Khol3A" src="covers/bader-khol3a.jpg"/></a>
+<a href="https://music.empi.re/boba" target="_blank"><img alt="Boba" src="covers/boba.jpg"/></a>
+<a href="https://music.empi.re/LkLk" target="_blank"><img alt="Lk Lk" src="covers/lk-lk.jpg"/></a>
+<a href="https://music.empi.re/fantasticsoulja" target="_blank"><img alt="Fantastic Soulja" src="covers/fantastic-soulja.jpg"/></a>
+<a href="https://music.empi.re/Caribby" target="_blank"><img alt="Caribby" src="covers/caribby.jpg"/></a>
+<a href="https://music.empi.re/figures" target="_blank"><img alt="Figures" src="covers/figures.jpg"/></a>
+<a href="https://music.empi.re/MoyawaZait" target="_blank"><img alt="Moyawa Zait" src="covers/moyawa-zait.jpg"/></a>
+<a href="https://music.empi.re/langa" target="_blank"><img alt="Langa" src="covers/langa.jpg"/></a>
+</div>
+</div>
+<script>
     window.addEventListener('load', () => {
       setTimeout(() => {
         document.getElementById('preloader').style.display = 'none';
         document.getElementById('landing').style.display = 'flex';
       }, 1000);
     });
-
     function enterSite() {
       document.getElementById('landing').style.display = 'none';
       document.getElementById('main').style.display = 'flex';
     }
-
-    function backToLanding() {
+    function goBack() {
       document.getElementById('main').style.display = 'none';
       document.getElementById('landing').style.display = 'flex';
     }
   </script>
 </body>
 </html>
-
