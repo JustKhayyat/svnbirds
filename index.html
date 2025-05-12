@@ -8,6 +8,7 @@
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { background-color: #000; color: #fff; font-family: sans-serif; overflow-x: hidden; }
+*:focus { outline: none !important; }
     .preloader {
       position: fixed; inset: 0; background-color: #000;
       display: flex; align-items: center; justify-content: center; z-index: 9999;
@@ -21,25 +22,13 @@
       to { opacity: 1; transform: scale(1); }
     }
     .container {
-      display: none;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-      padding: 20px;
-      text-align: center;
-      position: relative;
-    }
-    .center-block {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      flex-grow: 1;
+      display: none; flex-direction: column; align-items: center;
+      justify-content: flex-start; min-height: 100vh;
+      padding: 20px; text-align: center; position: relative;
     }
     .enter-btn {
       background-color: #fff; color: #000; border: none;
-      padding: 10px 20px; margin-top: 20px;
+      padding: 10px 20px; margin-top: 30px; margin-bottom: 60px;
       font-size: 0.9rem; cursor: pointer;
     }
     .social-icons {
@@ -49,13 +38,8 @@
     }
     .social-icons img { width: 24px; height: 24px; }
     .footer {
-      padding: 20px 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 100%;
-      position: absolute;
-      bottom: 0;
+      margin-top: auto; padding-bottom: 20px;
+      display: flex; align-items: center; justify-content: center; width: 100%;
     }
     .footer-logos {
       display: flex; gap: 30px;
@@ -76,7 +60,7 @@
     @media (max-width: 480px) {
       .container { padding: 10px; }
       .grid { gap: 10px; }
-      .enter-btn { margin-bottom: 60px; }
+      .enter-btn { margin-bottom: 80px; }
     }
   </style>
 </head>
@@ -90,10 +74,8 @@
       <a href="https://open.spotify.com/playlist/4VhoqaH12QhTY6UKxayjzI" target="_blank"><img src="spotify.png" alt="Spotify"></a>
       <a href="https://instagram.com/svnbirdspro" target="_blank"><img src="instagram.svg" alt="Instagram"></a>
     </div>
-    <div class="center-block">
-      <img src="SB.png" alt="SVNBIRDS Logo" style="max-width: 300px; height: auto;">
-      <button class="enter-btn" onclick="enterSite()">Press Play</button>
-    </div>
+    <img src="SB.png" alt="SVNBIRDS Logo" style="max-width: 300px; height: auto;">
+    <button class="enter-btn" onclick="enterSite()">Press Play</button>
     <div class="footer">
       <div class="footer-logos">
         <img src="sb_logo_white.png" alt="SVNBIRDS" class="sb-logo">
@@ -110,7 +92,26 @@
     <a href="#" onclick="goBack()" style="display:inline-block;">
       <img src="SB.png" alt="SVNBIRDS Logo" style="max-width: 200px; height: auto; margin-bottom: 20px;">
     </a>
-    <!-- CONTENT GRID INJECTED HERE -->
+    <div class="grid">
+  <a href="https://music.empi.re/argeen" target="_blank"><img src="covers/argeen.jpg" alt="Argeen"></a>
+  <a href="https://music.empi.re/thetopfreestyle" target="_blank"><img src="covers/the-top-freestyle.jpg" alt="The Top Freestyle"></a>
+  <a href="https://music.empi.re/suits" target="_blank"><img src="covers/suits.jpg" alt="Suits"></a>
+  <a href="https://music.empi.re/ducati" target="_blank"><img src="covers/ducati.jpg" alt="Ducati"></a>
+  <a href="https://music.empi.re/ntitled" target="_blank"><img src="covers/ntitled.jpg" alt="Ntitled"></a>
+  <a href="https://music.empi.re/cimamontiyago" target="_blank"><img src="covers/cima-montiyago.jpg" alt="Cima Montiyago"></a>
+  <a href="https://music.empi.re/messi" target="_blank"><img src="covers/messi.jpg" alt="Messi"></a>
+  <a href="https://music.empi.re/Tshreen" target="_blank"><img src="covers/tshreen.jpg" alt="Tshreen"></a>
+  <a href="https://music.empi.re/decor" target="_blank"><img src="covers/decor.jpg" alt="Decor"></a>
+  <a href="https://music.empi.re/dejavusoulja" target="_blank"><img src="covers/dejavu-soulja.jpg" alt="Dejavu Soulja"></a>
+  <a href="https://music.empi.re/baderkhol3a" target="_blank"><img src="covers/bader-khol3a.jpg" alt="Bader Khol3A"></a>
+  <a href="https://music.empi.re/boba" target="_blank"><img src="covers/boba.jpg" alt="Boba"></a>
+  <a href="https://music.empi.re/LkLk" target="_blank"><img src="covers/lk-lk.jpg" alt="Lk Lk"></a>
+  <a href="https://music.empi.re/fantasticsoulja" target="_blank"><img src="covers/fantastic-soulja.jpg" alt="Fantastic Soulja"></a>
+  <a href="https://music.empi.re/Caribby" target="_blank"><img src="covers/caribby.jpg" alt="Caribby"></a>
+  <a href="https://music.empi.re/figures" target="_blank"><img src="covers/figures.jpg" alt="Figures"></a>
+  <a href="https://music.empi.re/MoyawaZait" target="_blank"><img src="covers/moyawa-zait.jpg" alt="Moyawa Zait"></a>
+  <a href="https://music.empi.re/langa" target="_blank"><img src="covers/langa.jpg" alt="Langa"></a>
+</div>
   </div>
 
   <script>
