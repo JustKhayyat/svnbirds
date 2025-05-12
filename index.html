@@ -3,26 +3,27 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SVNBIRDS - Launching Soon</title>
-  <link rel="icon" type="image/png" href="favicon.png">
+  <title>SVNBIRDS</title>
+  <link rel="icon" type="image/png" href="SB%20LOGO%20WHITE.png">
   <style>
-    html, body {
+    * {
+      box-sizing: border-box;
       margin: 0;
       padding: 0;
-      height: 100%;
+    }
+    body {
+      background-color: #000;
+      color: #fff;
+      font-family: sans-serif;
+      height: 100vh;
       overflow: hidden;
     }
-
-    body {
-      background: radial-gradient(circle at center, #111 0%, #000 100%);
-      color: white;
-      font-family: sans-serif;
-      text-align: center;
-      cursor: crosshair;
-      position: relative;
-      z-index: 1;
+    @media (prefers-color-scheme: dark) {
+      body {
+        background-color: #000;
+        color: #fff;
+      }
     }
-
     .preloader {
       position: fixed;
       inset: 0;
@@ -31,183 +32,137 @@
       align-items: center;
       justify-content: center;
       z-index: 9999;
-      transition: opacity 0.5s ease;
     }
-
     .preloader img {
-      width: 160px;
-      height: auto;
+      width: 150px;
       animation: pulse 1.2s ease-in-out infinite alternate;
     }
-
     @keyframes pulse {
       from { opacity: 0.4; transform: scale(0.96); }
-      to   { opacity: 1; transform: scale(1); }
+      to { opacity: 1; transform: scale(1); }
     }
-
-    .content {
-      display: flex;
+    .container {
+      display: none;
       flex-direction: column;
-      justify-content: space-between;
+      justify-content: center;
       align-items: center;
-      min-height: 100vh;
+      height: 100vh;
       padding: 20px;
-      opacity: 0;
-      transition: opacity 0.5s ease;
+      text-align: center;
+      overflow-y: auto;
     }
-
-    .logo {
-      width: 50%;
-      max-width: 250px;
-      height: auto;
-      animation: fadeIn 1.2s ease-in forwards;
+    .enter-btn {
+      background-color: #fff;
+      color: #000;
+      border: none;
+      padding: 10px 20px;
+      margin-top: 20px;
+      font-size: 0.9rem;
+      cursor: pointer;
     }
-
-    h1 {
-      font-size: 1.75rem;
-      margin: 20px 0 10px;
-    }
-
-    .footer {
+    .social-icons {
+      position: absolute;
+      top: 20px;
       width: 100%;
-      padding: 20px 0 10px;
-      background-color: #111;
-    }
-
-    .socials {
       display: flex;
+      justify-content: space-between;
+      padding: 0 20px;
+    }
+    .social-icons img {
+      width: 24px;
+      height: 24px;
+    }
+    .footer {
+      position: absolute;
+      bottom: 20px;
+      display: flex;
+      align-items: center;
       justify-content: center;
       gap: 20px;
-      margin-bottom: 10px;
     }
-
-    .socials a {
-      display: inline-flex;
+    .footer img {
+      height: 30px;
+    }
+    .main-content {
+      display: none;
+      flex-direction: column;
       align-items: center;
-      justify-content: center;
-      border-radius: 50%;
-      width: 48px;
-      height: 48px;
-      text-decoration: none;
-      transition: transform 0.3s ease;
+      justify-content: flex-start;
+      padding: 40px 20px;
     }
-
-    .socials a:hover,
-    .socials a:active {
-      transform: scale(1.1);
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 20px;
+      margin-top: 30px;
+      width: 100%;
+      max-width: 1000px;
     }
-
-    .socials svg {
-      width: 28px;
-      height: 28px;
-    }
-
-    .contact {
-      font-size: 0.9rem;
-      color: #ccc;
-    }
-
-    .contact a {
-      color: #ffc40a;
-      text-decoration: none;
-    }
-
-    @keyframes fadeIn {
-      to { opacity: 1; }
+    .grid img {
+      width: 100%;
+      height: auto;
+      border-radius: 4px;
     }
 
     @media (max-width: 480px) {
-      h1 { font-size: 1.5rem; }
-      .contact { font-size: 0.8rem; }
-      .logo { width: 65%; }
+      .container {
+        padding: 10px;
+      }
+      .grid {
+        gap: 10px;
+      }
     }
   </style>
 </head>
 <body>
-  <!-- Ambient Sound -->
-  <audio id="ambience" autoplay muted loop>
-    <source src="sb_ambience.mp3" type="audio/mpeg">
-  </audio>
-
   <!-- Preloader -->
   <div class="preloader" id="preloader">
-    <img src="SB_LOGO TRANSPARENT (white).png" alt="Loading..." />
+    <img src="SB%20LOGO%20WHITE.png" alt="Loading...">
   </div>
 
-  <!-- Main Page Content -->
-  <div class="content" id="mainContent">
-    <img class="logo" src="SB_LOGO TRANSPARENT (white).png" alt="SVNBIRDS Logo" />
-    <h1>Launching Soon</h1>
-
+  <!-- Page 1 -->
+  <div class="container" id="landing">
+    <div class="social-icons">
+      <a href="https://open.spotify.com/playlist/4VhoqaH12QhTY6UKxayjzI" target="_blank"><img src="spotify.svg" alt="Spotify"></a>
+      <a href="https://instagram.com/svnbirdspro" target="_blank"><img src="instagram.svg" alt="Instagram"></a>
+    </div>
+    <img src="SB.png" alt="SVNBIRDS Logo" style="max-width: 300px; height: auto;">
+    <button class="enter-btn" onclick="enterSite()">Enter Here</button>
     <div class="footer">
-      <div class="socials">
-        <a href="https://instagram.com/svnbirdspro" target="_blank" aria-label="Instagram">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
-            <radialGradient id="instaGradient" cx="19.38" cy="42.035" r="44.899" gradientUnits="userSpaceOnUse">
-              <stop offset="0" stop-color="#fd5"/>
-              <stop offset=".328" stop-color="#ff543f"/>
-              <stop offset=".348" stop-color="#fc5245"/>
-              <stop offset=".504" stop-color="#e64771"/>
-              <stop offset=".643" stop-color="#d53e91"/>
-              <stop offset=".761" stop-color="#cc39a4"/>
-              <stop offset=".841" stop-color="#c837ab"/>
-            </radialGradient>
-            <path fill="url(#instaGradient)" d="M34.017,41.99l-20,0.019c-4.4,0.004-8.003-3.592-8.008-7.992l-0.019-20
-              c-0.004-4.4,3.592-8.003,7.992-8.008l20-0.019c4.4-0.004,8.003,3.592,8.008,7.992l0.019,20
-              C42.014,38.383,38.417,41.986,34.017,41.99z"/>
-            <path fill="#fff" d="M24,31c-3.859,0-7-3.14-7-7s3.141-7,7-7s7,3.14,7,7S27.859,31,24,31z M24,19c-2.757,0-5,2.243-5,5
-              s2.243,5,5,5s5-2.243,5-5S26.757,19,24,19z"/>
-            <circle cx="31.5" cy="16.5" r="1.5" fill="#fff"/>
-            <path fill="#fff" d="M30,37H18c-3.859,0-7-3.14-7-7V18c0-3.86,3.141-7,7-7h12c3.859,0,7,3.14,7,7v12
-              C37,33.86,33.859,37,30,37z M18,13c-2.757,0-5,2.243-5,5v12c0,2.757,2.243,5,5,5h12c2.757,0,5-2.243,5-5V18
-              c0-2.757-2.243-5-5-5H18z"/>
-          </svg>
-        </a>
+      <img src="SB%20LOGO%20WHITE.png" alt="SVNBIRDS">
+      <img src="empire-clean.png" alt="EMPIRE">
+    </div>
+  </div>
 
-        <a href="https://open.spotify.com/playlist/4VhoqaH12QhTY6UKxayjzI" target="_blank" aria-label="Spotify">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 168 168" fill="#1DB954">
-            <circle cx="84" cy="84" r="84" fill="#1DB954"/>
-            <path fill="#fff" d="M119.3 117.1c-1.5 2.5-4.7 3.3-7.2 1.8-19.8-12.1-44.8-14.9-74.4-8.3-2.9.6-5.8-1.3-6.4-4.2-.6-2.9 1.3-5.8 4.2-6.4 33.5-7.4 62.1-4.1 84.5 9.6 2.5 1.4 3.3 4.6 1.8 7.1zm9.3-21.2c-1.8 2.9-5.6 3.8-8.5 2-22.7-13.9-57.4-18-84.2-10-3.2.9-6.5-.9-7.4-4.1-.9-3.2.9-6.5 4.1-7.4 31.9-9.1 70.4-4.5 97.6 11.3 2.8 1.6 3.7 5.2 1.7 8.2zm.8-22.3c-26.1-15.5-69.3-16.9-94.1-9.4-3.8 1.2-7.8-.9-9-4.7-1.2-3.8.9-7.8 4.7-9 28.7-8.6 77.4-6.9 108.9 11.2 3.4 2 4.5 6.4 2.4 9.8-2.1 3.5-6.5 4.6-9.9 2.1z"/>
-          </svg>
-        </a>
-      </div>
-
-      <div class="contact">
-        For Talent Bookings: <a href="mailto:booking@svnbirds.com">booking@svnbirds.com</a>
-      </div>
+  <!-- Page 2 -->
+  <div class="main-content" id="main">
+    <div class="social-icons">
+      <a href="https://open.spotify.com/playlist/4VhoqaH12QhTY6UKxayjzI" target="_blank"><img src="spotify.svg" alt="Spotify"></a>
+      <a href="https://instagram.com/svnbirdspro" target="_blank"><img src="instagram.svg" alt="Instagram"></a>
+    </div>
+    <img src="SB.png" alt="SVNBIRDS Logo" style="max-width: 200px; height: auto; margin-bottom: 20px;">
+    <div class="grid">
+      <img src="https://via.placeholder.com/300x300" alt="Content 1">
+      <img src="https://via.placeholder.com/300x300" alt="Content 2">
+      <img src="https://via.placeholder.com/300x300" alt="Content 3">
+      <img src="https://via.placeholder.com/300x300" alt="Content 4">
+      <img src="https://via.placeholder.com/300x300" alt="Content 5">
+      <img src="https://via.placeholder.com/300x300" alt="Content 6">
     </div>
   </div>
 
   <script>
     window.addEventListener('load', () => {
-      const ambience = document.getElementById('ambience');
-      ambience.muted = true;
-
-      const enableAudio = () => {
-        ambience.muted = false;
-        ambience.volume = 1;
-        ambience.play().catch(() => {});
-        window.removeEventListener('scroll', enableAudio);
-      };
-
-      window.addEventListener('scroll', enableAudio);
-
       setTimeout(() => {
-        document.getElementById('preloader').style.opacity = '0';
-        setTimeout(() => {
-          document.getElementById('preloader').style.display = 'none';
-          document.getElementById('mainContent').style.opacity = '1';
-          document.body.style.overflow = 'auto';
-        }, 500);
-      }, 1100);
+        document.getElementById('preloader').style.display = 'none';
+        document.getElementById('landing').style.display = 'flex';
+      }, 1000);
     });
 
-    document.addEventListener('keydown', e => {
-      if (e.key.toLowerCase() === 's') {
-        window.open('https://open.spotify.com/playlist/4VhoqaH12QhTY6UKxayjzI', '_blank');
-      }
-    });
+    function enterSite() {
+      document.getElementById('landing').style.display = 'none';
+      document.getElementById('main').style.display = 'flex';
+    }
   </script>
 </body>
 </html>
-
