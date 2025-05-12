@@ -1,0 +1,392 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SVNBIRDS</title>
+  <meta name="description" content="SVNBIRDS — Independent music label. Stream our latest drops.">
+  <meta property="og:title" content="SVNBIRDS">
+  <meta property="og:description" content="Independent label pushing sounds with EMPIRE.">
+  <meta property="og:image" content="cover-image.jpg">
+  <meta property="og:url" content="https://svnbirds.com">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="keywords" content="SVNBIRDS, music label, independent music, Middle East, Empire, Sudanese rap, SWANA">
+  <meta name="twitter:site" content="@svnbirds">
+  <link rel="icon" href="sb_logo_white.png" type="image/png"/>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;700&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: #000;
+      color: #fff;
+      font-family: 'Montserrat', sans-serif;
+      overflow-x: hidden;
+      caret-color: transparent;
+    }
+    *:focus { outline: none !important; }
+
+    .preloader {
+      position: fixed; inset: 0; background-color: #000;
+      display: flex; align-items: center; justify-content: center; z-index: 9999;
+    }
+    .preloader img {
+      width: 150px;
+      animation: pulse 1.2s ease-in-out infinite alternate;
+    }
+    @keyframes pulse {
+      from { opacity: 0.4; transform: scale(0.96); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    .container {
+      display: none; flex-direction: column; align-items: center;
+      justify-content: flex-start; min-height: 100vh;
+      padding: 20px; text-align: center; position: relative;
+    }
+    .main-content {
+      display: none; flex-direction: column;
+      align-items: center; justify-content: flex-start;
+      padding: 40px 20px;
+    }
+
+    
+.enter-btn {
+  display: block;
+  margin: 20px auto 60px auto;
+  text-align: center;
+  border: 1px solid transparent;
+
+  border: 1px solid transparent;
+  background-color: #fff;
+  color: #000;
+  border: none;
+  padding: 10px 20px;
+  margin-top: 30px;
+  margin-bottom: 60px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  font-weight: 700;
+  border-radius: 6px;
+  transition: transform 0.3s ease, border-color 0.3s ease;
+}
+.enter-btn:hover {
+  transform: scale(1.015);
+  box-shadow: 0 0 4px #d4af37;
+  will-change: transform;
+  transform-origin: center;
+}
+
+
+    .social-icons {
+      position: absolute; top: 20px; width: 100%;
+      display: flex; justify-content: space-between;
+      padding: 0 20px; z-index: 10;
+    }
+    .social-icons img { width: 24px; height: 24px; }
+
+    .footer {
+      margin-top: auto; padding-bottom: 20px;
+      display: flex; align-items: center; justify-content: center; width: 100%;
+    }
+
+    .footer-logos {
+      display: flex; gap: 30px;
+      align-items: center; justify-content: center;
+    }
+
+    .sb-logo { height: 80px; }
+    .empire-logo { height: 60px; }
+
+    .grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 20px; margin-top: 30px; width: 100%; max-width: 1000px;
+    }
+    .grid img {
+      width: 100%; height: auto; border-radius: 4px;
+      transition: transform 0.3s ease;
+    }
+    .grid a:hover img {
+      transform: scale(1.02);
+    }
+
+    .logo-img {
+  max-width: 300px;
+  height: auto;
+  margin: 0 auto 10px auto;
+  display: block;
+
+      max-width: 300px; height: auto; margin-bottom: 20px;
+    }
+    .logo-img-small {
+      max-width: 200px; height: auto; margin-bottom: 20px;
+    }
+
+    .press-cards {
+      margin-top: 60px;
+      max-width: 1000px;
+      width: 100%;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
+
+    .press-cards > div {
+  background-color: #111;
+  border: 1px solid #222;
+  border-radius: 8px;
+  padding: 20px;
+  transition: transform 0.3s ease, border-color 0.3s ease;
+}
+.press-cards > div:hover {
+  transform: translateY(-2px);
+  border-color: #d4af37;
+}
+      background-color: #111;
+      border: 1px solid #222;
+      border-radius: 8px;
+      padding: 20px;
+      display: none;
+    }
+
+    .press-cards > div.visible {
+      display: block;
+    }
+
+    .press-source {
+      font-weight: 300;
+      font-size: 0.8rem;
+      color: #888;
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .toggle-press-btn {
+      background: none;
+      border: none;
+      color: #d4af37; /* dark yellow */
+      font-size: 0.85rem;
+      cursor: pointer;
+      margin-top: 30px;
+      font-weight: 300;
+      text-align: center;
+      width: 100%;
+    }
+
+    @media (max-width: 480px) {
+      .container { padding: 10px; }
+      .grid { gap: 10px; }
+      
+.enter-btn {
+  display: block;
+  margin: 20px auto 60px auto;
+  text-align: center;
+  border: 1px solid transparent;
+
+  border: 1px solid transparent;
+  background-color: #fff;
+  color: #000;
+  border: none;
+  padding: 10px 20px;
+  margin-top: 30px;
+  margin-bottom: 60px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  font-weight: 700;
+  border-radius: 6px;
+  transition: transform 0.3s ease, border-color 0.3s ease;
+}
+.enter-btn:hover {
+  transform: scale(1.015);
+  box-shadow: 0 0 4px #d4af37;
+  will-change: transform;
+  transform-origin: center;
+}
+
+
+      .press-cards {
+        grid-template-columns: 1fr !important;
+        gap: 10px !important;
+        padding: 0 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="preloader" id="preloader">
+    <img src="sb_logo_white.png" alt="Loading..."/>
+  </div>
+
+  <div class="container" id="landing">
+    <div class="social-icons">
+      <a href="https://open.spotify.com/playlist/4VhoqaH12QhTY6UKxayjzI" target="_blank" rel="noopener noreferrer"><img src="spotify.png" alt="Spotify"/></a>
+      <a href="https://instagram.com/svnbirdspro" target="_blank" rel="noopener noreferrer"><img src="instagram.svg" alt="Instagram"/></a>
+    </div>
+    <div class="center-block" style="display: flex; flex-direction: column; align-items: center; justify-content: center; flex-grow: 1; height: 100%;">
+      <img src="SB.png" alt="SVNBIRDS Logo" class="logo-img"/>
+      <button class="enter-btn" onclick="enterSite()" aria-label="Enter the SVNBIRDS site">Press Play</button>
+    </div>
+    <div class="footer">
+      <div class="footer-logos">
+        <img src="sb_logo_white.png" alt="SVNBIRDS" class="sb-logo"/>
+        <img src="empire-clean.png" alt="EMPIRE" class="empire-logo"/>
+      </div>
+    </div>
+  </div>
+
+  <div class="main-content" id="main">
+    <div class="social-icons">
+      <a href="https://open.spotify.com/playlist/4VhoqaH12QhTY6UKxayjzI" target="_blank" rel="noopener noreferrer"><img src="spotify.png" alt="Spotify"/></a>
+      <a href="https://instagram.com/svnbirdspro" target="_blank" rel="noopener noreferrer"><img src="instagram.svg" alt="Instagram"/></a>
+    </div>
+    <div onclick="goBack()" style="cursor: pointer;">
+      <img src="SB.png" alt="SVNBIRDS Logo" class="logo-img-small"/>
+    </div>
+    <div class="grid"></div>
+
+    <div class="press-cards"></div>
+    
+  </div>
+
+  
+<script>
+  function enterSite() {
+    localStorage.setItem('entered', 'true');
+    document.getElementById('landing').style.display = 'none';
+    document.getElementById('main').style.display = 'flex';
+  }
+
+  function goBack() {
+    document.getElementById('main').style.display = 'none';
+    document.getElementById('landing').style.display = 'flex';
+    localStorage.removeItem('entered');
+  }
+
+  window.addEventListener('load', () => {
+    localStorage.removeItem('entered');
+    const preloader = document.getElementById('preloader');
+    const landing = document.getElementById('landing');
+    const main = document.getElementById('main');
+    const entered = localStorage.getItem('entered');
+
+    console.log('Window loaded. localStorage.entered =', entered);
+
+    if (preloader) preloader.style.display = 'none';
+
+    if (entered === 'true') {
+      landing.style.display = 'none';
+      main.style.display = 'flex';
+      console.log('Showing MAIN view');
+      landing.style.display = 'none';
+      main.style.display = 'flex';
+    } else {
+      landing.style.display = 'flex';
+      main.style.display = 'none';
+      console.log('Showing LANDING view');
+      landing.style.display = 'flex';
+      
+    }
+  });
+</script>
+
+
+<script>
+  function enterSite() {
+    localStorage.setItem('entered', 'true');
+    document.getElementById('landing').style.display = 'none';
+    document.getElementById('main').style.display = 'flex';
+  }
+
+  function goBack() {
+    document.getElementById('main').style.display = 'none';
+    document.getElementById('landing').style.display = 'flex';
+    localStorage.removeItem('entered');
+  }
+
+  window.addEventListener('load', () => {
+    localStorage.removeItem('entered');
+    const preloader = document.getElementById('preloader');
+    const landing = document.getElementById('landing');
+    const main = document.getElementById('main');
+    const entered = localStorage.getItem('entered');
+
+    console.log('Window loaded. localStorage.entered =', entered);
+
+    if (preloader) preloader.style.display = 'none';
+
+    if (entered === 'true') {
+      landing.style.display = 'none';
+      main.style.display = 'flex';
+      console.log('Showing MAIN view');
+      landing.style.display = 'none';
+      main.style.display = 'flex';
+    } else {
+      landing.style.display = 'flex';
+      main.style.display = 'none';
+      console.log('Showing LANDING view');
+      landing.style.display = 'flex';
+      
+    }
+
+    // Render albums
+    const albums = [
+      { title: "Argeen", link: "https://music.empi.re/argeen", cover: "covers/argeen.jpg" },
+      { title: "The Top Freestyle", link: "https://music.empi.re/thetopfreestyle", cover: "covers/the-top-freestyle.jpg" },
+      { title: "Suits", link: "https://music.empi.re/suits", cover: "covers/suits.jpg" },
+      { title: "Ducati", link: "https://music.empi.re/ducati", cover: "covers/ducati.jpg" },
+      { title: "Ntitled", link: "https://music.empi.re/ntitled", cover: "covers/ntitled.jpg" },
+      { title: "Cima Montiyago", link: "https://music.empi.re/cimamontiyago", cover: "covers/cima-montiyago.jpg" },
+      { title: "Messi", link: "https://music.empi.re/messi", cover: "covers/messi.jpg" },
+      { title: "Tshreen", link: "https://music.empi.re/Tshreen", cover: "covers/tshreen.jpg" },
+      { title: "Decor", link: "https://music.empi.re/decor", cover: "covers/decor.jpg" },
+      { title: "Dejavu Soulja", link: "https://music.empi.re/dejavusoulja", cover: "covers/dejavu-soulja.jpg" },
+      { title: "Bader Khol3A", link: "https://music.empi.re/baderkhol3a", cover: "covers/bader-khol3a.jpg" },
+      { title: "Boba", link: "https://music.empi.re/boba", cover: "covers/boba.jpg" },
+      { title: "Lk Lk", link: "https://music.empi.re/LkLk", cover: "covers/lk-lk.jpg" },
+      { title: "Fantastic Soulja", link: "https://music.empi.re/fantasticsoulja", cover: "covers/fantastic-soulja.jpg" },
+      { title: "Caribby", link: "https://music.empi.re/Caribby", cover: "covers/caribby.jpg" },
+      { title: "Figures", link: "https://music.empi.re/figures", cover: "covers/figures.jpg" },
+      { title: "Moyawa Zait", link: "https://music.empi.re/MoyawaZait", cover: "covers/moyawa-zait.jpg" },
+      { title: "Langa", link: "https://music.empi.re/langa", cover: "covers/langa.jpg" }
+    ];
+
+    const grid = document.querySelector(".grid");
+    albums.forEach(album => {
+      const a = document.createElement("a");
+      a.href = album.link;
+      a.target = "_blank";
+      a.rel = "noopener noreferrer";
+      a.innerHTML = `<img loading="lazy" src="${album.cover}" alt="${album.title}" />`;
+      grid.appendChild(a);
+    });
+
+    const pressLinks = [
+      { title: "GRAMMYS – 5 Independent Record Labels Bringing The Sounds Of The Middle East & North Africa", url: "https://www.grammy.com/news/5-middle-east-north-africa-independent-record-labels-to-know-beirut-red-diamond", source: "GRAMMYS" },
+      { title: "Hard Knock Radio – Suhel Nafar on Empowering Palestinian & Arab Artists", url: "https://hardknockradio.org/suhel-nafar-speaks-on-empowering-palestinian-and-arab-music-hip-hop-artists/", source: "Hard Knock Radio" },
+      { title: "SceneNoise – 77: The Egyptian Producer Bringing SWANA Together", url: "https://scenenoise.com/Features/77-The-Egyptian-Producer-Bringing-SWANA-Together-from-Malaysia", source: "SceneNoise" },
+      { title: "SceneNoise – Artist Spotlight: Soulja, Sudan's Suave Rap Star", url: "https://scenenoise.com/Features/Artist-Spotlight-Soulja-Sudan-s-Suave-Rap-Superstar", source: "SceneNoise" },
+      { title: "CairoScene – Labels & Collectives Taking Over XP Nite", url: "https://cairoscene.com/Noise/The-Labels-Collectives-Taking-Over-XP-Nite-in-Riyadh-Dec-7th-9th", source: "CairoScene" },
+      { title: "MDLBEAST – Labels at XP Nite in Riyadh", url: "https://mdlbeast.com/xp-feed/music-industry/the-labels-collectives-taking-over-xp-nite-in-riyadh-dec-7th-9th", source: "MDLBEAST" },
+      { title: "YUNG – Fresh Sounds from Sudan: 10 Releases", url: "https://thisisyungmea.com/fresh-sounds-from-sudan-10-new-releases-you-need-to-hear/", source: "YUNG" },
+      { title: "OkayAfrica – Rise of Sudanese Rap", url: "https://www.okayafrica.com/sudanese-rap-racism-music-industry/", source: "OkayAfrica" },
+      { title: "SceneNoise – Montiyago Drops 'Kalam Kteer'", url: "https://m.scenenoise.com/New-Music/Sudanese-Rapper-Montiyago-Releases-Debut-Single-Kalam-Ktee", source: "SceneNoise" },
+      { title: "MILLE WORLD – Introducing Rapper Montiyago", url: "https://www.milleworld.com/introducing-genre-bending-sudanese-rapper-montiyago/", source: "MILLE WORLD" },
+      { title: "SceneNoise – Arab Songs on Ramy S3", url: "https://scenenoise.com/Features/Here-are-All-the-Arab-Songs-You-Can-Hear-on-Season-Three-of-Ramy", source: "SceneNoise" },
+      { title: "SceneNoise – Dafencii & Soulja Unite for Godzilla x Kong", url: "https://scenenoise.com/News/Dafencii-Soulja-Unite-for-Godzilla-x-Kong-The-New-Empire-Anthem", source: "SceneNoise" }
+    ];
+
+    const pressCards = document.querySelector(".press-cards");
+    pressLinks.forEach(({ title, url, source }, index) => {
+      const div = document.createElement("div");
+      div.className = 'visible';
+      div.innerHTML = `<div class='press-source'>${source}</div><a href='${url}' target='_blank' rel='noopener noreferrer' aria-label='${title}' style='font-weight: 700; color: #fff; text-decoration: none;'>${title.replace(source + ' – ', '')}</a>`;
+      pressCards.appendChild(div);
+    });
+
+    
+  });
+</script>
+
+</body>
+</html>
