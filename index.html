@@ -128,26 +128,7 @@
     <div onclick="goBack()" style="cursor: pointer;">
       <img src="SB.png" alt="SVNBIRDS Logo" class="logo-img-small"/>
     </div>
-    <div class="grid">
-      <a href="https://music.empi.re/argeen" target="_blank" rel="noopener noreferrer"><img loading="lazy" src="covers/argeen.jpg" alt="Argeen"/></a>
-      <a href="https://music.empi.re/thetopfreestyle" target="_blank" rel="noopener noreferrer"><img loading="lazy" src="covers/the-top-freestyle.jpg" alt="The Top Freestyle"/></a>
-      <a href="https://music.empi.re/suits" target="_blank" rel="noopener noreferrer"><img loading="lazy" src="covers/suits.jpg" alt="Suits"/></a>
-      <a href="https://music.empi.re/ducati" target="_blank" rel="noopener noreferrer"><img loading="lazy" src="covers/ducati.jpg" alt="Ducati"/></a>
-      <a href="https://music.empi.re/ntitled" target="_blank" rel="noopener noreferrer"><img loading="lazy" src="covers/ntitled.jpg" alt="Ntitled"/></a>
-      <a href="https://music.empi.re/cimamontiyago" target="_blank" rel="noopener noreferrer"><img loading="lazy" src="covers/cima-montiyago.jpg" alt="Cima Montiyago"/></a>
-      <a href="https://music.empi.re/messi" target="_blank" rel="noopener noreferrer"><img loading="lazy" src="covers/messi.jpg" alt="Messi"/></a>
-      <a href="https://music.empi.re/Tshreen" target="_blank" rel="noopener noreferrer"><img loading="lazy" src="covers/tshreen.jpg" alt="Tshreen"/></a>
-      <a href="https://music.empi.re/decor" target="_blank" rel="noopener noreferrer"><img loading="lazy" src="covers/decor.jpg" alt="Decor"/></a>
-      <a href="https://music.empi.re/dejavusoulja" target="_blank" rel="noopener noreferrer"><img loading="lazy" src="covers/dejavu-soulja.jpg" alt="Dejavu Soulja"/></a>
-      <a href="https://music.empi.re/baderkhol3a" target="_blank" rel="noopener noreferrer"><img loading="lazy" src="covers/bader-khol3a.jpg" alt="Bader Khol3A"/></a>
-      <a href="https://music.empi.re/boba" target="_blank" rel="noopener noreferrer"><img loading="lazy" src="covers/boba.jpg" alt="Boba"/></a>
-      <a href="https://music.empi.re/LkLk" target="_blank" rel="noopener noreferrer"><img loading="lazy" src="covers/lk-lk.jpg" alt="Lk Lk"/></a>
-      <a href="https://music.empi.re/fantasticsoulja" target="_blank" rel="noopener noreferrer"><img loading="lazy" src="covers/fantastic-soulja.jpg" alt="Fantastic Soulja"/></a>
-      <a href="https://music.empi.re/Caribby" target="_blank" rel="noopener noreferrer"><img loading="lazy" src="covers/caribby.jpg" alt="Caribby"/></a>
-      <a href="https://music.empi.re/figures" target="_blank" rel="noopener noreferrer"><img loading="lazy" src="covers/figures.jpg" alt="Figures"/></a>
-      <a href="https://music.empi.re/MoyawaZait" target="_blank" rel="noopener noreferrer"><img loading="lazy" src="covers/moyawa-zait.jpg" alt="Moyawa Zait"/></a>
-      <a href="https://music.empi.re/langa" target="_blank" rel="noopener noreferrer"><img loading="lazy" src="covers/langa.jpg" alt="Langa"/></a>
-    </div>
+    <div class="grid"></div>
   </div>
 
   <script>
@@ -173,6 +154,38 @@
         }
       }, 1000);
     });
+
+    const albums = [
+      { title: "Argeen", link: "https://music.empi.re/argeen", cover: "covers/argeen.jpg" },
+      { title: "The Top Freestyle", link: "https://music.empi.re/thetopfreestyle", cover: "covers/the-top-freestyle.jpg" },
+      { title: "Suits", link: "https://music.empi.re/suits", cover: "covers/suits.jpg" },
+      { title: "Ducati", link: "https://music.empi.re/ducati", cover: "covers/ducati.jpg" },
+      { title: "Ntitled", link: "https://music.empi.re/ntitled", cover: "covers/ntitled.jpg" },
+      { title: "Cima Montiyago", link: "https://music.empi.re/cimamontiyago", cover: "covers/cima-montiyago.jpg" },
+      { title: "Messi", link: "https://music.empi.re/messi", cover: "covers/messi.jpg" },
+      { title: "Tshreen", link: "https://music.empi.re/Tshreen", cover: "covers/tshreen.jpg" },
+      { title: "Decor", link: "https://music.empi.re/decor", cover: "covers/decor.jpg" },
+      { title: "Dejavu Soulja", link: "https://music.empi.re/dejavusoulja", cover: "covers/dejavu-soulja.jpg" },
+      { title: "Bader Khol3A", link: "https://music.empi.re/baderkhol3a", cover: "covers/bader-khol3a.jpg" },
+      { title: "Boba", link: "https://music.empi.re/boba", cover: "covers/boba.jpg" },
+      { title: "Lk Lk", link: "https://music.empi.re/LkLk", cover: "covers/lk-lk.jpg" },
+      { title: "Fantastic Soulja", link: "https://music.empi.re/fantasticsoulja", cover: "covers/fantastic-soulja.jpg" },
+      { title: "Caribby", link: "https://music.empi.re/Caribby", cover: "covers/caribby.jpg" },
+      { title: "Figures", link: "https://music.empi.re/figures", cover: "covers/figures.jpg" },
+      { title: "Moyawa Zait", link: "https://music.empi.re/MoyawaZait", cover: "covers/moyawa-zait.jpg" },
+      { title: "Langa", link: "https://music.empi.re/langa", cover: "covers/langa.jpg" }
+    ];
+
+    const grid = document.querySelector(".grid");
+    albums.forEach(album => {
+      const a = document.createElement("a");
+      a.href = album.link;
+      a.target = "_blank";
+      a.rel = "noopener noreferrer";
+      a.innerHTML = `<img loading="lazy" src="${album.cover}" alt="${album.title}" />`;
+      grid.appendChild(a);
+    });
   </script>
 </body>
 </html>
+
