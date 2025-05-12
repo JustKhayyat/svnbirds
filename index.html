@@ -22,6 +22,7 @@
       font-family: sans-serif;
       text-align: center;
       padding: 20px;
+      cursor: crosshair;
     }
 
     img.logo {
@@ -34,7 +35,7 @@
 
     h1 {
       font-size: 1.75rem;
-      margin: 20px 0;
+      margin: 20px 0 10px;
     }
 
     .footer {
@@ -58,9 +59,14 @@
       width: 48px;
       height: 48px;
       text-decoration: none;
+      transition: transform 0.3s ease;
     }
 
-    .socials img {
+    .socials a:hover {
+      transform: scale(1.1);
+    }
+
+    .socials svg {
       width: 32px;
       height: 32px;
     }
@@ -75,31 +81,42 @@
       text-decoration: none;
     }
 
+    #countdown {
+      font-size: 0.85rem;
+      color: #aaa;
+      margin-top: 8px;
+    }
+
+    #clock {
+      font-size: 0.75rem;
+      color: #666;
+      margin-top: 4px;
+    }
+
     @keyframes fadeIn {
-      to {
-        opacity: 1;
-      }
+      to { opacity: 1; }
     }
 
     @media (max-width: 480px) {
-      h1 {
-        font-size: 1.5rem;
-      }
-
-      .contact {
-        font-size: 0.8rem;
-      }
+      h1 { font-size: 1.5rem; }
+      .contact { font-size: 0.8rem; }
     }
   </style>
 </head>
 <body>
+  <audio autoplay muted loop>
+    <source src="sb_ambience.mp3" type="audio/mpeg">
+  </audio>
+
   <img class="logo" src="SB_LOGO_Flattened_BlackBG.png" alt="SVNBIRDS Logo" />
   <h1>Launching Soon</h1>
+
+  <p id="countdown">Loading reveal countdown...</p>
 
   <div class="footer">
     <div class="socials">
       <a href="https://instagram.com/svnbirdspro" target="_blank" aria-label="Instagram">
-        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 48 48">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
           <radialGradient id="instaGradient" cx="19.38" cy="42.035" r="44.899" gradientUnits="userSpaceOnUse">
             <stop offset="0" stop-color="#fd5"/>
             <stop offset=".328" stop-color="#ff543f"/>
@@ -121,13 +138,43 @@
         </svg>
       </a>
       <a href="https://open.spotify.com/playlist/4VhoqaH12QhTY6UKxayjzI" target="_blank" aria-label="Spotify">
-        <img src="spotify.png" alt="Spotify">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="#1DB954">
+          <circle cx="24" cy="24" r="20" fill="#1DB954" />
+          <path fill="#fff" d="M33.4 32.3c-.5.7-1.4.9-2.1.4-5.3-3.3-12.1-4-20.1-2.2-.8.2-1.6-.3-1.8-1.1s.3-1.6 1.1-1.8c8.7-2 16.3-1.2 22.4 2.5.6.3.8 1.2.5 1.9z"/>
+        </svg>
       </a>
     </div>
 
     <div class="contact">
       For Talent Bookings: <a href="mailto:booking@svnbirds.com">booking@svnbirds.com</a>
     </div>
+
+    <div id="clock"></div>
   </div>
+
+  <script>
+    // Countdown
+    const countdownTarget = new Date("2025-06-01").getTime();
+    const countdownEl = document.getElementById("countdown");
+    setInterval(() => {
+      const now = new Date().getTime();
+      const dist = countdownTarget - now;
+      const days = Math.max(0, Math.floor(dist / (1000 * 60 * 60 * 24)));
+      countdownEl.innerText = "First artist reveal in " + days + " days";
+    }, 1000 * 60 * 60);
+
+    // Clock
+    const clockEl = document.getElementById("clock");
+    setInterval(() => {
+      clockEl.innerText = new Date().toLocaleTimeString();
+    }, 1000);
+
+    // Keyboard shortcut
+    document.addEventListener('keydown', e => {
+      if (e.key.toLowerCase() === 's') {
+        window.open('https://open.spotify.com/playlist/4VhoqaH12QhTY6UKxayjzI', '_blank');
+      }
+    });
+  </script>
 </body>
 </html>
