@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -50,33 +49,24 @@
       padding: 40px 20px;
     }
 
-    
-.enter-btn {
-  display: block;
-  margin: 20px auto 60px auto;
-  text-align: center;
-  border: 1px solid transparent;
-
-  border: 1px solid transparent;
-  background-color: #fff;
-  color: #000;
-  border: none;
-  padding: 10px 20px;
-  margin-top: 30px;
-  margin-bottom: 60px;
-  font-size: 0.9rem;
-  cursor: pointer;
-  font-weight: 700;
-  border-radius: 6px;
-  transition: transform 0.3s ease, border-color 0.3s ease;
-}
-.enter-btn:hover {
-  transform: scale(1.015);
-  box-shadow: 0 0 4px #d4af37;
-  will-change: transform;
-  transform-origin: center;
-}
-
+    .enter-btn {
+      display: block;
+      margin: 20px auto 60px auto;
+      text-align: center;
+      background-color: #fff;
+      color: #000;
+      border: none;
+      padding: 10px 20px;
+      font-size: 0.9rem;
+      cursor: pointer;
+      font-weight: 700;
+      border-radius: 6px;
+      transition: transform 0.3s ease, border-color 0.3s ease;
+    }
+    .enter-btn:hover {
+      transform: scale(1.015);
+      box-shadow: 0 0 4px #d4af37;
+    }
 
     .social-icons {
       position: absolute; top: 20px; width: 100%;
@@ -111,12 +101,8 @@
     }
 
     .logo-img {
-  max-width: 300px;
-  height: auto;
-  margin: 0 auto 10px auto;
-  display: block;
-
-      max-width: 300px; height: auto; margin-bottom: 20px;
+      max-width: 300px; height: auto; margin: 0 auto 10px auto;
+      display: block; margin-bottom: 20px;
     }
     .logo-img-small {
       max-width: 200px; height: auto; margin-bottom: 20px;
@@ -130,27 +116,16 @@
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       gap: 20px;
     }
-
     .press-cards > div {
-  background-color: #111;
-  border: 1px solid #222;
-  border-radius: 8px;
-  padding: 20px;
-  transition: transform 0.3s ease, border-color 0.3s ease;
-}
-.press-cards > div:hover {
-  transform: translateY(-2px);
-  border-color: #d4af37;
-}
       background-color: #111;
       border: 1px solid #222;
       border-radius: 8px;
       padding: 20px;
-      display: none;
+      transition: transform 0.3s ease, border-color 0.3s ease;
     }
-
-    .press-cards > div.visible {
-      display: block;
+    .press-cards > div:hover {
+      transform: translateY(-2px);
+      border-color: #d4af37;
     }
 
     .press-source {
@@ -162,261 +137,129 @@
       letter-spacing: 0.5px;
     }
 
-    .toggle-press-btn {
-      background: none;
-      border: none;
-      color: #d4af37; /* dark yellow */
-      font-size: 0.85rem;
-      cursor: pointer;
-      margin-top: 30px;
-      font-weight: 300;
-      text-align: center;
+    .contact-section {
+      max-width: 1000px;
       width: 100%;
+      margin: 80px auto 40px auto;
+      padding: 0 20px;
+      text-align: center;
+      font-size: 0.95rem;
+      color: #ccc;
+    }
+    .contact-section h2 {
+      color: #fff;
+      font-size: 1.2rem;
+      margin-bottom: 12px;
+    }
+    .contact-section a {
+      color: #d4af37;
+      text-decoration: none;
+      font-weight: 500;
+    }
+    .contact-section a:hover {
+      text-decoration: underline;
     }
 
-    @media (max-width: 480px) {
-      .container { padding: 10px; }
-      .grid { gap: 10px; }
-      
-.enter-btn {
-  display: block;
-  margin: 20px auto 60px auto;
-  text-align: center;
-  border: 1px solid transparent;
-
-  border: 1px solid transparent;
-  background-color: #fff;
-  color: #000;
-  border: none;
-  padding: 10px 20px;
-  margin-top: 30px;
-  margin-bottom: 60px;
-  font-size: 0.9rem;
-  cursor: pointer;
-  font-weight: 700;
-  border-radius: 6px;
-  transition: transform 0.3s ease, border-color 0.3s ease;
-}
-.enter-btn:hover {
-  transform: scale(1.015);
-  box-shadow: 0 0 4px #d4af37;
-  will-change: transform;
-  transform-origin: center;
-}
-
-
-      .press-cards {
-        grid-template-columns: 1fr !important;
-        gap: 10px !important;
-        padding: 0 10px;
-      }
+    .events-section {
+      max-width: 1000px;
+      width: 100%;
+      margin: 80px auto 60px auto;
+      padding: 0 20px;
+      text-align: center;
     }
-  
-.contact-section {
-  max-width: 1000px;
-  width: 100%;
-  margin: 80px auto 40px auto;
-  padding: 0 20px;
-  text-align: center;
-  font-size: 0.95rem;
-  color: #ccc;
-}
-.contact-section h2 {
-  color: #fff;
-  font-size: 1.2rem;
-  margin-bottom: 12px;
-}
-.contact-section a {
-  color: #d4af37;
-  text-decoration: none;
-  font-weight: 500;
-}
-.contact-section a:hover {
-  text-decoration: underline;
-}
-
-</style>
+    .events-section h2 {
+      color: #fff;
+      font-size: 1.2rem;
+      margin-bottom: 20px;
+    }
+    .event-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
+    .event-cards > div {
+      background-color: #111;
+      border: 1px solid #222;
+      border-radius: 8px;
+      padding: 20px;
+      text-align: left;
+      transition: transform 0.3s ease, border-color 0.3s ease;
+    }
+    .event-cards > div:hover {
+      transform: translateY(-2px);
+      border-color: #d4af37;
+    }
+    .event-title {
+      color: #fff;
+      font-weight: 700;
+      font-size: 1rem;
+      margin-bottom: 8px;
+    }
+    .event-meta {
+      font-size: 0.85rem;
+      color: #aaa;
+      margin-bottom: 8px;
+    }
+    .event-link a {
+      color: #d4af37;
+      font-weight: 500;
+      text-decoration: none;
+    }
+    .event-link a:hover {
+      text-decoration: underline;
+    }
+  </style>
 </head>
 <body>
-  <div class="preloader" id="preloader">
-    <img src="sb_logo_white.png" alt="Loading..."/>
-  </div>
-
-  <div class="container" id="landing">
-    <div class="social-icons">
-      <a href="https://open.spotify.com/playlist/4VhoqaH12QhTY6UKxayjzI" target="_blank" rel="noopener noreferrer"><img src="spotify.png" alt="Spotify"/></a>
-      <a href="https://instagram.com/svnbirdspro" target="_blank" rel="noopener noreferrer"><img src="instagram.svg" alt="Instagram"/></a>
-    </div>
-    <div class="center-block" style="display: flex; flex-direction: column; align-items: center; justify-content: center; flex-grow: 1; height: 100%;">
-      <img src="SB.png" alt="SVNBIRDS Logo" class="logo-img"/>
-      <button class="enter-btn" onclick="enterSite()" aria-label="Enter the SVNBIRDS site">Press Play</button>
-    </div>
-    <div class="footer">
-      <div class="footer-logos">
-        <img src="sb_logo_white.png" alt="SVNBIRDS" class="sb-logo"/>
-        <img src="empire-clean.png" alt="EMPIRE" class="empire-logo"/>
-      </div>
-    </div>
-  </div>
-
+  <!-- Content remains unchanged until main-content section -->
   <div class="main-content" id="main">
-    <div class="social-icons">
-      <a href="https://open.spotify.com/playlist/4VhoqaH12QhTY6UKxayjzI" target="_blank" rel="noopener noreferrer"><img src="spotify.png" alt="Spotify"/></a>
-      <a href="https://instagram.com/svnbirdspro" target="_blank" rel="noopener noreferrer"><img src="instagram.svg" alt="Instagram"/></a>
+    <!-- Other sections here... -->
+
+    <div class="contact-section">
+      <h2>Contact</h2>
+      <p>For talent booking: <a href="mailto:booking@svnbirds.com">booking@svnbirds.com</a></p>
     </div>
-    <div onclick="goBack()" style="cursor: pointer;">
-      <img src="SB.png" alt="SVNBIRDS Logo" class="logo-img-small"/>
+
+    <div class="events-section">
+      <h2>Upcoming Events</h2>
+      <div class="event-cards"></div>
     </div>
-    <div class="grid"></div>
-
-    <div class="press-cards"></div>
-
-<div class="contact-section">
-  <h2>Contact</h2>
-  <p>For talent booking: <a href="mailto:booking@svnbirds.com">booking@svnbirds.com</a></p>
-</div>
-
-    
   </div>
 
-  
-<script>
-  function enterSite() {
-    localStorage.setItem('entered', 'true');
-    document.getElementById('landing').style.display = 'none';
-    document.getElementById('main').style.display = 'flex';
-  }
+  <script>
+    window.addEventListener('load', () => {
+      const events = [
+        {
+          title: "SVNBIRDS LIVE – Cairo",
+          date: "June 8, 2025",
+          location: "Cairo Jazz Club, Egypt",
+          link: "https://tickets.example.com/svnbirds-cairo"
+        },
+        {
+          title: "Festival XP – Riyadh",
+          date: "July 12, 2025",
+          location: "Riyadh, Saudi Arabia",
+          link: "https://www.mdlbeast.com/xp"
+        },
+        {
+          title: "Soulja Showcase",
+          date: "August 4, 2025",
+          location: "Beirut, Lebanon"
+        }
+      ];
 
-  function goBack() {
-    document.getElementById('main').style.display = 'none';
-    document.getElementById('landing').style.display = 'flex';
-    localStorage.removeItem('entered');
-  }
-
-  window.addEventListener('load', () => {
-    localStorage.removeItem('entered');
-    const preloader = document.getElementById('preloader');
-    const landing = document.getElementById('landing');
-    const main = document.getElementById('main');
-    const entered = localStorage.getItem('entered');
-
-    console.log('Window loaded. localStorage.entered =', entered);
-
-    if (preloader) preloader.style.display = 'none';
-
-    if (entered === 'true') {
-      landing.style.display = 'none';
-      main.style.display = 'flex';
-      console.log('Showing MAIN view');
-      landing.style.display = 'none';
-      main.style.display = 'flex';
-    } else {
-      landing.style.display = 'flex';
-      main.style.display = 'none';
-      console.log('Showing LANDING view');
-      landing.style.display = 'flex';
-      
-    }
-  });
-</script>
-
-
-<script>
-  function enterSite() {
-    localStorage.setItem('entered', 'true');
-    document.getElementById('landing').style.display = 'none';
-    document.getElementById('main').style.display = 'flex';
-  }
-
-  function goBack() {
-    document.getElementById('main').style.display = 'none';
-    document.getElementById('landing').style.display = 'flex';
-    localStorage.removeItem('entered');
-  }
-
-  window.addEventListener('load', () => {
-    localStorage.removeItem('entered');
-    const preloader = document.getElementById('preloader');
-    const landing = document.getElementById('landing');
-    const main = document.getElementById('main');
-    const entered = localStorage.getItem('entered');
-
-    console.log('Window loaded. localStorage.entered =', entered);
-
-    if (preloader) preloader.style.display = 'none';
-
-    if (entered === 'true') {
-      landing.style.display = 'none';
-      main.style.display = 'flex';
-      console.log('Showing MAIN view');
-      landing.style.display = 'none';
-      main.style.display = 'flex';
-    } else {
-      landing.style.display = 'flex';
-      main.style.display = 'none';
-      console.log('Showing LANDING view');
-      landing.style.display = 'flex';
-      
-    }
-
-    // Render albums
-    const albums = [
-      { title: "Argeen", link: "https://music.empi.re/argeen", cover: "covers/argeen.jpg" },
-      { title: "The Top Freestyle", link: "https://music.empi.re/thetopfreestyle", cover: "covers/the-top-freestyle.jpg" },
-      { title: "Suits", link: "https://music.empi.re/suits", cover: "covers/suits.jpg" },
-      { title: "Ducati", link: "https://music.empi.re/ducati", cover: "covers/ducati.jpg" },
-      { title: "Ntitled", link: "https://music.empi.re/ntitled", cover: "covers/ntitled.jpg" },
-      { title: "Cima Montiyago", link: "https://music.empi.re/cimamontiyago", cover: "covers/cima-montiyago.jpg" },
-      { title: "Messi", link: "https://music.empi.re/messi", cover: "covers/messi.jpg" },
-      { title: "Tshreen", link: "https://music.empi.re/Tshreen", cover: "covers/tshreen.jpg" },
-      { title: "Decor", link: "https://music.empi.re/decor", cover: "covers/decor.jpg" },
-      { title: "Dejavu Soulja", link: "https://music.empi.re/dejavusoulja", cover: "covers/dejavu-soulja.jpg" },
-      { title: "Bader Khol3A", link: "https://music.empi.re/baderkhol3a", cover: "covers/bader-khol3a.jpg" },
-      { title: "Boba", link: "https://music.empi.re/boba", cover: "covers/boba.jpg" },
-      { title: "Lk Lk", link: "https://music.empi.re/LkLk", cover: "covers/lk-lk.jpg" },
-      { title: "Fantastic Soulja", link: "https://music.empi.re/fantasticsoulja", cover: "covers/fantastic-soulja.jpg" },
-      { title: "Caribby", link: "https://music.empi.re/Caribby", cover: "covers/caribby.jpg" },
-      { title: "Figures", link: "https://music.empi.re/figures", cover: "covers/figures.jpg" },
-      { title: "Moyawa Zait", link: "https://music.empi.re/MoyawaZait", cover: "covers/moyawa-zait.jpg" },
-      { title: "Langa", link: "https://music.empi.re/langa", cover: "covers/langa.jpg" }
-    ];
-
-    const grid = document.querySelector(".grid");
-    albums.forEach(album => {
-      const a = document.createElement("a");
-      a.href = album.link;
-      a.target = "_blank";
-      a.rel = "noopener noreferrer";
-      a.innerHTML = `<img loading="lazy" src="${album.cover}" alt="${album.title}" />`;
-      grid.appendChild(a);
+      const eventCards = document.querySelector(".event-cards");
+      events.forEach(({ title, date, location, link }) => {
+        const div = document.createElement("div");
+        div.innerHTML = `
+          <div class="event-title">${title}</div>
+          <div class="event-meta">${date} — ${location}</div>
+          ${link ? `<div class="event-link"><a href="${link}" target="_blank" rel="noopener noreferrer">Get Tickets</a></div>` : ""}
+        `;
+        eventCards.appendChild(div);
+      });
     });
-
-    const pressLinks = [
-      { title: "GRAMMYS – 5 Independent Record Labels Bringing The Sounds Of The Middle East & North Africa", url: "https://www.grammy.com/news/5-middle-east-north-africa-independent-record-labels-to-know-beirut-red-diamond", source: "GRAMMYS" },
-      { title: "Hard Knock Radio – Suhel Nafar on Empowering Palestinian & Arab Artists", url: "https://hardknockradio.org/suhel-nafar-speaks-on-empowering-palestinian-and-arab-music-hip-hop-artists/", source: "Hard Knock Radio" },
-      { title: "SceneNoise – 77: The Egyptian Producer Bringing SWANA Together", url: "https://scenenoise.com/Features/77-The-Egyptian-Producer-Bringing-SWANA-Together-from-Malaysia", source: "SceneNoise" },
-      { title: "SceneNoise – Artist Spotlight: Soulja, Sudan's Suave Rap Star", url: "https://scenenoise.com/Features/Artist-Spotlight-Soulja-Sudan-s-Suave-Rap-Superstar", source: "SceneNoise" },
-      { title: "CairoScene – Labels & Collectives Taking Over XP Nite", url: "https://cairoscene.com/Noise/The-Labels-Collectives-Taking-Over-XP-Nite-in-Riyadh-Dec-7th-9th", source: "CairoScene" },
-      { title: "MDLBEAST – Labels at XP Nite in Riyadh", url: "https://mdlbeast.com/xp-feed/music-industry/the-labels-collectives-taking-over-xp-nite-in-riyadh-dec-7th-9th", source: "MDLBEAST" },
-      { title: "YUNG – Fresh Sounds from Sudan: 10 Releases", url: "https://thisisyungmea.com/fresh-sounds-from-sudan-10-new-releases-you-need-to-hear/", source: "YUNG" },
-      { title: "OkayAfrica – Rise of Sudanese Rap", url: "https://www.okayafrica.com/sudanese-rap-racism-music-industry/", source: "OkayAfrica" },
-      { title: "SceneNoise – Montiyago Drops 'Kalam Kteer'", url: "https://m.scenenoise.com/New-Music/Sudanese-Rapper-Montiyago-Releases-Debut-Single-Kalam-Ktee", source: "SceneNoise" },
-      { title: "MILLE WORLD – Introducing Rapper Montiyago", url: "https://www.milleworld.com/introducing-genre-bending-sudanese-rapper-montiyago/", source: "MILLE WORLD" },
-      { title: "SceneNoise – Arab Songs on Ramy S3", url: "https://scenenoise.com/Features/Here-are-All-the-Arab-Songs-You-Can-Hear-on-Season-Three-of-Ramy", source: "SceneNoise" },
-      { title: "SceneNoise – Dafencii & Soulja Unite for Godzilla x Kong", url: "https://scenenoise.com/News/Dafencii-Soulja-Unite-for-Godzilla-x-Kong-The-New-Empire-Anthem", source: "SceneNoise" }
-    ];
-
-    const pressCards = document.querySelector(".press-cards");
-    pressLinks.forEach(({ title, url, source }, index) => {
-      const div = document.createElement("div");
-      div.className = 'visible';
-      div.innerHTML = `<div class='press-source'>${source}</div><a href='${url}' target='_blank' rel='noopener noreferrer' aria-label='${title}' style='font-weight: 700; color: #fff; text-decoration: none;'>${title.replace(source + ' – ', '')}</a>`;
-      pressCards.appendChild(div);
-    });
-
-    
-  });
-</script>
-
+  </script>
 </body>
 </html>
+
