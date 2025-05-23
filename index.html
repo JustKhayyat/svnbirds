@@ -52,7 +52,6 @@
     .enter-btn {
       display: block;
       margin: 30px auto 60px auto;
-      text-align: center;
       background-color: #fff;
       color: #000;
       padding: 10px 20px;
@@ -69,16 +68,6 @@
       will-change: transform;
       transform-origin: center;
     }
-
-    .footer-logos {
-      display: flex;
-      gap: 30px;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .sb-logo { height: 80px; }
-    .empire-logo { height: 60px; }
 
     .grid {
       display: grid;
@@ -143,41 +132,18 @@
       letter-spacing: 0.5px;
     }
 
-    .contact-section {
-      max-width: 1000px;
-      width: 100%;
-      margin: 80px auto 40px auto;
-      padding: 0 20px;
-      text-align: center;
-      font-size: 0.95rem;
-      color: #ccc;
-    }
-
-    .contact-section h2 {
-      color: #fff;
-      font-size: 1.2rem;
-      margin-bottom: 12px;
-    }
-
-    .contact-section a {
-      color: #d4af37;
-      text-decoration: none;
-      font-weight: 500;
-    }
-
-    .contact-section a:hover {
-      text-decoration: underline;
-    }
-
     .footer-bar {
       width: 100%;
-      padding: 20px 0;
+      padding: 20px;
       display: flex;
+      flex-wrap: wrap;
       justify-content: center;
       gap: 30px;
       border-top: 1px solid #222;
       background-color: #000;
       margin-top: 40px;
+      font-size: 0.85rem;
+      color: #ccc;
     }
 
     .footer-bar img {
@@ -193,19 +159,25 @@
       filter: drop-shadow(0 0 2px #d4af37);
     }
 
+    .footer-bar a {
+      text-decoration: none;
+      color: #d4af37;
+      font-weight: 500;
+    }
+
+    .footer-bar a:hover {
+      text-decoration: underline;
+    }
+
     @media (max-width: 480px) {
       .container { padding: 10px; }
       .grid { gap: 10px; }
 
       .footer-bar {
-        gap: 20px;
-        padding: 16px 0;
-      }
-
-      .press-cards {
-        grid-template-columns: 1fr !important;
-        gap: 10px !important;
-        padding: 0 10px;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+        text-align: center;
       }
     }
   </style>
@@ -220,17 +192,14 @@
       <img src="SB.png" alt="SVNBIRDS Logo" class="logo-img"/>
       <button class="enter-btn" onclick="enterSite()" aria-label="Enter the SVNBIRDS site">Press Play</button>
     </div>
-    <div class="footer-logos">
-      <img src="sb_logo_white.png" alt="SVNBIRDS" class="sb-logo"/>
-      <img src="empire-clean.png" alt="EMPIRE" class="empire-logo"/>
-    </div>
     <div class="footer-bar">
-      <a href="https://open.spotify.com/playlist/4VhoqaH12QhTY6UKxayjzI" target="_blank" rel="noopener noreferrer" aria-label="Spotify">
+      <a href="https://open.spotify.com/playlist/4VhoqaH12QhTY6UKxayjzI" target="_blank" aria-label="Spotify">
         <img src="spotify.png" alt="Spotify">
       </a>
-      <a href="https://instagram.com/svnbirdspro" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+      <a href="https://instagram.com/svnbirdspro" target="_blank" aria-label="Instagram">
         <img src="instagram.svg" alt="Instagram">
       </a>
+      <span>Booking: <a href="mailto:booking@svnbirds.com">booking@svnbirds.com</a></span>
     </div>
   </div>
 
@@ -240,17 +209,14 @@
     </div>
     <div class="grid"></div>
     <div class="press-cards"></div>
-    <div class="contact-section">
-      <h2>Contact</h2>
-      <p>For talent booking: <a href="mailto:booking@svnbirds.com">booking@svnbirds.com</a></p>
-    </div>
     <div class="footer-bar">
-      <a href="https://open.spotify.com/playlist/4VhoqaH12QhTY6UKxayjzI" target="_blank" rel="noopener noreferrer" aria-label="Spotify">
+      <a href="https://open.spotify.com/playlist/4VhoqaH12QhTY6UKxayjzI" target="_blank" aria-label="Spotify">
         <img src="spotify.png" alt="Spotify">
       </a>
-      <a href="https://instagram.com/svnbirdspro" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+      <a href="https://instagram.com/svnbirdspro" target="_blank" aria-label="Instagram">
         <img src="instagram.svg" alt="Instagram">
       </a>
+      <span>Booking: <a href="mailto:booking@svnbirds.com">booking@svnbirds.com</a></span>
     </div>
   </div>
 
@@ -317,15 +283,8 @@
         { title: "GRAMMYS – 5 Independent Record Labels Bringing The Sounds Of The Middle East & North Africa", url: "https://www.grammy.com/news/5-middle-east-north-africa-independent-record-labels-to-know-beirut-red-diamond", source: "GRAMMYS" },
         { title: "Hard Knock Radio – Suhel Nafar on Empowering Palestinian & Arab Artists", url: "https://hardknockradio.org/suhel-nafar-speaks-on-empowering-palestinian-and-arab-music-hip-hop-artists/", source: "Hard Knock Radio" },
         { title: "SceneNoise – 77: The Egyptian Producer Bringing SWANA Together", url: "https://scenenoise.com/Features/77-The-Egyptian-Producer-Bringing-SWANA-Together-from-Malaysia", source: "SceneNoise" },
-        { title: "SceneNoise – Artist Spotlight: Soulja, Sudan's Suave Rap Star", url: "https://scenenoise.com/Features/Artist-Spotlight-Soulja-Sudan-s-Suave-Rap-Superstar", source: "SceneNoise" },
-        { title: "CairoScene – Labels & Collectives Taking Over XP Nite", url: "https://cairoscene.com/Noise/The-Labels-Collectives-Taking-Over-XP-Nite-in-Riyadh-Dec-7th-9th", source: "CairoScene" },
-        { title: "MDLBEAST – Labels at XP Nite in Riyadh", url: "https://mdlbeast.com/xp-feed/music-industry/the-labels-collectives-taking-over-xp-nite-in-riyadh-dec-7th-9th", source: "MDLBEAST" },
-        { title: "YUNG – Fresh Sounds from Sudan: 10 Releases", url: "https://thisisyungmea.com/fresh-sounds-from-sudan-10-new-releases-you-need-to-hear/", source: "YUNG" },
-        { title: "OkayAfrica – Rise of Sudanese Rap", url: "https://www.okayafrica.com/sudanese-rap-racism-music-industry/", source: "OkayAfrica" },
-        { title: "SceneNoise – Montiyago Drops 'Kalam Kteer'", url: "https://m.scenenoise.com/New-Music/Sudanese-Rapper-Montiyago-Releases-Debut-Single-Kalam-Ktee", source: "SceneNoise" },
-        { title: "MILLE WORLD – Introducing Rapper Montiyago", url: "https://www.milleworld.com/introducing-genre-bending-sudanese-rapper-montiyago/", source: "MILLE WORLD" },
-        { title: "SceneNoise – Arab Songs on Ramy S3", url: "https://scenenoise.com/Features/Here-are-All-the-Arab-Songs-You-Can-Hear-on-Season-Three-of-Ramy", source: "SceneNoise" },
-        { title: "SceneNoise – Dafencii & Soulja Unite for Godzilla x Kong", url: "https://scenenoise.com/News/Dafencii-Soulja-Unite-for-Godzilla-x-Kong-The-New-Empire-Anthem", source: "SceneNoise" }
+        { title: "SceneNoise – Artist Spotlight: Soulja, Sudan's Suave Rap Star", url: "https://scenenoise.com/Features/Artist-Spotlight-Soulja-Sudan-s-Suave-Rap-Superstar", source: "SceneNoise" }
+        // (Add more as needed...)
       ];
 
       const pressCards = document.querySelector(".press-cards");
@@ -339,3 +298,4 @@
   </script>
 </body>
 </html>
+
