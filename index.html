@@ -102,6 +102,171 @@
       justify-content: flex-start;
       padding: 40px 20px;
       min-height: 100vh;
+      position: relative;
+    }
+
+    .shop-btn {
+      position: fixed;
+      top: 25px;
+      right: 25px;
+      background: linear-gradient(135deg, #d4af37 0%, #f4d03f 100%);
+      color: #000;
+      border: none;
+      padding: 12px 24px;
+      font-size: 0.9rem;
+      cursor: pointer;
+      font-weight: 700;
+      border-radius: 25px;
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+      z-index: 1000;
+      font-family: 'Montserrat', sans-serif;
+    }
+
+    .shop-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 6px 20px rgba(212, 175, 55, 0.5);
+      background: linear-gradient(135deg, #f4d03f 0%, #d4af37 100%);
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 2000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(10px);
+      animation: fadeIn 0.3s ease-out;
+    }
+
+    .modal-content {
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+      margin: 10% auto;
+      padding: 40px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 20px;
+      width: 90%;
+      max-width: 500px;
+      backdrop-filter: blur(20px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+      color: #fff;
+      text-align: center;
+      position: relative;
+      animation: slideIn 0.4s ease-out;
+    }
+
+    @keyframes slideIn {
+      from {
+        transform: translateY(-50px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    .close {
+      color: #fff;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+      cursor: pointer;
+      position: absolute;
+      top: 15px;
+      right: 20px;
+      transition: color 0.3s ease;
+    }
+
+    .close:hover {
+      color: #d4af37;
+    }
+
+    .modal h2 {
+      margin-bottom: 20px;
+      font-size: 1.8rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #d4af37, #f4d03f);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .modal p {
+      margin-bottom: 30px;
+      color: #ccc;
+      line-height: 1.6;
+      font-size: 1rem;
+    }
+
+    .notify-form {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      max-width: 400px;
+      margin: 0 auto;
+    }
+
+    .notify-form input {
+      padding: 15px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+      font-size: 1rem;
+      font-family: 'Montserrat', sans-serif;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(10px);
+    }
+
+    .notify-form input::placeholder {
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    .notify-form input:focus {
+      border-color: #d4af37;
+      background: rgba(255, 255, 255, 0.15);
+      box-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
+    }
+
+    .notify-submit {
+      background: linear-gradient(135deg, #d4af37 0%, #f4d03f 100%);
+      color: #000;
+      border: none;
+      padding: 15px 30px;
+      font-size: 1rem;
+      cursor: pointer;
+      font-weight: 700;
+      border-radius: 10px;
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      font-family: 'Montserrat', sans-serif;
+    }
+
+    .notify-submit:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(212, 175, 55, 0.4);
+      background: linear-gradient(135deg, #f4d03f 0%, #d4af37 100%);
+    }
+
+    .notify-submit:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .success-message {
+      display: none;
+      color: #4CAF50;
+      font-weight: 600;
+      margin-top: 15px;
+      animation: fadeIn 0.5s ease-out;
     }
 
     .center-block {
@@ -425,6 +590,7 @@
   </div>
 
   <div class="main-content" id="main">
+    <button class="shop-btn" onclick="openShopModal()">Shop</button>
     <div onclick="goBack()" style="cursor: pointer;">
       <img src="SB.png" alt="SVNBIRDS Logo" class="logo-img-small"/>
     </div>
@@ -436,11 +602,103 @@
     </div>
   </div>
 
+  <!-- Shop Modal -->
+  <div id="shopModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeShopModal()">&times;</span>
+      <h2>SVNBIRDS Merch</h2>
+      <p>We're cooking up some exclusive merchandise for our community. Be the first to know when our limited drops go live!</p>
+      
+      <form class="notify-form" onsubmit="submitNotifyForm(event)">
+        <input type="email" id="notifyEmail" placeholder="Enter your email" required>
+        <input type="text" id="notifyName" placeholder="Your name (optional)">
+        <button type="submit" class="notify-submit" id="submitBtn">Notify Me</button>
+        <div class="success-message" id="successMessage">
+          🔥 You're on the list! We'll hit you up when the merch drops.
+        </div>
+      </form>
+    </div>
+  </div>
+
   <script>
     // Use in-memory state instead of localStorage
     let appState = {
-      entered: false
+      entered: false,
+      notifyList: []
     };
+
+    function openShopModal() {
+      document.getElementById('shopModal').style.display = 'block';
+      document.body.style.overflow = 'hidden'; // Prevent background scrolling
+    }
+
+    function closeShopModal() {
+      document.getElementById('shopModal').style.display = 'none';
+      document.body.style.overflow = 'auto';
+      // Reset form
+      document.getElementById('notifyEmail').value = '';
+      document.getElementById('notifyName').value = '';
+      document.getElementById('successMessage').style.display = 'none';
+      document.getElementById('submitBtn').disabled = false;
+    }
+
+    function submitNotifyForm(event) {
+      event.preventDefault();
+      
+      const email = document.getElementById('notifyEmail').value;
+      const name = document.getElementById('notifyName').value;
+      const submitBtn = document.getElementById('submitBtn');
+      const successMessage = document.getElementById('successMessage');
+      
+      // Disable button to prevent double submission
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Adding...';
+      
+      // Simulate API call delay
+      setTimeout(() => {
+        // Store in our in-memory state
+        appState.notifyList.push({
+          email: email,
+          name: name,
+          timestamp: new Date().toISOString()
+        });
+        
+        // Log to console for easy copying to Mailchimp
+        console.log('📧 New merch notification signup:', {
+          email: email,
+          name: name || 'No name provided',
+          timestamp: new Date().toLocaleString()
+        });
+        
+        // Show all signups in console for batch export
+        console.log('📋 All signups so far:', appState.notifyList);
+        
+        // Show success message
+        successMessage.style.display = 'block';
+        submitBtn.textContent = 'Added!';
+        
+        // Auto-close modal after 2 seconds
+        setTimeout(() => {
+          closeShopModal();
+        }, 2000);
+        
+      }, 800);
+    }
+
+    // Close modal when clicking outside of it
+    window.onclick = function(event) {
+      const modal = document.getElementById('shopModal');
+      if (event.target === modal) {
+        closeShopModal();
+      }
+    }
+
+    // Close modal with Escape key
+    document.addEventListener('keydown', function(event) {
+      if (event.key === 'Escape') {
+        closeShopModal();
+      }
+    });
 
     function enterSite() {
       appState.entered = true;
