@@ -15,6 +15,12 @@
   <link rel="icon" href="sb_logo_white.png" type="image/png"/>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
+    /* Immediate background to prevent white flash */
+    html, body {
+      background-color: #000 !important;
+      margin: 0;
+      padding: 0;
+    }
     * { 
       box-sizing: border-box; 
       margin: 0; 
@@ -406,7 +412,7 @@
     }
   </style>
 </head>
-<body>
+<body style="background-color: #000; margin: 0; padding: 0;">
   <div class="preloader" id="preloader">
     <img src="sb_logo_white.png" alt="Loading..."/>
   </div>
