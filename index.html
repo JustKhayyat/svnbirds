@@ -15,195 +15,143 @@
   <link rel="icon" href="sb_logo_white.png" type="image/png"/>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
-    /* Immediate background to prevent white flash */
     html, body {
       background-color: #000 !important;
       margin: 0;
       padding: 0;
     }
-    * { 
-      box-sizing: border-box; 
-      margin: 0; 
-      padding: 0; 
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
     }
-    
     body {
-      background: linear-gradient(135deg, #000000 0%, #1a1a1a 50%, #000000 100%);
+      background: linear-gradient(135deg, #000 0%, #1a1a1a 50%, #000 100%);
       color: #fff;
       font-family: 'Montserrat', sans-serif;
       overflow-x: hidden;
-      caret-color: transparent;
-      min-height: 100vh;
       position: relative;
+      min-height: 100vh;
     }
-    
     body::before {
       content: '';
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: 
-        radial-gradient(circle at 20% 20%, rgba(212, 175, 55, 0.1) 0%, transparent 50%),
-        radial-gradient(circle at 80% 80%, rgba(212, 175, 55, 0.05) 0%, transparent 50%),
-        radial-gradient(circle at 40% 60%, rgba(255, 255, 255, 0.02) 0%, transparent 50%);
+      inset: 0;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(212,175,55,0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(212,175,55,0.05) 0%, transparent 50%),
+        radial-gradient(circle at 40% 60%, rgba(255,255,255,0.02) 0%, transparent 50%);
       pointer-events: none;
       z-index: -1;
     }
-    
-    *:focus { outline: none !important; }
-
     .preloader {
-      position: fixed; 
-      inset: 0; 
-      background: radial-gradient(circle, #1a1a1a 0%, #000000 100%);
-      display: flex; 
-      align-items: center; 
-      justify-content: center; 
-      z-index: 9999;
+      position: fixed;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(circle, #1a1a1a 0%, #000 100%);
       backdrop-filter: blur(10px);
+      z-index: 9999;
     }
-    
     .preloader img {
       width: 150px;
       animation: pulse 1.5s ease-in-out infinite alternate;
-      filter: drop-shadow(0 0 20px rgba(212, 175, 55, 0.3));
+      filter: drop-shadow(0 0 20px rgba(212,175,55,0.3));
     }
-    
     @keyframes pulse {
-      from { 
-        opacity: 0.6; 
-        transform: scale(0.95); 
-        filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.2));
-      }
-      to { 
-        opacity: 1; 
-        transform: scale(1.05); 
-        filter: drop-shadow(0 0 30px rgba(212, 175, 55, 0.5));
-      }
+      0% { transform: scale(0.95); opacity: 0.6; filter: drop-shadow(0 0 10px rgba(212,175,55,0.2)); }
+      100% { transform: scale(1.05); opacity: 1; filter: drop-shadow(0 0 30px rgba(212,175,55,0.5)); }
     }
-
-    .container {
-      display: none; 
-      flex-direction: column; 
-      align-items: center;
-      justify-content: center; 
-      min-height: 100vh;
-      padding: 20px; 
-      text-align: center; 
-      position: relative;
-    }
-    
-    .main-content {
-      display: none; 
+    .container, .main-content {
+      display: none;
       flex-direction: column;
-      align-items: center; 
-      justify-content: flex-start;
-      padding: 40px 20px;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
       min-height: 100vh;
+      padding: 20px;
       position: relative;
     }
-
+    .main-content { justify-content: flex-start; padding: 40px 20px; }
+    .enter-btn {
+      display: block;
+      margin: 30px auto 60px;
+      background: none;
+      color: #fff;
+      border: none;
+      padding: 14px 32px;
+      font-size: 1rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      cursor: pointer;
+      transition: color 0.3s ease;
+    }
+    .enter-btn:hover { text-decoration: underline; color: #fff; }
     .shop-btn {
       position: fixed;
       top: 25px;
       right: 25px;
-      background: linear-gradient(135deg, #d4af37 0%, #f4d03f 100%);
-      color: #000;
+      background: none;
+      color: #fff;
       border: none;
       padding: 12px 24px;
       font-size: 0.9rem;
-      cursor: pointer;
       font-weight: 700;
-      border-radius: 25px;
-      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
       text-transform: uppercase;
       letter-spacing: 0.5px;
-      box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+      cursor: pointer;
+      transition: color 0.3s ease;
       z-index: 1000;
-      font-family: 'Montserrat', sans-serif;
     }
-
-    .shop-btn:hover {
-      transform: scale(1.05);
-      box-shadow: 0 6px 20px rgba(212, 175, 55, 0.5);
-      background: linear-gradient(135deg, #f4d03f 0%, #d4af37 100%);
-    }
-
+    .shop-btn:hover { text-decoration: underline; color: #fff; }
     .modal {
       display: none;
       position: fixed;
-      z-index: 2000;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0, 0, 0, 0.8);
+      inset: 0;
+      background: rgba(0,0,0,0.8);
       backdrop-filter: blur(10px);
+      z-index: 2000;
       animation: fadeIn 0.3s ease-out;
     }
-
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     .modal-content {
-      background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+      background: rgba(255,255,255,0.05);
       margin: 10% auto;
       padding: 40px;
-      border: 1px solid rgba(255, 255, 255, 0.2);
+      border: 1px solid rgba(255,255,255,0.2);
       border-radius: 20px;
       width: 90%;
       max-width: 500px;
       backdrop-filter: blur(20px);
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
       color: #fff;
       text-align: center;
-      position: relative;
       animation: slideIn 0.4s ease-out;
+      position: relative;
     }
-
-    @keyframes slideIn {
-      from {
-        transform: translateY(-50px);
-        opacity: 0;
-      }
-      to {
-        transform: translateY(0);
-        opacity: 1;
-      }
-    }
-
+    @keyframes slideIn { from { transform: translateY(-50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
     .close {
-      color: #fff;
-      float: right;
-      font-size: 28px;
-      font-weight: bold;
-      cursor: pointer;
       position: absolute;
       top: 15px;
       right: 20px;
+      font-size: 28px;
+      font-weight: bold;
+      color: #fff;
+      cursor: pointer;
       transition: color 0.3s ease;
     }
-
-    .close:hover {
-      color: #d4af37;
-    }
-
+    .close:hover { color: #d4af37; }
     .modal h2 {
-      margin-bottom: 20px;
       font-size: 1.8rem;
       font-weight: 700;
       background: linear-gradient(135deg, #d4af37, #f4d03f);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      background-clip: text;
+      margin-bottom: 20px;
     }
-
-    .modal p {
-      margin-bottom: 30px;
-      color: #ccc;
-      line-height: 1.6;
-      font-size: 1rem;
-    }
-
+    .modal p { color: #ccc; margin-bottom: 30px; line-height: 1.6; }
     .notify-form {
       display: flex;
       flex-direction: column;
@@ -211,373 +159,95 @@
       max-width: 400px;
       margin: 0 auto;
     }
-
     .notify-form input {
       padding: 15px;
-      border: 1px solid rgba(255, 255, 255, 0.2);
+      border: 1px solid rgba(255,255,255,0.2);
       border-radius: 10px;
-      background: rgba(255, 255, 255, 0.1);
+      background: rgba(255,255,255,0.1);
       color: #fff;
       font-size: 1rem;
-      font-family: 'Montserrat', sans-serif;
       transition: all 0.3s ease;
       backdrop-filter: blur(10px);
     }
-
-    .notify-form input::placeholder {
-      color: rgba(255, 255, 255, 0.6);
-    }
-
     .notify-form input:focus {
       border-color: #d4af37;
-      background: rgba(255, 255, 255, 0.15);
-      box-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
+      background: rgba(255,255,255,0.15);
+      box-shadow: 0 0 10px rgba(212,175,55,0.3);
     }
-
     .notify-submit {
-      background: linear-gradient(135deg, #d4af37 0%, #f4d03f 100%);
+      background: linear-gradient(135deg, #d4af37, #f4d03f);
       color: #000;
       border: none;
       padding: 15px 30px;
       font-size: 1rem;
-      cursor: pointer;
       font-weight: 700;
       border-radius: 10px;
-      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      cursor: pointer;
+      transition: all 0.3s ease;
       text-transform: uppercase;
       letter-spacing: 0.5px;
-      font-family: 'Montserrat', sans-serif;
     }
-
-    .notify-submit:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 20px rgba(212, 175, 55, 0.4);
-      background: linear-gradient(135deg, #f4d03f 0%, #d4af37 100%);
-    }
-
-    .notify-submit:disabled {
-      opacity: 0.6;
-      cursor: not-allowed;
-      transform: none;
-    }
-
-    .success-message {
-      display: none;
-      color: #4CAF50;
-      font-weight: 600;
-      margin-top: 15px;
-      animation: fadeIn 0.5s ease-out;
-    }
-
-    .center-block {
-      display: flex; 
-      flex-direction: column; 
-      align-items: center; 
-      justify-content: center; 
-      flex-grow: 1; 
-      height: 100%;
-      animation: fadeInUp 1s ease-out;
-    }
-    
-    @keyframes fadeInUp {
-      from {
-        opacity: 0;
-        transform: translateY(30px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    .enter-btn {
-      display: block;
-      margin: 30px auto 60px auto;
-      text-align: center;
-      background: linear-gradient(135deg, #d4af37 0%, #f4d03f 100%);
-      color: #000;
-      border: none;
-      padding: 14px 32px;
-      font-size: 1rem;
-      cursor: pointer;
-      font-weight: 700;
-      border-radius: 50px;
-      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      position: relative;
-      overflow: hidden;
-      box-shadow: 0 8px 25px rgba(212, 175, 55, 0.3);
-    }
-    
-    .enter-btn::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-      transition: left 0.5s ease;
-    }
-    
-    .enter-btn:hover {
-      transform: scale(1.05) translateY(-2px);
-      box-shadow: 0 15px 35px rgba(212, 175, 55, 0.5);
-      background: linear-gradient(135deg, #f4d03f 0%, #d4af37 100%);
-    }
-    
-    .enter-btn:hover::before {
-      left: 100%;
-    }
-    
-    .enter-btn:active {
-      transform: scale(0.98) translateY(0);
-    }
-
-    .logo-img {
-      max-width: 350px;
-      height: auto;
-      margin: 0 auto 20px auto;
-      display: block;
-      filter: drop-shadow(0 0 30px rgba(212, 175, 55, 0.3));
-      animation: logoGlow 3s ease-in-out infinite alternate;
-    }
-    
-    @keyframes logoGlow {
-      from {
-        filter: drop-shadow(0 0 20px rgba(212, 175, 55, 0.2));
-      }
-      to {
-        filter: drop-shadow(0 0 40px rgba(212, 175, 55, 0.4));
-      }
-    }
-    
-    .logo-img-small {
-      max-width: 200px; 
-      height: auto; 
-      margin-bottom: 30px;
-      transition: all 0.3s ease;
-      filter: drop-shadow(0 0 15px rgba(212, 175, 55, 0.2));
-    }
-    
-    .logo-img-small:hover {
-      transform: scale(1.05);
-      filter: drop-shadow(0 0 25px rgba(212, 175, 55, 0.4));
-    }
-
+    .notify-submit:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(212,175,55,0.4); }
+    .notify-submit:disabled { opacity: 0.6; cursor: not-allowed; }
+    .success-message { display: none; color: #4CAF50; font-weight: 600; margin-top: 15px; }
+    .logo-img { max-width: 350px; margin-bottom: 20px; filter: drop-shadow(0 0 30px rgba(212,175,55,0.3)); }
+    .logo-img-small { display: none; }
     .grid {
-      display: grid; 
+      display: grid;
       grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 25px; 
-      margin-top: 40px; 
-      width: 100%; 
-      max-width: 1200px;
+      gap: 25px;
+      margin-top: 40px;
+      width: 100%; max-width: 1200px;
       animation: fadeIn 1s ease-out 0.3s both;
     }
-    
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-    
-    .grid img {
-      width: 100%; 
-      height: auto; 
-      border-radius: 12px;
-      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
-      border: 2px solid transparent;
-    }
-    
-    .grid a {
-      display: block;
-      position: relative;
-      overflow: hidden;
-      border-radius: 12px;
-    }
-    
-    .grid a::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(135deg, rgba(212, 175, 55, 0.2) 0%, rgba(212, 175, 55, 0.1) 100%);
-      opacity: 0;
-      transition: opacity 0.3s ease;
-      z-index: 1;
-      border-radius: 12px;
-    }
-    
-    .grid a:hover::before {
-      opacity: 1;
-    }
-    
-    .grid a:hover img {
-      transform: scale(1.05);
-      box-shadow: 0 15px 40px rgba(212, 175, 55, 0.2);
-      border-color: rgba(212, 175, 55, 0.5);
-    }
-
+    .grid a { display: block; border-radius: 12px; overflow: hidden; position: relative; }
+    .grid img { width: 100%; display: block; border-radius: 12px; transition: transform 0.3s ease, box-shadow 0.3s ease; }
+    .grid a:hover img { transform: scale(1.05); box-shadow: 0 15px 40px rgba(212,175,55,0.2); }
     .press-cards {
-      margin-top: 80px;
-      max-width: 1200px;
-      width: 100%;
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
       gap: 25px;
+      margin-top: 80px;
+      width: 100%; max-width: 1200px;
       animation: fadeIn 1s ease-out 0.6s both;
     }
-    
     .press-cards > div {
-      background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,255,255,0.1);
       border-radius: 16px;
       padding: 25px;
-      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
       backdrop-filter: blur(10px);
-      position: relative;
-      overflow: hidden;
     }
-    
-    .press-cards > div::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 2px;
-      background: linear-gradient(90deg, transparent, #d4af37, transparent);
-      transition: left 0.6s ease;
-    }
-    
-    .press-cards > div:hover {
-      transform: translateY(-8px);
-      border-color: rgba(212, 175, 55, 0.3);
-      box-shadow: 0 20px 40px rgba(212, 175, 55, 0.1);
-      background: linear-gradient(135deg, rgba(212, 175, 55, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
-    }
-    
-    .press-cards > div:hover::before {
-      left: 100%;
-    }
-
-    .press-source {
-      font-weight: 600;
-      font-size: 0.75rem;
-      color: #d4af37;
-      margin-bottom: 8px;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-    
-    .press-cards a {
-      font-weight: 600; 
-      color: #fff; 
-      text-decoration: none;
-      font-size: 1rem;
-      line-height: 1.4;
-      transition: color 0.3s ease;
-    }
-    
-    .press-cards a:hover {
-      color: #d4af37;
-    }
-
+    .press-cards > div:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(212,175,55,0.1); }
+    .press-source { color: #d4af37; font-size: 0.75rem; font-weight: 600; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 1px; }
+    .press-cards a { color: #fff; text-decoration: none; font-weight: 600; line-height: 1.4; }
+    .press-cards a:hover { color: #d4af37; }
     .contact-section {
-      max-width: 1200px;
-      width: 100%;
-      margin: 100px auto 60px auto;
-      padding: 40px;
-      text-align: center;
-      font-size: 1rem;
-      color: #ccc;
-      background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
-      border-radius: 20px;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(10px);
+      margin: 100px auto 60px; padding: 40px; width: 100%; max-width: 1200px; text-align: center;
+      background: rgba(255,255,255,0.02); border-radius: 20px; border: 1px solid rgba(255,255,255,0.1); backdrop-filter: blur(10px);
       animation: fadeIn 1s ease-out 0.9s both;
     }
-    
-    .contact-section h2 {
-      color: #fff;
-      font-size: 1.5rem;
-      margin-bottom: 16px;
-      font-weight: 700;
-    }
-    
+    .contact-section h2 { font-size: 1.5rem; margin-bottom: 16px; font-weight: 700; color: #fff; }
     .contact-section a {
-      color: #d4af37;
-      text-decoration: none;
-      font-weight: 600;
-      transition: all 0.3s ease;
-      position: relative;
+      color: #d4af37; text-decoration: none; font-weight: 600; position: relative; transition: color 0.3s ease;
     }
-    
-    .contact-section a::after {
-      content: '';
-      position: absolute;
-      bottom: -2px;
-      left: 0;
-      width: 0;
-      height: 2px;
-      background: linear-gradient(90deg, #d4af37, #f4d03f);
-      transition: width 0.3s ease;
-    }
-    
-    .contact-section a:hover {
-      color: #f4d03f;
-      text-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
-    }
-    
-    .contact-section a:hover::after {
-      width: 100%;
-    }
-    
-    /* Responsive Design */
+    .contact-section a::after { content: ''; position: absolute; bottom: -2px; left: 0; width: 0; height: 2px; background: linear-gradient(90deg, #d4af37, #f4d03f); transition: width 0.3s ease; }
+    .contact-section a:hover { color: #f4d03f; }
+    .contact-section a:hover::after { width: 100%; }
     @media (max-width: 768px) {
-      .logo-img {
-        max-width: 280px;
-      }
-      
-      .grid {
-        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-        gap: 20px;
-      }
-      
-      .press-cards {
-        grid-template-columns: 1fr;
-        gap: 20px;
-      }
-      
-      .contact-section {
-        margin: 60px auto 40px auto;
-        padding: 30px 20px;
-      }
+      .logo-img { max-width: 280px; }
+      .grid { grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 20px; }
+      .press-cards { grid-template-columns: 1fr; gap: 20px; }
+      .contact-section { margin: 60px auto 40px; padding: 30px 20px; }
     }
-    
-    /* Scrollbar Styling */
-    ::-webkit-scrollbar {
-      width: 8px;
-    }
-    
-    ::-webkit-scrollbar-track {
-      background: rgba(255, 255, 255, 0.05);
-    }
-    
-    ::-webkit-scrollbar-thumb {
-      background: linear-gradient(135deg, #d4af37, #f4d03f);
-      border-radius: 4px;
-    }
-    
-    ::-webkit-scrollbar-thumb:hover {
-      background: linear-gradient(135deg, #f4d03f, #d4af37);
-    }
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: rgba(255,255,255,0.05); }
+    ::-webkit-scrollbar-thumb { background: linear-gradient(135deg, #d4af37, #f4d03f); border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: linear-gradient(135deg, #f4d03f, #d4af37); }
   </style>
 </head>
-<body style="background-color: #000; margin: 0; padding: 0;">
+<body>
   <div class="preloader" id="preloader">
     <img src="sb_logo_white.png" alt="Loading..."/>
   </div>
@@ -585,15 +255,12 @@
   <div class="container" id="landing">
     <div class="center-block">
       <img src="SB.png" alt="SVNBIRDS Logo" class="logo-img"/>
-      <button class="enter-btn" onclick="enterSite()" aria-label="Enter the SVNBIRDS site">Press Play</button>
+      <button class="enter-btn" onclick="enterSite()">Press Play</button>
     </div>
   </div>
 
   <div class="main-content" id="main">
     <button class="shop-btn" onclick="openShopModal()">Shop</button>
-    <div onclick="goBack()" style="cursor: pointer;">
-      <img src="SB.png" alt="SVNBIRDS Logo" class="logo-img-small"/>
-    </div>
     <div class="grid"></div>
     <div class="press-cards"></div>
     <div class="contact-section">
@@ -602,135 +269,69 @@
     </div>
   </div>
 
-  <!-- Shop Modal -->
   <div id="shopModal" class="modal">
     <div class="modal-content">
       <span class="close" onclick="closeShopModal()">&times;</span>
       <h2>SVNBIRDS Merch</h2>
-      <p>We're cooking up some exclusive merchandise for our community. Be the first to know when our limited drops go live!</p>
-      
+      <p>We're cooking up some exclusive merchandise. Be the first to know when our limited drops go live!</p>
       <form class="notify-form" onsubmit="submitNotifyForm(event)">
         <input type="email" id="notifyEmail" placeholder="Enter your email" required>
         <input type="text" id="notifyName" placeholder="Your name (optional)">
         <button type="submit" class="notify-submit" id="submitBtn">Notify Me</button>
-        <div class="success-message" id="successMessage">
-          🔥 You're on the list! We'll hit you up when the merch drops.
-        </div>
+        <div class="success-message" id="successMessage">🔥 You're on the list! We'll hit you up when the merch drops.</div>
       </form>
     </div>
   </div>
 
   <script>
-    // Use in-memory state instead of localStorage
-    let appState = {
-      entered: false,
-      notifyList: []
-    };
+    let appState = { entered: false, notifyList: [] };
 
     function openShopModal() {
       document.getElementById('shopModal').style.display = 'block';
-      document.body.style.overflow = 'hidden'; // Prevent background scrolling
+      document.body.style.overflow = 'hidden';
     }
-
     function closeShopModal() {
       document.getElementById('shopModal').style.display = 'none';
       document.body.style.overflow = 'auto';
-      // Reset form
       document.getElementById('notifyEmail').value = '';
       document.getElementById('notifyName').value = '';
       document.getElementById('successMessage').style.display = 'none';
-      document.getElementById('submitBtn').disabled = false;
+      const btn = document.getElementById('submitBtn');
+      btn.disabled = false;
+      btn.textContent = 'Notify Me';
     }
-
-    function submitNotifyForm(event) {
-      event.preventDefault();
-      
+    function submitNotifyForm(e) {
+      e.preventDefault();
       const email = document.getElementById('notifyEmail').value;
       const name = document.getElementById('notifyName').value;
-      const submitBtn = document.getElementById('submitBtn');
-      const successMessage = document.getElementById('successMessage');
-      
-      // Disable button to prevent double submission
-      submitBtn.disabled = true;
-      submitBtn.textContent = 'Adding...';
-      
-      // Simulate API call delay
+      const btn = document.getElementById('submitBtn');
+      const msg = document.getElementById('successMessage');
+      btn.disabled = true;
+      btn.textContent = 'Adding...';
       setTimeout(() => {
-        // Store in our in-memory state
-        appState.notifyList.push({
-          email: email,
-          name: name,
-          timestamp: new Date().toISOString()
-        });
-        
-        // Log to console for easy copying to Mailchimp
-        console.log('📧 New merch notification signup:', {
-          email: email,
-          name: name || 'No name provided',
-          timestamp: new Date().toLocaleString()
-        });
-        
-        // Show all signups in console for batch export
-        console.log('📋 All signups so far:', appState.notifyList);
-        
-        // Show success message
-        successMessage.style.display = 'block';
-        submitBtn.textContent = 'Added!';
-        
-        // Auto-close modal after 2 seconds
-        setTimeout(() => {
-          closeShopModal();
-        }, 2000);
-        
+        appState.notifyList.push({ email, name, timestamp: new Date().toISOString() });
+        console.log('New signup:', appState.notifyList);
+        msg.style.display = 'block';
+        btn.textContent = 'Added!';
+        setTimeout(closeShopModal, 2000);
       }, 800);
     }
-
-    // Close modal when clicking outside of it
-    window.onclick = function(event) {
-      const modal = document.getElementById('shopModal');
-      if (event.target === modal) {
-        closeShopModal();
-      }
-    }
-
-    // Close modal with Escape key
-    document.addEventListener('keydown', function(event) {
-      if (event.key === 'Escape') {
-        closeShopModal();
-      }
-    });
+    window.onclick = e => { if (e.target === document.getElementById('shopModal')) closeShopModal(); };
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeShopModal(); });
 
     function enterSite() {
       appState.entered = true;
       document.getElementById('landing').style.display = 'none';
       document.getElementById('main').style.display = 'flex';
     }
-
-    function goBack() {
-      document.getElementById('main').style.display = 'none';
-      document.getElementById('landing').style.display = 'flex';
-      appState.entered = false;
-    }
-
     window.addEventListener('load', () => {
-      // Reset state on load
-      appState.entered = false;
-      
-      const preloader = document.getElementById('preloader');
-      const landing = document.getElementById('landing');
-      const main = document.getElementById('main');
-
-      // Hide preloader after a short delay for better UX
+      const pre = document.getElementById('preloader'),
+            land = document.getElementById('landing'),
+            main = document.getElementById('main');
       setTimeout(() => {
-        if (preloader) preloader.style.display = 'none';
-        
-        if (appState.entered) {
-          landing.style.display = 'none';
-          main.style.display = 'flex';
-        } else {
-          landing.style.display = 'flex';
-          main.style.display = 'none';
-        }
+        pre.style.display = 'none';
+        if (appState.entered) { land.style.display = 'none'; main.style.display = 'flex'; }
+        else { land.style.display = 'flex'; main.style.display = 'none'; }
       }, 1000);
 
       const albums = [
@@ -753,17 +354,14 @@
         { title: "Moyawa Zait", link: "https://music.empi.re/MoyawaZait", cover: "covers/moyawa-zait.jpg" },
         { title: "Langa", link: "https://music.empi.re/langa", cover: "covers/langa.jpg" }
       ];
-
-      const grid = document.querySelector(".grid");
-      albums.forEach((album, index) => {
-        const a = document.createElement("a");
-        a.href = album.link;
-        a.target = "_blank";
-        a.rel = "noopener noreferrer";
-        a.innerHTML = `<img loading="lazy" src="${album.cover}" alt="${album.title}" />`;
-        a.style.animationDelay = `${index * 0.05}s`;
-        a.style.animation = 'fadeIn 0.6s ease-out both';
-        grid.appendChild(a);
+      const grid = document.querySelector('.grid');
+      albums.forEach((a,i) => {
+        const el = document.createElement('a');
+        el.href = a.link; el.target = "_blank"; el.rel = "noopener noreferrer";
+        el.innerHTML = `<img loading="lazy" src="${a.cover}" alt="${a.title}"/>`;
+        el.style.animation = 'fadeIn 0.6s ease-out both';
+        el.style.animationDelay = `${i*0.05}s`;
+        grid.appendChild(el);
       });
 
       const pressLinks = [
@@ -780,20 +378,19 @@
         { title: "SceneNoise – Arab Songs on Ramy S3", url: "https://scenenoise.com/Features/Here-are-All-the-Arab-Songs-You-Can-Hear-on-Season-Three-of-Ramy", source: "SceneNoise" },
         { title: "SceneNoise – Dafencii & Soulja Unite for Godzilla x Kong", url: "https://scenenoise.com/News/Dafencii-Soulja-Unite-for-Godzilla-x-Kong-The-New-Empire-Anthem", source: "SceneNoise" }
       ];
-
-      const pressCards = document.querySelector(".press-cards");
-      pressLinks.forEach(({ title, url, source }, index) => {
-        const div = document.createElement("div");
-        div.className = 'visible';
-        div.innerHTML = `<div class='press-source'>${source}</div><a href='${url}' target='_blank' rel='noopener noreferrer' aria-label='${title}'>${title.replace(source + ' – ', '')}</a>`;
-        div.style.animationDelay = `${index * 0.1}s`;
-        div.style.animation = 'fadeIn 0.6s ease-out both';
-        pressCards.appendChild(div);
+      const pressCards = document.querySelector('.press-cards');
+      pressLinks.forEach((p, i) => {
+        const d = document.createElement('div');
+        d.innerHTML = `<div class="press-source">${p.source}</div><a href="${p.url}" target="_blank" rel="noopener noreferrer">${p.title.replace(p.source + ' – ', '')}</a>`;
+        d.style.animation = 'fadeIn 0.6s ease-out both';
+        d.style.animationDelay = `${i*0.1}s`;
+        pressCards.appendChild(d);
       });
     });
   </script>
 </body>
 </html>
+
 
 
 
