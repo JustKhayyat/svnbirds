@@ -31,13 +31,13 @@ window.onload = () => {
   }
 
   const rimAudio = new Audio("sounds/rim.mp3");
-  rimAudio.volume = 0.3;
+  rimAudio.volume = 0.1;
 
   const kickAudio = new Audio("sounds/kick.mp3");
-  kickAudio.volume = 0.3;
+  kickAudio.volume = 0.1;
 
   const clickAudio = new Audio("sounds/click.mp3");
-  clickAudio.volume = 0.3;
+  clickAudio.volume = 0.1;
 
   // ---------- Scroll-triggered click sound ----------
   let lastScroll = 0;
