@@ -100,35 +100,33 @@ html, body {
   to { opacity: 1; }
 }
 
-/* ========== Releases ========== */
-.releases-section h2 {
-  font-size: 2rem; font-weight: 700; margin-bottom: 20px; text-align: left;
-}
+/* ========== Releases Grid ========== */
 .grid {
-  display: flex; gap: 20px; overflow-x: auto; padding-bottom: 10px;
+  display: grid; grid-template-columns: repeat(auto-fit,minmax(200px,1fr));
+  gap: 25px; margin: 60px auto; max-width: 1200px; width: 100%; padding: 0 20px;
 }
-.grid a {
-  min-width: 200px; flex-shrink: 0; border-radius: 12px; overflow: hidden;
+.grid a { position: relative; border-radius: 12px; overflow: hidden; }
+.grid img { width: 100%; display: block; border-radius: 12px; transition: transform .3s; }
+.grid a:hover img { transform: scale(1.05); }
+.grid a::after {
+  content: attr(data-title);
+  position: absolute; bottom: 0; left: 0; right: 0;
+  padding: 12px; background: linear-gradient(to top,rgba(0,0,0,.8),transparent);
+  font-size: .9rem; font-weight: 600; text-align: left; color: #fff;
+  opacity: 0; transition: opacity .3s;
 }
-.grid img { width: 100%; display: block; border-radius: 12px; }
+.grid a:hover::after { opacity: 1; }
 
-/* ========== Press ========== */
-.press-section h2 {
-  font-size: 2rem; font-weight: 700; margin-bottom: 20px; text-align: left;
-}
+/* ========== Press Cards ========== */
 .press-cards {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  max-height: 600px; /* scrollable if too many items */
-  overflow-y: auto;
-  padding-right: 10px;
+  display: grid; grid-template-columns: repeat(auto-fit,minmax(320px,1fr));
+  gap: 25px; margin: 100px auto; max-width: 1200px; width: 100%; padding: 0 20px;
 }
 .press-cards > div {
-  background: rgba(255,255,255,.02);
-  border: 1px solid rgba(255,255,255,.08);
-  border-radius: 16px; padding: 25px;
+  background: rgba(255,255,255,.02); border: 1px solid rgba(255,255,255,.08);
+  border-radius: 16px; padding: 25px; transition: transform .3s, box-shadow .3s;
 }
+.press-cards > div:hover { transform: translateY(-6px); box-shadow: 0 20px 40px rgba(0,0,0,.5); }
 .press-source { color: #a1a1a6; font-size: .75rem; font-weight: 700; margin-bottom: 8px; text-transform: uppercase; }
 .press-cards a { color: #fff; text-decoration: none; font-weight: 600; }
 .press-cards a:hover { opacity: .7; }
@@ -142,7 +140,10 @@ html, body {
 .contact-section a { color: #fff; font-weight: 600; text-decoration: none; }
 .contact-section a:hover { opacity: .7; }
 
-/* ========== Responsive tweaks ========== */
+/* Scroll fade-ins */
+.fade-in { opacity: 1 !important; transform: translateY(0) !important; transition: all .6s ease !important; }
+
+/* Responsive tweaks */
 @media(max-width:768px){
   .grid{gap:15px;}
   .press-cards{gap:15px;}
