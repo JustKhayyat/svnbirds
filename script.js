@@ -24,6 +24,27 @@ window.onload = () => {
     }
   }, 1000);
 
+  // Force hero video to play
+  const heroVideo = document.getElementById("hero-video");
+  if (heroVideo) {
+    heroVideo.style.opacity = 0; // start transparent
+    heroVideo.play().then(() => {
+      // Fade in smoothly once it starts
+      heroVideo.style.transition = "opacity 1s ease";
+      heroVideo.style.opacity = 0.25; // match your CSS
+    }).catch(err => {
+      // Autoplay failed, retry after delay
+      setTimeout(() => {
+        heroVideo.play().then(() => {
+          heroVideo.style.transition = "opacity 1s ease";
+          heroVideo.style.opacity = 0.25;
+        }).catch(() => console.warn("Hero video autoplay failed."));
+      }, 1000);
+    });
+  }
+};
+
+
   // Populate releases
   const albums = [
     { title: "PRICE", link: "https://music.empi.re/price", cover: "covers/price.jpg" },
