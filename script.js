@@ -1,25 +1,21 @@
 // ---------- App State ----------
-let appState = { entered:false };
+let appState = { entered: false };
 
 // ---------- Enter Site ----------
 function enterSite() {
   appState.entered = true;
-  document.documentElement.scrollTo({ top:0, behavior:"smooth" });
+  const landing = document.getElementById("landing");
+  const main = document.getElementById("main");
+  if (landing) landing.style.display = "none";
+  if (main) main.style.display = "flex";
+  document.documentElement.scrollTo({ top: 0, behavior: "smooth" });
 }
 
 // ---------- On Load ----------
 window.onload = () => {
-  populateReleases();
-  populatePress();
-  setupHeroParticles();
-  setupHeroParallax();
-  setupScrollFade();
-};
-
-// ---------- Populate Releases ----------
-function populateReleases() {
+  // Populate releases
   const albums = [
-  { title: "PRICE", link: "https://music.empi.re/price", cover: "covers/price.jpg" },
+    { title: "PRICE", link: "https://music.empi.re/price", cover: "covers/price.jpg" },
     { title: "KSHFF", link: "https://music.empi.re/kshff", cover: "covers/kshff.jpg" },
     { title: "Mozart", link: "https://music.empi.re/mozart", cover: "covers/mozart.jpg" },
     { title: "Shark", link: "https://music.empi.re/shark", cover: "covers/montiyago-shark.jpeg" },
@@ -41,25 +37,32 @@ function populateReleases() {
     { title: "Fantastic Soulja", link: "https://music.empi.re/fantasticsoulja", cover: "covers/fantastic-soulja.jpg" },
     { title: "Caribby", link: "https://music.empi.re/Caribby", cover: "covers/caribby.jpg" },
     { title: "Figures", link: "https://music.empi.re/figures", cover: "covers/figures.jpg" },
-    { title: "Langa", link: "https://music.empi.re/langa", cover: "covers/langa.jpg" } 
+    { title: "Langa", link: "https://music.empi.re/langa", cover: "covers/langa.jpg" }
   ];
 
   const grid = document.querySelector(".grid");
-  albums.forEach((a,i)=>{
-    const el = document.createElement("a");
-    el.href=a.link; el.target="_blank"; el.rel="noopener noreferrer";
-    el.setAttribute("data-title", a.title);
-    el.innerHTML=`<img loading="lazy" src="${a.cover}" alt="${a.title}">`;
-    el.style.opacity=0; el.style.transform="translateY(20px)";
-    setTimeout(()=>{ el.style.transition="all .6s ease"; el.style.opacity=1; el.style.transform="translateY(0)"; }, i*80);
-    grid.appendChild(el);
-  });
-}
+  if (grid) {
+    albums.forEach((a, i) => {
+      const el = document.createElement("a");
+      el.href = a.link;
+      el.target = "_blank";
+      el.rel = "noopener noreferrer";
+      el.setAttribute("data-title", a.title);
+      el.innerHTML = `<img loading="lazy" src="${a.cover}" alt="${a.title}">`;
+      el.style.opacity = 0;
+      el.style.transform = "translateY(20px)";
+      setTimeout(() => {
+        el.style.transition = "all .6s ease";
+        el.style.opacity = 1;
+        el.style.transform = "translateY(0)";
+      }, i * 80);
+      grid.appendChild(el);
+    });
+  }
 
-// ---------- Populate Press ----------
-function populatePress() {
+  // Populate press
   const pressLinks = [
-   { title: "GRAMMYS – 5 Independent Record Labels Bringing The Sounds Of The Middle East & North Africa", url: "https://www.grammy.com/news/5-middle-east-north-africa-independent-record-labels-to-know-beirut-red-diamond", source: "GRAMMYS" },
+    { title: "GRAMMYS – 5 Independent Record Labels Bringing The Sounds Of The Middle East & North Africa", url: "https://www.grammy.com/news/5-middle-east-north-africa-independent-record-labels-to-know-beirut-red-diamond", source: "GRAMMYS" },
     { title: "Hard Knock Radio – Suhel Nafar on Empowering Palestinian & Arab Artists", url: "https://hardknockradio.org/suhel-nafar-speaks-on-empowering-palestinian-and-arab-music-hip-hop-artists/", source: "Hard Knock Radio" },
     { title: "SceneNoise – 77: The Egyptian Producer Bringing SWANA Together", url: "https://scenenoise.com/Features/77-The-Egyptian-Producer-Bringing-SWANA-Together-from-Malaysia", source: "SceneNoise" },
     { title: "SceneNoise – Artist Spotlight: Soulja, Sudan's Suave Rap Star", url: "https://scenenoise.com/Features/Artist-Spotlight-Soulja-Sudan-s-Suave-Rap-Superstar", source: "SceneNoise" },
@@ -70,82 +73,123 @@ function populatePress() {
     { title: "SceneNoise – Montiyago Drops 'Kalam Kteer'", url: "https://m.scenenoise.com/New-Music/Sudanese-Rapper-Montiyago-Releases-Debut-Single-Kalam-Ktee", source: "SceneNoise" },
     { title: "MILLE WORLD – Introducing Rapper Montiyago", url: "https://www.milleworld.com/introducing-genre-bending-sudanese-rapper-montiyago/", source: "MILLE WORLD" },
     { title: "SceneNoise – Arab Songs on Ramy S3", url: "https://scenenoise.com/Features/Here-are-All-the-Arab-Songs-You-Can-Hear-on-Season-Three-of-Ramy", source: "SceneNoise" },
-    { title: "SceneNoise – Dafencii & Soulja Unite for Godzilla x Kong", url: "https://scenenoise.com/News/Dafencii-Soulja-Unite-for-Godzilla-x-Kong-The-New-Empire-Anthem", source: "SceneNoise" } 
+    { title: "SceneNoise – Dafencii & Soulja Unite for Godzilla x Kong", url: "https://scenenoise.com/News/Dafencii-Soulja-Unite-for-Godzilla-x-Kong-The-New-Empire-Anthem", source: "SceneNoise" }
   ];
 
   const press = document.querySelector(".press-cards");
-  pressLinks.forEach((p,i)=>{
-    const d=document.createElement("div");
-    d.innerHTML=`<div class="press-source">${p.source}</div><a href="${p.url}" target="_blank" rel="noopener noreferrer">${p.title.replace(p.source+" – ","")}</a>`;
-    d.style.opacity=0; d.style.transform="translateY(20px)";
-    setTimeout(()=>{ d.style.transition="all .6s ease"; d.style.opacity=1; d.style.transform="translateY(0)"; }, i*120);
-    press.appendChild(d);
-  });
-}
-
-// ---------- Hero Particles ----------
-function setupHeroParticles() {
-  const canvas = document.getElementById("hero-canvas");
-  const ctx = canvas.getContext("2d");
-  canvas.width = window.innerWidth; canvas.height = window.innerHeight;
-
-  let particles = [];
-  for(let i=0;i<80;i++){
-    particles.push({
-      x: Math.random()*canvas.width,
-      y: Math.random()*canvas.height,
-      r: Math.random()*2+1,
-      dx: (Math.random()-0.5)*0.5,
-      dy: (Math.random()-0.5)*0.5
+  if (press) {
+    pressLinks.forEach((p, i) => {
+      const d = document.createElement("div");
+      d.innerHTML = `<div class="press-source">${p.source}</div><a href="${p.url}" target="_blank" rel="noopener noreferrer">${p.title.replace(p.source + " – ", "")}</a>`;
+      d.style.opacity = 0;
+      d.style.transform = "translateY(20px)";
+      setTimeout(() => {
+        d.style.transition = "all .6s ease";
+        d.style.opacity = 1;
+        d.style.transform = "translateY(0)";
+      }, i * 120);
+      press.appendChild(d);
     });
   }
 
-  function animate(){
-    ctx.clearRect(0,0,canvas.width,canvas.height);
-    particles.forEach(p=>{
-      p.x+=p.dx; p.y+=p.dy;
-      if(p.x>canvas.width||p.x<0)p.dx*=-1;
-      if(p.y>canvas.height||p.y<0)p.dy*=-1;
-      ctx.beginPath();
-      ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
-      ctx.fillStyle="rgba(255,255,255,0.5)";
-      ctx.fill();
-    });
-    requestAnimationFrame(animate);
-  }
-  animate();
+  // Hero parallax + subtitle fade
+  window.addEventListener("scroll", () => {
+    const scrollY = window.scrollY;
+    const hero = document.querySelector(".hero-title");
+    const subtitle = document.querySelector(".hero-subtitle");
 
-  window.addEventListener("resize",()=>{ canvas.width=window.innerWidth; canvas.height=window.innerHeight; });
-}
-
-// ---------- Hero Parallax ----------
-function setupHeroParallax() {
-  const heroTitle=document.querySelector(".hero-title");
-  const heroSubtitle=document.querySelector(".hero-subtitle");
-
-  window.addEventListener("scroll",()=>{
-    const scrollY=window.scrollY;
-    if(heroTitle) heroTitle.style.transform=`translateY(${scrollY*0.2}px)`;
-    if(heroSubtitle){
-      const opacity=Math.max(1-scrollY/300,0);
-      heroSubtitle.style.opacity=opacity;
-      heroSubtitle.style.pointerEvents=opacity>0?"auto":"none";
+    if (hero) hero.style.transform = `translateY(${scrollY * 0.2}px)`;
+    if (subtitle) {
+      const opacity = Math.max(1 - scrollY / 300, 0);
+      subtitle.style.opacity = opacity;
+      subtitle.style.pointerEvents = opacity > 0 ? "auto" : "none";
     }
   });
 
-  window.addEventListener("mousemove",(e)=>{
-    if(heroTitle) heroTitle.style.transform=`translate(${(e.clientX-window.innerWidth/2)*0.02}px, ${(e.clientY-window.innerHeight/2)*0.02}px)`;
-    if(heroSubtitle) heroSubtitle.style.transform=`translate(${(e.clientX-window.innerWidth/2)*0.01}px, ${(e.clientY-window.innerHeight/2)*0.01}px)`;
-  });
-}
-
-// ---------- Scroll Fade-ins ----------
-function setupScrollFade() {
-  const observer = new IntersectionObserver(entries=>{
-    entries.forEach(entry=>{
-      if(entry.isIntersecting) entry.target.classList.add("fade-in");
+  // Scroll fade-ins
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) entry.target.classList.add("fade-in");
     });
-  },{ threshold:0.2 });
+  }, { threshold: 0.2 });
 
-  document.querySelectorAll(".hero-content, .grid, .press-cards, .contact-section").forEach(el=>observer.observe(el));
-}
+  document.querySelectorAll(".hero-content, .grid, .press-cards, .contact-section").forEach(el => observer.observe(el));
+
+  // ---------- Hero Particles ----------
+  const hero = document.querySelector(".hero");
+  if (hero) {
+    const canvas = document.createElement("canvas");
+    canvas.id = "hero-canvas";
+    canvas.style.position = "absolute";
+    canvas.style.top = 0;
+    canvas.style.left = 0;
+    canvas.style.width = "100%";
+    canvas.style.height = "100%";
+    canvas.style.zIndex = 0;
+    hero.appendChild(canvas);
+
+    const ctx = canvas.getContext("2d");
+    let particles = [];
+    const particleCount = 60;
+
+    function resizeCanvas() {
+      canvas.width = hero.offsetWidth;
+      canvas.height = hero.offsetHeight;
+    }
+    window.addEventListener("resize", resizeCanvas);
+    resizeCanvas();
+
+    function initParticles() {
+      particles = [];
+      for (let i = 0; i < particleCount; i++) {
+        particles.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          vx: (Math.random() - 0.5) * 0.5,
+          vy: (Math.random() - 0.5) * 0.5,
+          size: Math.random() * 3 + 1,
+        });
+      }
+    }
+    initParticles();
+
+    function animateParticles() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      particles.forEach(p => {
+        p.x += p.vx;
+        p.y += p.vy;
+
+        // Bounce off edges
+        if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+        if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        ctx.fillStyle = "rgba(255,255,255,0.6)";
+        ctx.fill();
+      });
+
+      requestAnimationFrame(animateParticles);
+    }
+    animateParticles();
+
+    // Particle interaction with mouse
+    const mouse = { x: null, y: null };
+    window.addEventListener("mousemove", e => {
+      mouse.x = e.clientX;
+      mouse.y = e.clientY;
+      particles.forEach(p => {
+        const dx = mouse.x - p.x;
+        const dy = mouse.y - p.y;
+        const dist = Math.sqrt(dx*dx + dy*dy);
+        if (dist < 100) {
+          const angle = Math.atan2(dy, dx);
+          const force = (100 - dist) / 100;
+          p.vx -= Math.cos(angle) * force * 0.3;
+          p.vy -= Math.sin(angle) * force * 0.3;
+        }
+      });
+    });
+  }
+};
+
