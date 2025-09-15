@@ -34,11 +34,12 @@
     <!-- Shop button now links out -->
     <a class="shop-btn" href="https://shopsvnbirds.com" target="_blank" rel="noopener noreferrer">Shop</a>
 
-    <!-- Hero -->
+   <!-- Hero -->
 <section class="hero" id="hero">
-  <video autoplay muted loop playsinline class="hero-bg">
+  <video autoplay muted loop playsinline class="hero-bg" poster="media/moving-light-streaks-poster.jpg">
     <source src="media/moving-light-streaks.mp4" type="video/mp4">
-    Your browser does not support the video tag.
+    <!-- Fallback for old browsers -->
+    <img src="media/moving-light-streaks-poster.jpg" alt="Background">
   </video>
 
   <div class="hero-content">
@@ -47,7 +48,6 @@
     <div class="scroll-down">⌄</div>
   </div>
 </section>
-
 
     <!-- Releases -->
     <div class="grid" id="releases"></div>
