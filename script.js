@@ -9,46 +9,10 @@ function enterSite() {
   if (landing) landing.style.display = "none";
   if (main) main.style.display = "flex";
   document.documentElement.scrollTo({ top: 0, behavior: "smooth" });
-
-  // Start ambient loop
-  startAmbient();
 }
 
 // ---------- On Load ----------
 window.onload = () => {
-
-  // ---------- Audio Setup ----------
-  const ambient = new Audio("sounds/ambient-loop.mp3");
-  ambient.loop = true;
-  ambient.volume = 1; // keep original mix
-  let ambientStarted = false;
-
-  function startAmbient() {
-    if (!ambientStarted) {
-      ambient.play().catch(() => console.log("Ambient blocked until user interacts"));
-      ambientStarted = true;
-    }
-  }
-
-  const rimAudio = new Audio("sounds/rim.mp3");
-  rimAudio.volume = 0.1;
-
-  const kickAudio = new Audio("sounds/kick.mp3");
-  kickAudio.volume = 0.1;
-
-  const clickAudio = new Audio("sounds/click.mp3");
-  clickAudio.volume = 0.1;
-
-  // ---------- Scroll-triggered click sound ----------
-  let lastScroll = 0;
-  window.addEventListener("scroll", () => {
-    const now = Date.now();
-    if (now - lastScroll > 300) { // throttle
-      const sound = clickAudio.cloneNode();
-      sound.play();
-      lastScroll = now;
-    }
-  });
 
   // ---------- Populate Releases ----------
   const albums = [
@@ -94,12 +58,6 @@ window.onload = () => {
         el.style.transform = "translateY(0)";
       }, i * 80);
       grid.appendChild(el);
-
-      // Kick sound on hover
-      el.addEventListener("mouseenter", () => {
-        const sound = kickAudio.cloneNode();
-        sound.play();
-      });
     });
   }
 
@@ -132,13 +90,6 @@ window.onload = () => {
         d.style.transform = "translateY(0)";
       }, i * 120);
       press.appendChild(d);
-
-      // Kick sound on hover
-      const link = d.querySelector("a");
-      link.addEventListener("mouseenter", () => {
-        const sound = kickAudio.cloneNode();
-        sound.play();
-      });
     });
   }
 
@@ -154,6 +105,15 @@ window.onload = () => {
       subtitle.style.pointerEvents = opacity > 0 ? "auto" : "none";
     }
   });
+
+  // ---------- Scroll Fade-ins ----------
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) entry.target.classList.add("fade-in");
+    });
+  }, { threshold: 0.2 });
+
+  document.querySelectorAll(".hero-content, .grid, .press-cards, .contact-section").forEach(el => observer.observe(el));
 
   // ---------- Hero Cursor Ripples + Tilt ----------
   const hero = document.querySelector(".hero");
@@ -180,7 +140,9 @@ window.onload = () => {
 
     function animate() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ripples.forEach((r) => {
+
+      // draw ripples
+      ripples.forEach((r, i) => {
         r.radius += r.speed;
         r.alpha -= 0.01;
         ctx.beginPath();
@@ -189,6 +151,8 @@ window.onload = () => {
         ctx.lineWidth = 2;
         ctx.stroke();
       });
+
+      // remove faded ripples
       ripples = ripples.filter(r => r.alpha > 0);
       requestAnimationFrame(animate);
     }
@@ -205,16 +169,11 @@ window.onload = () => {
         alpha: 0.4
       });
 
+      // subtle tilt effect on content only
       const moveX = (e.clientX / window.innerWidth - 0.5) * 10;
       const moveY = (e.clientY / window.innerHeight - 0.5) * 10;
       const content = hero.querySelector(".hero-content");
       if (content) content.style.transform = `perspective(800px) rotateX(${ -moveY }deg) rotateY(${ moveX }deg)`;
-    });
-
-    // Rim sound on click anywhere
-    window.addEventListener("click", () => {
-      const sound = rimAudio.cloneNode();
-      sound.play();
     });
 
     // Reset tilt when mouse leaves hero
