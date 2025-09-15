@@ -104,11 +104,12 @@ window.addEventListener("scroll", () => {
     hero.style.transform = `translateY(${scrollY * 0.2}px)`;
   }
   if (subtitle) {
-    subtitle.style.opacity = Math.max(1 - scrollY / 300, 0);
+    const opacity = Math.max(1 - scrollY / 300, 0);
+    subtitle.style.opacity = opacity;
+    subtitle.style.pointerEvents = opacity > 0 ? "auto" : "none";
   }
 });
 
-  
   // Scroll fade-ins
   const observer = new IntersectionObserver(entries => {
     entries.forEach(entry => {
