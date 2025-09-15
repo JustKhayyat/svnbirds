@@ -1,4 +1,4 @@
-<script>
+
     let appState = { entered:false, notifyList:[] };
 
     function enterSite(){
@@ -78,4 +78,3 @@
       document.getElementById('successMessage').style.display='block';
       setTimeout(closeShopModal,2000);
     }
-  </script>
