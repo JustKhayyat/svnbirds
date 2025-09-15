@@ -119,9 +119,7 @@ window.onload = () => {
   const hero = document.querySelector(".hero");
   if (hero) {
     // Set poster as background
-    hero.style.backgroundImage = "url('media/moving-light-streaks-poster.jpg')";
-    hero.style.backgroundSize = "cover";
-    hero.style.backgroundPosition = "center";
+    
     hero.style.overflow = "hidden";
     hero.style.position = "relative";
 
