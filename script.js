@@ -94,6 +94,15 @@ window.onload = () => {
     press.appendChild(d);
   });
 
+// Hero parallax effect
+window.addEventListener("scroll", () => {
+  const scrollY = window.scrollY;
+  const hero = document.querySelector(".hero-title");
+  if (hero) {
+    hero.style.transform = `translateY(${scrollY * 0.2}px)`; // 0.2 = subtle shift
+  }
+});
+  
   // Scroll fade-ins
   const observer = new IntersectionObserver(entries => {
     entries.forEach(entry => {
