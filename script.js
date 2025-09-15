@@ -125,4 +125,70 @@ document.addEventListener("keydown", e => {
   if (e.key === "Enter" && document.activeElement.id === "notifyEmail") {
     document.querySelector("form").dispatchEvent(new Event("submit", { cancelable: true, bubbles: true }));
   }
+}); // ✅ close this event listener
+
+// ---------- Audio Player ----------
+const audio = document.getElementById("audio");
+const playPauseBtn = document.getElementById("playPauseBtn");
+const prevBtn = document.getElementById("prevBtn");
+const nextBtn = document.getElementById("nextBtn");
+const seekBar = document.getElementById("seekBar");
+const trackTitle = document.getElementById("track-title");
+
+// Playlist (replace links with MP3s or preview URLs)
+const playlist = [
+  { title: "KSHFF", src: "https://cdn.pixabay.com/download/audio/2022/03/15/audio_example1.mp3" },
+  { title: "Mozart", src: "https://cdn.pixabay.com/download/audio/2022/04/12/audio_example2.mp3" },
+  { title: "Shark", src: "https://cdn.pixabay.com/download/audio/2022/01/05/audio_example3.mp3" }
+];
+
+let currentTrack = 0;
+
+// Load track
+function loadTrack(index) {
+  currentTrack = index;
+  audio.src = playlist[index].src;
+  trackTitle.textContent = playlist[index].title;
+  audio.load();
+}
+loadTrack(currentTrack);
+
+// Play/pause
+playPauseBtn.addEventListener("click", () => {
+  if (audio.paused) {
+    audio.play();
+    playPauseBtn.textContent = "⏸";
+  } else {
+    audio.pause();
+    playPauseBtn.textContent = "▶";
+  }
+});
+
+// Next/Prev
+nextBtn.addEventListener("click", () => {
+  currentTrack = (currentTrack + 1) % playlist.length;
+  loadTrack(currentTrack);
+  audio.play();
+  playPauseBtn.textContent = "⏸";
+});
+prevBtn.addEventListener("click", () => {
+  currentTrack = (currentTrack - 1 + playlist.length) % playlist.length;
+  loadTrack(currentTrack);
+  audio.play();
+  playPauseBtn.textContent = "⏸";
+});
+
+// Seek bar
+audio.addEventListener("timeupdate", () => {
+  seekBar.value = (audio.currentTime / audio.duration) * 100 || 0;
+});
+seekBar.addEventListener("input", () => {
+  audio.currentTime = (seekBar.value / 100) * audio.duration;
+});
+
+// Auto next track
+audio.addEventListener("ended", () => {
+  currentTrack = (currentTrack + 1) % playlist.length;
+  loadTrack(currentTrack);
+  audio.play();
 });
