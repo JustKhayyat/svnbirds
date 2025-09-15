@@ -118,11 +118,6 @@ window.onload = () => {
   // ---------- Hero Cursor Ripples + Tilt ----------
   const hero = document.querySelector(".hero");
   if (hero) {
-    // Set poster as background
-    
-    hero.style.overflow = "hidden";
-    hero.style.position = "relative";
-
     const canvas = document.createElement("canvas");
     canvas.id = "hero-canvas";
     canvas.style.position = "absolute";
@@ -139,53 +134,53 @@ window.onload = () => {
     function resizeCanvas() {
       canvas.width = hero.offsetWidth;
       canvas.height = hero.offsetHeight;
-    }window.addEventListener("resize", resizeCanvas);
-resizeCanvas();
+    }
+    window.addEventListener("resize", resizeCanvas);
+    resizeCanvas();
 
-function animate() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-  // draw ripples
-  ripples.forEach((r, i) => {
-    r.radius += r.speed;
-    r.alpha -= 0.01;
-    ctx.beginPath();
-    ctx.arc(r.x, r.y, r.radius, 0, Math.PI * 2);
-    ctx.strokeStyle = `rgba(255,255,255,${r.alpha})`;
-    ctx.lineWidth = 2;
-    ctx.stroke();
-  });
+      // draw ripples
+      ripples.forEach((r, i) => {
+        r.radius += r.speed;
+        r.alpha -= 0.01;
+        ctx.beginPath();
+        ctx.arc(r.x, r.y, r.radius, 0, Math.PI * 2);
+        ctx.strokeStyle = `rgba(255,255,255,${r.alpha})`;
+        ctx.lineWidth = 2;
+        ctx.stroke();
+      });
 
-  // remove faded ripples
-  ripples = ripples.filter(r => r.alpha > 0);
-  requestAnimationFrame(animate);
-}
-animate();
+      // remove faded ripples
+      ripples = ripples.filter(r => r.alpha > 0);
+      requestAnimationFrame(animate);
+    }
+    animate();
 
-// Cursor ripple + tilt
-window.addEventListener("mousemove", e => {
-  const rect = hero.getBoundingClientRect();
-  ripples.push({
-    x: e.clientX - rect.left,
-    y: e.clientY - rect.top,
-    radius: 0,
-    speed: 1.5,
-    alpha: 0.4
-  });
+    // Cursor ripple + tilt
+    window.addEventListener("mousemove", e => {
+      const rect = hero.getBoundingClientRect();
+      ripples.push({
+        x: e.clientX - rect.left,
+        y: e.clientY - rect.top,
+        radius: 0,
+        speed: 1.5,
+        alpha: 0.4
+      });
 
-  // subtle tilt effect
-  const moveX = (e.clientX / window.innerWidth - 0.5) * 10;
-  const moveY = (e.clientY / window.innerHeight - 0.5) * 10;
-  const content = hero.querySelector(".hero-content");
-  if (content) content.style.transform = `perspective(800px) rotateX(${ -moveY }deg) rotateY(${ moveX }deg)`;
-});
+      // subtle tilt effect on content only
+      const moveX = (e.clientX / window.innerWidth - 0.5) * 10;
+      const moveY = (e.clientY / window.innerHeight - 0.5) * 10;
+      const content = hero.querySelector(".hero-content");
+      if (content) content.style.transform = `perspective(800px) rotateX(${ -moveY }deg) rotateY(${ moveX }deg)`;
+    });
 
-// Reset tilt when mouse leaves hero
-window.addEventListener("mouseleave", () => {
-  const content = hero.querySelector(".hero-content");
-  if (content) content.style.transform = "perspective(800px) rotateX(0deg) rotateY(0deg)";
-});
-
+    // Reset tilt when mouse leaves hero
+    window.addEventListener("mouseleave", () => {
+      const content = hero.querySelector(".hero-content");
+      if (content) content.style.transform = "perspective(800px) rotateX(0deg) rotateY(0deg)";
+    });
   }
 
 };
