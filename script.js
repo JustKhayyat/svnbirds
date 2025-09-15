@@ -15,9 +15,23 @@ function enterSite() {
 window.onload = () => {
 
   // ---------- Audio Setup ----------
-  const ambientAudio = new Audio("sounds/ambient-loop.mp3");
-  ambientAudio.loop = true;
-  ambientAudio.play().catch(() => { /* Autoplay may be blocked */ });
+ const ambient = new Audio("sounds/ambient-loop.mp3");
+ambient.loop = true;
+let ambientStarted = false;
+
+function startAmbient() {
+  if (!ambientStarted) {
+    ambient.play().catch(() => {
+      console.log("Ambient loop blocked until user interacts");
+    });
+    ambientStarted = true;
+  }
+}
+
+// Trigger after first interaction
+window.addEventListener("mousemove", startAmbient, { once: true });
+window.addEventListener("click", startAmbient, { once: true });
+
 
   const rimAudio = new Audio("sounds/rim.mp3");
   const kickAudio = new Audio("sounds/kick.mp3");
