@@ -112,4 +112,11 @@ body {
   .logo-img{max-width:280px;}
   .grid{gap:15px;}
   .press-cards{gap:15px;}
+
+  .fade-in {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+  transition: all .8s ease !important;
+}
+
 }
