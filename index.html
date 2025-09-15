@@ -4,31 +4,120 @@
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>SVNBIRDS</title>
+  <meta name="description" content="SVNBIRDS — Independent music label. Stream our latest drops.">
+  <meta property="og:title" content="SVNBIRDS">
+  <meta property="og:description" content="Independent label pushing sounds with EMPIRE.">
+  <meta property="og:image" content="cover-image.jpg">
+  <meta property="og:url" content="https://svnbirds.com">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="keywords" content="SVNBIRDS, music label, independent music, Middle East, Empire, Sudanese rap, SWANA">
+  <meta name="twitter:site" content="@svnbirds">
+  <link rel="icon" href="sb_logo_white.png" type="image/png"/>
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-<!-- Preloader -->
-<div id="preloader">
-  <div class="spinner"></div>
-</div>
+  <!-- Shop Button -->
+  <a class="shop-btn" href="https://shopsvnbirds.com" target="_blank" rel="noopener noreferrer">Shop</a>
 
-<!-- Shop Button -->
-<a class="shop-btn" href="https://shopsvnbirds.com" target="_blank" rel="noopener noreferrer">Shop</a>
+  <!-- Hero Section -->
+  <section class="hero" id="hero">
+    <video id="hero-video" class="hero-bg" autoplay muted loop playsinline preload="auto" poster="media/moving-light-streaks-poster.jpg">
+      <source src="media/moving-light-streaks-fixed.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <h1 class="hero-title">SVNBIRDS</h1>
+      <p class="hero-subtitle">Independent Label · Artists · Culture</p>
+    </div>
+  </section>
 
-<!-- Hero Section -->
-<section class="hero" id="hero">
-  <video id="hero-video" class="hero-bg" autoplay muted loop playsinline preload="auto" poster="media/moving-light-streaks-poster.jpg">
-    <source src="media/moving-light-streaks-fixed.mp4" type="video/mp4">
-    Your browser does not support the video tag.
-  </video>
-
-  <div class="hero-content">
-    <h1 class="hero-title">SVNBIRDS</h1>
-    <p class="hero-subtitle">Independent Label · Artists · Culture</p>
+  <!-- Releases Grid -->
+  <div class="grid" id="releases">
+    <!-- Example release cards -->
+    <a href="#" data-title="Release 1"><img src="media/release1.jpg" alt="Release 1"></a>
+    <a href="#" data-title="Release 2"><img src="media/release2.jpg" alt="Release 2"></a>
+    <a href="#" data-title="Release 3"><img src="media/release3.jpg" alt="Release 3"></a>
   </div>
-</section>
 
-<script src="script.js"></script>
+  <!-- Press Cards -->
+  <div class="press-cards">
+    <div>
+      <div class="press-source">Pitchfork</div>
+      <a href="#">"SVNBIRDS is redefining Middle Eastern rap."</a>
+    </div>
+    <div>
+      <div class="press-source">Complex</div>
+      <a href="#">"Independent and unstoppable."</a>
+    </div>
+  </div>
+
+  <!-- Contact Section -->
+  <div class="contact-section">
+    <h2>Contact</h2>
+    <p><a href="mailto:booking@svnbirds.com">booking@svnbirds.com</a></p>
+    <p><a href="https://www.instagram.com/svnbirdspro/" target="_blank">@svnbirdspro</a></p>
+  </div>
+
+  <!-- Scripts -->
+  <script>
+    // Hero video autoplay fix
+    window.addEventListener('load', () => {
+      const heroVideo = document.getElementById('hero-video');
+      if (!heroVideo) return;
+
+      heroVideo.muted = true;
+      const tryPlay = () => {
+        heroVideo.play().catch(() => setTimeout(tryPlay, 500));
+      };
+      tryPlay();
+    });
+  </script>
+
+  <style>
+    /* ====== Base ====== */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { background: #000; font-family: 'Grift', sans-serif; color: #fff; line-height: 1.5; overflow-x: hidden; }
+
+    /* ====== Shop Button ====== */
+    .shop-btn { position: fixed; top: 20px; right: 20px; background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.2); padding: 10px 20px; border-radius: 8px; color: #fff; font-weight: 700; z-index: 1000; transition: all .3s; text-decoration: none; }
+    .shop-btn:hover { background: #fff; color: #000; }
+
+    /* ====== Hero ====== */
+    .hero { position: relative; min-height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center; overflow: hidden; background: #000; }
+    .hero-bg { position: absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; z-index:0; }
+    .hero-overlay { position:absolute; inset:0; background: rgba(0,0,0,0.35); z-index:1; }
+    .hero-content { position: relative; z-index:2; }
+    .hero-title { font-size: clamp(64px, 10vw, 140px); font-weight:900; line-height:1.1; }
+    .hero-subtitle { font-size: clamp(18px, 2vw, 28px); font-weight:400; margin-top:12px; color:#a1a1a6; }
+
+    /* ====== Releases Grid ====== */
+    .grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(200px,1fr)); gap:25px; margin:60px auto; max-width:1200px; width:100%; padding:0 20px; }
+    .grid a { position: relative; border-radius:12px; overflow:hidden; text-decoration:none; }
+    .grid img { width:100%; display:block; border-radius:12px; transition: transform .3s; }
+    .grid a:hover img { transform: scale(1.05); }
+    .grid a::after { content: attr(data-title); position:absolute; bottom:0; left:0; right:0; padding:12px; background: linear-gradient(to top, rgba(0,0,0,.8), transparent); font-size:.9rem; font-weight:600; text-align:left; color:#fff; opacity:0; transition: opacity .3s; }
+    .grid a:hover::after { opacity:1; }
+
+    /* ====== Press Cards ====== */
+    .press-cards { display:grid; grid-template-columns: repeat(auto-fit,minmax(320px,1fr)); gap:25px; margin:100px auto; max-width:1200px; width:100%; padding:0 20px; }
+    .press-cards > div { background: rgba(255,255,255,.02); border:1px solid rgba(255,255,255,.08); border-radius:16px; padding:25px; transition: transform .3s, box-shadow .3s; }
+    .press-cards > div:hover { transform: translateY(-6px); box-shadow: 0 20px 40px rgba(0,0,0,.5); }
+    .press-source { color:#a1a1a6; font-size:.75rem; font-weight:700; margin-bottom:8px; text-transform:uppercase; }
+    .press-cards a { color:#fff; text-decoration:none; font-weight:600; }
+    .press-cards a:hover { opacity:.7; }
+
+    /* ====== Contact ====== */
+    .contact-section { text-align:center; margin:100px auto 60px; padding:40px 20px; max-width:800px; background: rgba(255,255,255,.02); border-radius:16px; border:1px solid rgba(255,255,255,.08); }
+    .contact-section h2 { margin-bottom:20px; font-size:1.6rem; font-weight:700; }
+    .contact-section a { color:#fff; font-weight:600; text-decoration:none; }
+    .contact-section a:hover { opacity:.7; }
+
+    /* ====== Responsive ====== */
+    @media(max-width:768px){ .grid, .press-cards { gap:15px; } }
+  </style>
+
 </body>
 </html>
