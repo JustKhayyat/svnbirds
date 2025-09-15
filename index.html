@@ -17,8 +17,6 @@
   <link rel="stylesheet" href="style.css">
 </head>
 
-
-  
 <body>
   <!-- Preloader -->
   <div class="preloader" id="preloader">
@@ -33,7 +31,8 @@
 
   <!-- Main -->
   <div class="main-content" id="main">
-    <a class="shop-btn" onclick="openShopModal()">Shop</a>
+    <!-- Shop button now links out -->
+    <a class="shop-btn" href="https://shopsvnbirds.com" target="_blank" rel="noopener noreferrer">Shop</a>
 
     <!-- Hero -->
     <section class="hero">
@@ -56,19 +55,8 @@
     </div>
   </div>
 
-  <!-- Shop Modal -->
-  <div id="shopModal" class="modal">
-    <div class="modal-content">
-      <span class="close" onclick="closeShopModal()">&times;</span>
-      <h2>SVNBIRDS Merch</h2>
-      <p>Exclusive drops coming soon. Be the first to know.</p>
-      <form onsubmit="submitNotifyForm(event)">
-        <input type="email" id="notifyEmail" placeholder="Email" required style="padding:10px;width:100%;margin:10px 0;border-radius:6px;border:none;">
-        <button type="submit" class="notify-submit" style="padding:10px 20px;border:none;background:#d4af37;color:#000;font-weight:700;border-radius:6px;cursor:pointer;">Notify Me</button>
-        <div id="successMessage" style="margin-top:15px;display:none;color:#4caf50;font-weight:600;">🔥 You’re on the list!</div>
-      </form>
-    </div>
-  </div>
+  <!-- 🔥 Shop Modal removed (not needed anymore) -->
+
   <script src="script.js"></script>
 </body>
 </html>
