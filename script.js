@@ -13,7 +13,8 @@ function enterSite() {
 
 // ---------- On Load ----------
 window.onload = () => {
-  // Populate releases
+
+  // ---------- Populate Releases ----------
   const albums = [
     { title: "PRICE", link: "https://music.empi.re/price", cover: "covers/price.jpg" },
     { title: "KSHFF", link: "https://music.empi.re/kshff", cover: "covers/kshff.jpg" },
@@ -60,7 +61,7 @@ window.onload = () => {
     });
   }
 
-  // Populate press
+  // ---------- Populate Press ----------
   const pressLinks = [
     { title: "GRAMMYS – 5 Independent Record Labels Bringing The Sounds Of The Middle East & North Africa", url: "https://www.grammy.com/news/5-middle-east-north-africa-independent-record-labels-to-know-beirut-red-diamond", source: "GRAMMYS" },
     { title: "Hard Knock Radio – Suhel Nafar on Empowering Palestinian & Arab Artists", url: "https://hardknockradio.org/suhel-nafar-speaks-on-empowering-palestinian-and-arab-music-hip-hop-artists/", source: "Hard Knock Radio" },
@@ -92,12 +93,11 @@ window.onload = () => {
     });
   }
 
-  // Hero parallax + subtitle fade
+  // ---------- Hero Parallax + Subtitle Fade ----------
   window.addEventListener("scroll", () => {
     const scrollY = window.scrollY;
     const hero = document.querySelector(".hero-title");
     const subtitle = document.querySelector(".hero-subtitle");
-
     if (hero) hero.style.transform = `translateY(${scrollY * 0.2}px)`;
     if (subtitle) {
       const opacity = Math.max(1 - scrollY / 300, 0);
@@ -106,7 +106,7 @@ window.onload = () => {
     }
   });
 
-  // Scroll fade-ins
+  // ---------- Scroll Fade-ins ----------
   const observer = new IntersectionObserver(entries => {
     entries.forEach(entry => {
       if (entry.isIntersecting) entry.target.classList.add("fade-in");
@@ -115,9 +115,16 @@ window.onload = () => {
 
   document.querySelectorAll(".hero-content, .grid, .press-cards, .contact-section").forEach(el => observer.observe(el));
 
-  // ---------- Hero Particles ----------
+  // ---------- Hero Cursor Ripples + Tilt ----------
   const hero = document.querySelector(".hero");
   if (hero) {
+    // Set poster as background
+    hero.style.backgroundImage = "url('media/moving-light-streaks-fixed-poster.jpg')";
+    hero.style.backgroundSize = "cover";
+    hero.style.backgroundPosition = "center";
+    hero.style.overflow = "hidden";
+    hero.style.position = "relative";
+
     const canvas = document.createElement("canvas");
     canvas.id = "hero-canvas";
     canvas.style.position = "absolute";
@@ -125,12 +132,11 @@ window.onload = () => {
     canvas.style.left = 0;
     canvas.style.width = "100%";
     canvas.style.height = "100%";
-    canvas.style.zIndex = 0;
+    canvas.style.pointerEvents = "none";
     hero.appendChild(canvas);
 
     const ctx = canvas.getContext("2d");
-    let particles = [];
-    const particleCount = 60;
+    let ripples = [];
 
     function resizeCanvas() {
       canvas.width = hero.offsetWidth;
@@ -139,57 +145,47 @@ window.onload = () => {
     window.addEventListener("resize", resizeCanvas);
     resizeCanvas();
 
-    function initParticles() {
-      particles = [];
-      for (let i = 0; i < particleCount; i++) {
-        particles.push({
-          x: Math.random() * canvas.width,
-          y: Math.random() * canvas.height,
-          vx: (Math.random() - 0.5) * 0.5,
-          vy: (Math.random() - 0.5) * 0.5,
-          size: Math.random() * 3 + 1,
-        });
-      }
-    }
-    initParticles();
-
-    function animateParticles() {
+    function animate() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      particles.forEach(p => {
-        p.x += p.vx;
-        p.y += p.vy;
 
-        // Bounce off edges
-        if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
-        if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
-
+      // draw ripples
+      ripples.forEach((r, i) => {
+        r.radius += r.speed;
+        r.alpha -= 0.01;
         ctx.beginPath();
-        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-        ctx.fillStyle = "rgba(255,255,255,0.6)";
-        ctx.fill();
+        ctx.arc(r.x, r.y, r.radius, 0, Math.PI * 2);
+        ctx.strokeStyle = `rgba(255,255,255,${r.alpha})`;
+        ctx.lineWidth = 2;
+        ctx.stroke();
       });
 
-      requestAnimationFrame(animateParticles);
+      // remove faded ripples
+      ripples = ripples.filter(r => r.alpha > 0);
+      requestAnimationFrame(animate);
     }
-    animateParticles();
+    animate();
 
-    // Particle interaction with mouse
-    const mouse = { x: null, y: null };
+    // Cursor ripple
     window.addEventListener("mousemove", e => {
-      mouse.x = e.clientX;
-      mouse.y = e.clientY;
-      particles.forEach(p => {
-        const dx = mouse.x - p.x;
-        const dy = mouse.y - p.y;
-        const dist = Math.sqrt(dx*dx + dy*dy);
-        if (dist < 100) {
-          const angle = Math.atan2(dy, dx);
-          const force = (100 - dist) / 100;
-          p.vx -= Math.cos(angle) * force * 0.3;
-          p.vy -= Math.sin(angle) * force * 0.3;
-        }
+      const rect = hero.getBoundingClientRect();
+      ripples.push({
+        x: e.clientX - rect.left,
+        y: e.clientY - rect.top,
+        radius: 0,
+        speed: 1.5,
+        alpha: 0.4
       });
+
+      // subtle tilt effect
+      const moveX = (e.clientX / window.innerWidth - 0.5) * 10;
+      const moveY = (e.clientY / window.innerHeight - 0.5) * 10;
+      hero.style.transform = `perspective(800px) rotateX(${ -moveY }deg) rotateY(${ moveX }deg)`;
+    });
+
+    // Reset tilt when mouse leaves
+    window.addEventListener("mouseleave", () => {
+      hero.style.transform = "perspective(800px) rotateX(0deg) rotateY(0deg)";
     });
   }
-};
 
+};
