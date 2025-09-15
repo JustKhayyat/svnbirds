@@ -112,5 +112,5 @@ window.addEventListener("scroll", () => {
     });
   }, { threshold: 0.2 });
 
-  document.querySelectorAll(".hero, .grid, .press-cards, .contact-section").forEach(el => observer.observe(el));
+  document.querySelectorAll(".hero-content, .grid, .press-cards, .contact-section").forEach(el => observer.observe(el));
 };
