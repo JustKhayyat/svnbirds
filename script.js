@@ -1,5 +1,5 @@
 // ---------- App State ----------
-let appState = { entered: false, notifyList: [] };
+let appState = { entered: false };
 
 // ---------- Enter Site ----------
 function enterSite() {
@@ -105,24 +105,3 @@ window.onload = () => {
 
   document.querySelectorAll(".hero, .grid, .press-cards, .contact-section").forEach(el => observer.observe(el));
 };
-
-// ---------- Modal ----------
-function openShopModal() {
-  document.getElementById("shopModal").style.display = "block";
-}
-function closeShopModal() {
-  document.getElementById("shopModal").style.display = "none";
-}
-function submitNotifyForm(e) {
-  e.preventDefault();
-  document.getElementById("successMessage").style.display = "block";
-  setTimeout(closeShopModal, 2000);
-}
-
-// ---------- Keyboard Shortcuts ----------
-document.addEventListener("keydown", e => {
-  if (e.key === "Escape") closeShopModal();
-  if (e.key === "Enter" && document.activeElement.id === "notifyEmail") {
-    document.querySelector("form").dispatchEvent(new Event("submit", { cancelable: true, bubbles: true }));
-  }
-}); 
