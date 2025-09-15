@@ -14,16 +14,15 @@ function enterSite() {
 // ---------- On Load ----------
 window.onload = () => {
 
-  // ---------- Audio Setup ----------
- const ambient = new Audio("sounds/ambient-loop.mp3");
+// ---------- Audio Setup ----------
+const ambient = new Audio("sounds/ambient-loop.mp3");
 ambient.loop = true;
+ambient.volume = 1; // keep original mix
 let ambientStarted = false;
 
 function startAmbient() {
   if (!ambientStarted) {
-    ambient.play().catch(() => {
-      console.log("Ambient loop blocked until user interacts");
-    });
+    ambient.play().catch(() => console.log("Ambient blocked until user interacts"));
     ambientStarted = true;
   }
 }
@@ -32,10 +31,26 @@ function startAmbient() {
 window.addEventListener("mousemove", startAmbient, { once: true });
 window.addEventListener("click", startAmbient, { once: true });
 
+const rimAudio = new Audio("sounds/rim.mp3");
+rimAudio.volume = 0.3;
 
-  const rimAudio = new Audio("sounds/rim.mp3");
-  const kickAudio = new Audio("sounds/kick.mp3");
-  const clickAudio = new Audio("sounds/click.mp3");
+const kickAudio = new Audio("sounds/kick.mp3");
+kickAudio.volume = 0.3;
+
+const clickAudio = new Audio("sounds/click.mp3");
+clickAudio.volume = 0.3;
+
+// ---------- Scroll-triggered click sound ----------
+let lastScroll = 0;
+window.addEventListener("scroll", () => {
+  const now = Date.now();
+  if (now - lastScroll > 300) { // trigger max every 300ms
+    const sound = clickAudio.cloneNode();
+    sound.play();
+    lastScroll = now;
+  }
+});
+
 
   // ---------- Populate Releases ----------
   const albums = [
