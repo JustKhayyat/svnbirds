@@ -115,19 +115,10 @@ window.onload = () => {
 
   document.querySelectorAll(".hero-content, .grid, .press-cards, .contact-section").forEach(el => observer.observe(el));
 
-  // ---------- Hero Cursor Ripples + Tilt ----------
+  // ---------- Hero Cursor Ripples + Tilt + Audio ----------
   const hero = document.querySelector(".hero");
   if (hero) {
-    const canvas = document.createElement("canvas");
-    canvas.id = "hero-canvas";
-    canvas.style.position = "absolute";
-    canvas.style.top = 0;
-    canvas.style.left = 0;
-    canvas.style.width = "100%";
-    canvas.style.height = "100%";
-    canvas.style.pointerEvents = "none";
-    hero.appendChild(canvas);
-
+    const canvas = document.getElementById("hero-canvas");
     const ctx = canvas.getContext("2d");
     let ripples = [];
 
@@ -137,6 +128,19 @@ window.onload = () => {
     }
     window.addEventListener("resize", resizeCanvas);
     resizeCanvas();
+
+    // ---------- Audio ----------
+    const ambient = new Audio("sounds/ambient-loop.mp3");
+    ambient.loop = true;
+    ambient.volume = 0.2;
+    ambient.play().catch(() => { /* autoplay might be blocked */ });
+
+    const sounds = ["sounds/click.mp3", "sounds/rim.mp3", "sounds/kick.mp3"];
+    function playSound() {
+      const sound = new Audio(sounds[Math.floor(Math.random() * sounds.length)]);
+      sound.volume = 0.25;
+      sound.play();
+    }
 
     function animate() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -158,7 +162,6 @@ window.onload = () => {
     }
     animate();
 
-    // Cursor ripple + tilt
     window.addEventListener("mousemove", e => {
       const rect = hero.getBoundingClientRect();
       ripples.push({
@@ -169,18 +172,19 @@ window.onload = () => {
         alpha: 0.4
       });
 
-      // subtle tilt effect on content only
+      playSound(); // play ear-candy on ripple
+
+      // subtle tilt effect
       const moveX = (e.clientX / window.innerWidth - 0.5) * 10;
       const moveY = (e.clientY / window.innerHeight - 0.5) * 10;
       const content = hero.querySelector(".hero-content");
       if (content) content.style.transform = `perspective(800px) rotateX(${ -moveY }deg) rotateY(${ moveX }deg)`;
     });
 
-    // Reset tilt when mouse leaves hero
+    // Reset tilt when mouse leaves
     window.addEventListener("mouseleave", () => {
       const content = hero.querySelector(".hero-content");
       if (content) content.style.transform = "perspective(800px) rotateX(0deg) rotateY(0deg)";
     });
   }
-
 };
