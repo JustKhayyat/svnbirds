@@ -1,39 +1,78 @@
+/* ========== Fonts ========== */
+@font-face {
+  font-family: 'Grift';
+  src: url('fonts/Grift-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Grift';
+  src: url('fonts/Grift-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Grift';
+  src: url('fonts/Grift-ExtraBold.woff2') format('woff2');
+  font-weight: 900;
+  font-style: normal;
+}
+
+/* ========== Base ========== */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { 
+  background: #000; 
+  font-family: 'Grift', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
+  color: #fff; 
+  line-height: 1.5; 
+  overflow-x: hidden;
+}
+
+/* ========== Shop Button ========== */
+.shop-btn {
+  position: fixed; top: 20px; right: 20px;
+  background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.2);
+  padding: 10px 20px; border-radius: 8px;
+  color: #fff; font-size: .85rem; font-weight: 700;
+  z-index: 1000; cursor: pointer; transition: all .3s;
+}
+.shop-btn:hover { background: #fff; color: #000; }
+
+/* ========== Hero ========== */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 0 16px;
+  background: #000;
+  overflow: hidden;
+}
+
 .hero-bg {
   position: absolute;
   top: 0; left: 0;
   width: 100%; height: 100%;
   object-fit: cover;
   z-index: 0;
-  opacity: 0.25; /* tweak for brightness */
+  opacity: 0.25;
+  background: #000;
 }
 
 .hero-content {
   position: relative;
-  z-index: 1; /* keep text above video */
-}
-
-
-/* ========== Hero Mobile-First ========== */
-.hero {
-  position: relative;
-  min-height: 100vh; /* fits screen on phones */
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 0 16px;
-  text-align: center;
-  overflow: hidden;
-  background: #000;
+  z-index: 1;
 }
 
 .hero-title {
-  font-size: 12vw; /* responsive to viewport width */
+  font-size: 12vw;
   font-weight: 900;
   line-height: 1.1;
   color: #fff;
-  transform: translateY(0);
-  transition: transform 0.2s ease-out;
+  animation: fadeInUp 1s ease forwards;
 }
 
 .hero-subtitle {
@@ -42,7 +81,7 @@
   color: #a1a1a6;
   margin-top: 12px;
   opacity: 0;
-  animation: fadeIn 1s ease forwards .3s;
+  animation: fadeIn 1.4s ease forwards .4s;
 }
 
 .scroll-down {
@@ -58,119 +97,7 @@
 @media(min-width:768px){
   .hero-title { font-size: clamp(64px, 10vw, 140px); }
   .hero-subtitle { font-size: clamp(18px, 2vw, 28px); }
-}
-
-
-@font-face {
-  font-family: 'Grift';
-  src: url('fonts/Grift-Regular.woff2') format('woff2');
-  font-weight: 400;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'Grift';
-  src: url('fonts/Grift-Bold.woff2') format('woff2');
-  font-weight: 700;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'Grift';
-  src: url('fonts/Grift-ExtraBold.woff2') format('woff2');
-  font-weight: 900;
-  font-style: normal;
-}
-
-
-/* ========== Base ========== */
-* { margin: 0; padding: 0; box-sizing: border-box; }
-html, body { background: #000; font-family: 'Grift', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; color: #fff; line-height: 1.5; }
-
-/* ========== Preloader ========== */
-.preloader {
-  position: fixed; inset: 0; display: flex; align-items: center; justify-content: center;
-  background: #000;
-  z-index: 9999;
-}
-.preloader img {
-  width: 150px; animation: pulse 1.5s ease-in-out infinite alternate;
-  filter: drop-shadow(0 0 20px rgba(255,255,255,0.1));
-}
-@keyframes pulse { 0%{ transform:scale(.95); opacity:.6 } 100%{ transform:scale(1.05); opacity:1 } }
-
-/* ========== Landing ========== */
-.container, .main-content { display: none; flex-direction: column; align-items: center; text-align: center; }
-.logo-img { max-width: 350px; margin-bottom: 20px; }
-.enter-btn {
-  background: none; color: #fff; border: none; padding: 14px 32px;
-  font-weight: 700; text-transform: uppercase; cursor: pointer;
-  transition: opacity .3s ease;
-}
-.enter-btn:hover { opacity: .6; }
-
-/* ========== Shop Button ========== */
-.shop-btn {
-  position: fixed; top: 20px; right: 20px;
-  background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.2);
-  padding: 10px 20px; border-radius: 8px;
-  color: #fff; font-size: .85rem; font-weight: 700;
-  z-index: 1000; cursor: pointer; transition: all .3s;
-}
-.shop-btn:hover { background: #fff; color: #000; }
-
-/* ========== Hero (Apple-inspired) ========== */
-.hero {
-  position: relative;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: 0 20px;
-  background: #000;
-}
-
-.hero h1 {
-  font-size: clamp(48px, 12vw, 140px);
-  font-weight: 900;
-  letter-spacing: -1px;
-  margin-bottom: 20px;
-  color: #fff;
-  animation: fadeInUp 1s ease forwards;
-}
-
-.hero p {
-  font-size: clamp(16px, 2vw, 24px);
-  font-weight: 400;
-  color: #a1a1a6;
-  opacity: 0;
-  animation: fadeIn 1.4s ease forwards .4s;
-  margin-bottom: 40px;
-}
-
-.hero a {
-  background: #fff;
-  padding: 12px 28px;
-  border-radius: 30px;
-  color: #000;
-  font-weight: 700;
-  text-decoration: none;
-  transition: transform .2s, opacity .3s;
-}
-.hero a:hover { transform: translateY(-2px); opacity: .8; }
-
-.scroll-down {
-  position: absolute;
-  bottom: 40px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 28px;
-  color: #fff;
-  opacity: 0.6;
-  animation: bounce 2s infinite;
-  cursor: pointer;
+  .scroll-down { font-size: 28px; }
 }
 
 /* Animations */
@@ -180,8 +107,8 @@ html, body { background: #000; font-family: 'Grift', -apple-system, BlinkMacSyst
 }
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 @keyframes bounce {
-  0%, 100% { transform: translate(-50%, 0); }
-  50% { transform: translate(-50%, -10px); }
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(8px); }
 }
 
 /* ========== Releases Grid ========== */
@@ -224,9 +151,8 @@ html, body { background: #000; font-family: 'Grift', -apple-system, BlinkMacSyst
 .contact-section a { color: #fff; font-weight: 600; text-decoration: none; }
 .contact-section a:hover { opacity: .7; }
 
-/* ========== Responsive ========== */
+/* ========== Responsive tweaks ========== */
 @media(max-width:768px){
-  .logo-img{max-width:280px;}
   .grid{gap:15px;}
   .press-cards{gap:15px;}
 }
