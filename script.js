@@ -9,48 +9,46 @@ function enterSite() {
   if (landing) landing.style.display = "none";
   if (main) main.style.display = "flex";
   document.documentElement.scrollTo({ top: 0, behavior: "smooth" });
+
+  // Start ambient loop
+  startAmbient();
 }
 
 // ---------- On Load ----------
 window.onload = () => {
 
-// ---------- Audio Setup ----------
-const ambient = new Audio("sounds/ambient-loop.mp3");
-ambient.loop = true;
-ambient.volume = 1; // keep original mix
-let ambientStarted = false;
+  // ---------- Audio Setup ----------
+  const ambient = new Audio("sounds/ambient-loop.mp3");
+  ambient.loop = true;
+  ambient.volume = 1; // keep original mix
+  let ambientStarted = false;
 
-function startAmbient() {
-  if (!ambientStarted) {
-    ambient.play().catch(() => console.log("Ambient blocked until user interacts"));
-    ambientStarted = true;
+  function startAmbient() {
+    if (!ambientStarted) {
+      ambient.play().catch(() => console.log("Ambient blocked until user interacts"));
+      ambientStarted = true;
+    }
   }
-}
 
-// Trigger after first interaction
-window.addEventListener("mousemove", startAmbient, { once: true });
-window.addEventListener("click", startAmbient, { once: true });
+  const rimAudio = new Audio("sounds/rim.mp3");
+  rimAudio.volume = 0.3;
 
-const rimAudio = new Audio("sounds/rim.mp3");
-rimAudio.volume = 0.3;
+  const kickAudio = new Audio("sounds/kick.mp3");
+  kickAudio.volume = 0.3;
 
-const kickAudio = new Audio("sounds/kick.mp3");
-kickAudio.volume = 0.3;
+  const clickAudio = new Audio("sounds/click.mp3");
+  clickAudio.volume = 0.3;
 
-const clickAudio = new Audio("sounds/click.mp3");
-clickAudio.volume = 0.3;
-
-// ---------- Scroll-triggered click sound ----------
-let lastScroll = 0;
-window.addEventListener("scroll", () => {
-  const now = Date.now();
-  if (now - lastScroll > 300) { // trigger max every 300ms
-    const sound = clickAudio.cloneNode();
-    sound.play();
-    lastScroll = now;
-  }
-});
-
+  // ---------- Scroll-triggered click sound ----------
+  let lastScroll = 0;
+  window.addEventListener("scroll", () => {
+    const now = Date.now();
+    if (now - lastScroll > 300) { // throttle
+      const sound = clickAudio.cloneNode();
+      sound.play();
+      lastScroll = now;
+    }
+  });
 
   // ---------- Populate Releases ----------
   const albums = [
@@ -157,20 +155,6 @@ window.addEventListener("scroll", () => {
     }
   });
 
-  // ---------- Scroll Fade-ins with Click Sound ----------
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add("fade-in");
-
-        const sound = clickAudio.cloneNode();
-        sound.play();
-      }
-    });
-  }, { threshold: 0.2 });
-
-  document.querySelectorAll(".hero-content, .grid, .press-cards, .contact-section").forEach(el => observer.observe(el));
-
   // ---------- Hero Cursor Ripples + Tilt ----------
   const hero = document.querySelector(".hero");
   if (hero) {
@@ -196,8 +180,7 @@ window.addEventListener("scroll", () => {
 
     function animate() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-      ripples.forEach((r, i) => {
+      ripples.forEach((r) => {
         r.radius += r.speed;
         r.alpha -= 0.01;
         ctx.beginPath();
@@ -206,13 +189,12 @@ window.addEventListener("scroll", () => {
         ctx.lineWidth = 2;
         ctx.stroke();
       });
-
       ripples = ripples.filter(r => r.alpha > 0);
       requestAnimationFrame(animate);
     }
     animate();
 
-    // Cursor ripple + tilt + rim sound
+    // Cursor ripple + tilt
     window.addEventListener("mousemove", e => {
       const rect = hero.getBoundingClientRect();
       ripples.push({
