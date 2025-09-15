@@ -94,14 +94,20 @@ window.onload = () => {
     press.appendChild(d);
   });
 
-// Hero parallax effect
+// Hero parallax + subtitle fade
 window.addEventListener("scroll", () => {
   const scrollY = window.scrollY;
   const hero = document.querySelector(".hero-title");
+  const subtitle = document.querySelector(".hero-subtitle");
+
   if (hero) {
-    hero.style.transform = `translateY(${scrollY * 0.2}px)`; // 0.2 = subtle shift
+    hero.style.transform = `translateY(${scrollY * 0.2}px)`;
+  }
+  if (subtitle) {
+    subtitle.style.opacity = Math.max(1 - scrollY / 300, 0);
   }
 });
+
   
   // Scroll fade-ins
   const observer = new IntersectionObserver(entries => {
