@@ -18,52 +18,36 @@
 </head>
 
 <body>
-  <!-- Preloader -->
-  <div class="preloader" id="preloader">
-    <img src="sb_logo_white.png" alt="Loading..."/>
-  </div>
+  <!-- Shop button -->
+  <a class="shop-btn" href="https://shopsvnbirds.com" target="_blank" rel="noopener noreferrer">Shop</a>
 
-  <!-- Landing -->
-  <div class="container" id="landing">
-    <img src="SB.png" alt="SVNBIRDS Logo" class="logo-img"/>
-    <button class="enter-btn" onclick="enterSite()">Press Play</button>
-  </div>
+  <!-- Hero -->
+  <section class="hero" id="hero">
+    <video autoplay muted loop playsinline class="hero-bg" poster="media/moving-light-streaks-poster.jpg">
+      <source src="media/moving-light-streaks.mp4" type="video/mp4">
+      <!-- Fallback -->
+      <img src="media/moving-light-streaks-poster.jpg" alt="Background">
+    </video>
 
-  <!-- Main -->
-  <div class="main-content" id="main">
-    <!-- Shop button now links out -->
-    <a class="shop-btn" href="https://shopsvnbirds.com" target="_blank" rel="noopener noreferrer">Shop</a>
-
-   <!-- Hero -->
-<section class="hero" id="hero">
-  <video autoplay muted loop playsinline class="hero-bg" poster="media/moving-light-streaks-poster.jpg">
-    <source src="media/moving-light-streaks.mp4" type="video/mp4">
-    <!-- Fallback for old browsers -->
-    <img src="media/moving-light-streaks-poster.jpg" alt="Background">
-  </video>
-
-  <div class="hero-content">
-    <h1 class="hero-title">SVNBIRDS</h1>
-    <p class="hero-subtitle">Independent Label · Artists · Culture</p>
-    <div class="scroll-down">⌄</div>
-  </div>
-</section>
-
-    <!-- Releases -->
-    <div class="grid" id="releases"></div>
-
-    <!-- Press -->
-    <div class="press-cards"></div>
-
-    <!-- Contact -->
-    <div class="contact-section">
-      <h2>Contact</h2>
-      <p><a href="mailto:booking@svnbirds.com">booking@svnbirds.com</a></p>
-      <p><a href="https://www.instagram.com/svnbirdspro/" target="_blank">@svnbirdspro</a></p>
+    <div class="hero-content">
+      <h1 class="hero-title">SVNBIRDS</h1>
+      <p class="hero-subtitle">Independent Label · Artists · Culture</p>
+      <div class="scroll-down">⌄</div>
     </div>
-  </div>
+  </section>
 
-  <!-- 🔥 Shop Modal removed (not needed anymore) -->
+  <!-- Releases -->
+  <div class="grid" id="releases"></div>
+
+  <!-- Press -->
+  <div class="press-cards"></div>
+
+  <!-- Contact -->
+  <div class="contact-section">
+    <h2>Contact</h2>
+    <p><a href="mailto:booking@svnbirds.com">booking@svnbirds.com</a></p>
+    <p><a href="https://www.instagram.com/svnbirdspro/" target="_blank">@svnbirdspro</a></p>
+  </div>
 
   <script src="script.js"></script>
 </body>
