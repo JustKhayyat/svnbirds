@@ -14,6 +14,15 @@ function enterSite() {
 // ---------- On Load ----------
 window.onload = () => {
 
+  // ---------- Audio Setup ----------
+  const ambientAudio = new Audio("sounds/ambient-loop.mp3");
+  ambientAudio.loop = true;
+  ambientAudio.play().catch(() => { /* Autoplay may be blocked */ });
+
+  const rimAudio = new Audio("sounds/rim.mp3");
+  const kickAudio = new Audio("sounds/kick.mp3");
+  const clickAudio = new Audio("sounds/click.mp3");
+
   // ---------- Populate Releases ----------
   const albums = [
     { title: "PRICE", link: "https://music.empi.re/price", cover: "covers/price.jpg" },
@@ -58,6 +67,12 @@ window.onload = () => {
         el.style.transform = "translateY(0)";
       }, i * 80);
       grid.appendChild(el);
+
+      // Kick sound on hover
+      el.addEventListener("mouseenter", () => {
+        const sound = kickAudio.cloneNode();
+        sound.play();
+      });
     });
   }
 
@@ -90,6 +105,13 @@ window.onload = () => {
         d.style.transform = "translateY(0)";
       }, i * 120);
       press.appendChild(d);
+
+      // Kick sound on hover
+      const link = d.querySelector("a");
+      link.addEventListener("mouseenter", () => {
+        const sound = kickAudio.cloneNode();
+        sound.play();
+      });
     });
   }
 
@@ -106,19 +128,33 @@ window.onload = () => {
     }
   });
 
-  // ---------- Scroll Fade-ins ----------
+  // ---------- Scroll Fade-ins with Click Sound ----------
   const observer = new IntersectionObserver(entries => {
     entries.forEach(entry => {
-      if (entry.isIntersecting) entry.target.classList.add("fade-in");
+      if (entry.isIntersecting) {
+        entry.target.classList.add("fade-in");
+
+        const sound = clickAudio.cloneNode();
+        sound.play();
+      }
     });
   }, { threshold: 0.2 });
 
   document.querySelectorAll(".hero-content, .grid, .press-cards, .contact-section").forEach(el => observer.observe(el));
 
-  // ---------- Hero Cursor Ripples + Tilt + Audio ----------
+  // ---------- Hero Cursor Ripples + Tilt ----------
   const hero = document.querySelector(".hero");
   if (hero) {
-    const canvas = document.getElementById("hero-canvas");
+    const canvas = document.createElement("canvas");
+    canvas.id = "hero-canvas";
+    canvas.style.position = "absolute";
+    canvas.style.top = 0;
+    canvas.style.left = 0;
+    canvas.style.width = "100%";
+    canvas.style.height = "100%";
+    canvas.style.pointerEvents = "none";
+    hero.appendChild(canvas);
+
     const ctx = canvas.getContext("2d");
     let ripples = [];
 
@@ -129,23 +165,9 @@ window.onload = () => {
     window.addEventListener("resize", resizeCanvas);
     resizeCanvas();
 
-    // ---------- Audio ----------
-    const ambient = new Audio("sounds/ambient-loop.mp3");
-    ambient.loop = true;
-    ambient.volume = 0.2;
-    ambient.play().catch(() => { /* autoplay might be blocked */ });
-
-    const sounds = ["sounds/click.mp3", "sounds/rim.mp3", "sounds/kick.mp3"];
-    function playSound() {
-      const sound = new Audio(sounds[Math.floor(Math.random() * sounds.length)]);
-      sound.volume = 0.25;
-      sound.play();
-    }
-
     function animate() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      // draw ripples
       ripples.forEach((r, i) => {
         r.radius += r.speed;
         r.alpha -= 0.01;
@@ -156,12 +178,12 @@ window.onload = () => {
         ctx.stroke();
       });
 
-      // remove faded ripples
       ripples = ripples.filter(r => r.alpha > 0);
       requestAnimationFrame(animate);
     }
     animate();
 
+    // Cursor ripple + tilt + rim sound
     window.addEventListener("mousemove", e => {
       const rect = hero.getBoundingClientRect();
       ripples.push({
@@ -172,19 +194,23 @@ window.onload = () => {
         alpha: 0.4
       });
 
-      playSound(); // play ear-candy on ripple
-
-      // subtle tilt effect
       const moveX = (e.clientX / window.innerWidth - 0.5) * 10;
       const moveY = (e.clientY / window.innerHeight - 0.5) * 10;
       const content = hero.querySelector(".hero-content");
       if (content) content.style.transform = `perspective(800px) rotateX(${ -moveY }deg) rotateY(${ moveX }deg)`;
     });
 
-    // Reset tilt when mouse leaves
+    // Rim sound on click anywhere
+    window.addEventListener("click", () => {
+      const sound = rimAudio.cloneNode();
+      sound.play();
+    });
+
+    // Reset tilt when mouse leaves hero
     window.addEventListener("mouseleave", () => {
       const content = hero.querySelector(".hero-content");
       if (content) content.style.transform = "perspective(800px) rotateX(0deg) rotateY(0deg)";
     });
   }
+
 };
