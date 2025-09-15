@@ -4,8 +4,10 @@ let appState = { entered: false };
 // ---------- Enter Site ----------
 function enterSite() {
   appState.entered = true;
-  document.getElementById("landing").style.display = "none";
-  document.getElementById("main").style.display = "flex";
+  const landing = document.getElementById("landing");
+  const main = document.getElementById("main");
+  if (landing) landing.style.display = "none";
+  if (main) main.style.display = "flex";
   document.documentElement.scrollTo({ top: 0, behavior: "smooth" });
 }
 
@@ -13,9 +15,12 @@ function enterSite() {
 window.onload = () => {
   // Preloader
   setTimeout(() => {
-    document.getElementById("preloader").style.display = "none";
-    if (!appState.entered) {
-      document.getElementById("landing").style.display = "flex";
+    const preloader = document.getElementById("preloader");
+    if (preloader) preloader.style.display = "none";
+
+    const landing = document.getElementById("landing");
+    if (!appState.entered && landing) {
+      landing.style.display = "flex";
     }
   }, 1000);
 
@@ -47,22 +52,24 @@ window.onload = () => {
   ];
 
   const grid = document.querySelector(".grid");
-  albums.forEach((a, i) => {
-    const el = document.createElement("a");
-    el.href = a.link;
-    el.target = "_blank";
-    el.rel = "noopener noreferrer";
-    el.setAttribute("data-title", a.title);
-    el.innerHTML = `<img loading="lazy" src="${a.cover}" alt="${a.title}">`;
-    el.style.opacity = 0;
-    el.style.transform = "translateY(20px)";
-    setTimeout(() => {
-      el.style.transition = "all .6s ease";
-      el.style.opacity = 1;
-      el.style.transform = "translateY(0)";
-    }, i * 80);
-    grid.appendChild(el);
-  });
+  if (grid) {
+    albums.forEach((a, i) => {
+      const el = document.createElement("a");
+      el.href = a.link;
+      el.target = "_blank";
+      el.rel = "noopener noreferrer";
+      el.setAttribute("data-title", a.title);
+      el.innerHTML = `<img loading="lazy" src="${a.cover}" alt="${a.title}">`;
+      el.style.opacity = 0;
+      el.style.transform = "translateY(20px)";
+      setTimeout(() => {
+        el.style.transition = "all .6s ease";
+        el.style.opacity = 1;
+        el.style.transform = "translateY(0)";
+      }, i * 80);
+      grid.appendChild(el);
+    });
+  }
 
   // Populate press
   const pressLinks = [
@@ -81,41 +88,39 @@ window.onload = () => {
   ];
 
   const press = document.querySelector(".press-cards");
-  pressLinks.forEach((p, i) => {
-    const d = document.createElement("div");
-    d.innerHTML = `<div class="press-source">${p.source}</div><a href="${p.url}" target="_blank" rel="noopener noreferrer">${p.title.replace(p.source + " – ", "")}</a>`;
-    d.style.opacity = 0;
-    d.style.transform = "translateY(20px)";
-    setTimeout(() => {
-      d.style.transition = "all .6s ease";
-      d.style.opacity = 1;
-      d.style.transform = "translateY(0)";
-    }, i * 120);
-    press.appendChild(d);
+  if (press) {
+    pressLinks.forEach((p, i) => {
+      const d = document.createElement("div");
+      d.innerHTML = `<div class="press-source">${p.source}</div><a href="${p.url}" target="_blank" rel="noopener noreferrer">${p.title.replace(p.source + " – ", "")}</a>`;
+      d.style.opacity = 0;
+      d.style.transform = "translateY(20px)";
+      setTimeout(() => {
+        d.style.transition = "all .6s ease";
+        d.style.opacity = 1;
+        d.style.transform = "translateY(0)";
+      }, i * 120);
+      press.appendChild(d);
+    });
+  }
+
+  // Hero parallax + subtitle fade
+  window.addEventListener("scroll", () => {
+    const scrollY = window.scrollY;
+    const hero = document.querySelector(".hero-title");
+    const subtitle = document.querySelector(".hero-subtitle");
+
+    if (hero) hero.style.transform = `translateY(${scrollY * 0.2}px)`;
+    if (subtitle) {
+      const opacity = Math.max(1 - scrollY / 300, 0);
+      subtitle.style.opacity = opacity;
+      subtitle.style.pointerEvents = opacity > 0 ? "auto" : "none";
+    }
   });
-
-// Hero parallax + subtitle fade
-window.addEventListener("scroll", () => {
-  const scrollY = window.scrollY;
-  const hero = document.querySelector(".hero-title");
-  const subtitle = document.querySelector(".hero-subtitle");
-
-  if (hero) {
-    hero.style.transform = `translateY(${scrollY * 0.2}px)`;
-  }
-  if (subtitle) {
-    const opacity = Math.max(1 - scrollY / 300, 0);
-    subtitle.style.opacity = opacity;
-    subtitle.style.pointerEvents = opacity > 0 ? "auto" : "none";
-  }
-});
 
   // Scroll fade-ins
   const observer = new IntersectionObserver(entries => {
     entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add("fade-in");
-      }
+      if (entry.isIntersecting) entry.target.classList.add("fade-in");
     });
   }, { threshold: 0.2 });
 
