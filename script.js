@@ -174,10 +174,6 @@ window.onload = () => {
 
     window.addEventListener("mousemove", handleInteraction);
     hero.addEventListener("touchstart", handleInteraction);
-    hero.addEventListener("touchmove", (e) => {
-      e.preventDefault(); // Prevents page scrolling
-      handleInteraction(e);
-    }, { passive: false });
 
     // Reset tilt on mouse/touch leave
     hero.addEventListener("mouseleave", () => {
