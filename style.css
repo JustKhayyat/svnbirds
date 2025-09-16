@@ -1,5 +1,4 @@
 /* ========== Fonts ========== */ 
-
 @font-face {
   font-family: 'Grift';
   src: url('fonts/Grift-Regular.woff2') format('woff2');
@@ -61,32 +60,6 @@ html, body {
   height: 100%;
   object-fit: cover;
   z-index: 0;
-}
-
-.hero-video-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-}
-
-.play-button {
-  background-color: rgba(255, 255, 255, 0.2);
-  border-radius: 50%;
-  padding: 10px;
-  backdrop-filter: blur(5px);
-  -webkit-backdrop-filter: blur(5px);
-  transition: transform 0.3s ease;
-}
-
-.play-button:hover {
-  transform: scale(1.1);
 }
 
 #hero-canvas {
@@ -177,9 +150,4 @@ html, body {
 @media(max-width:768px){
   .grid{gap:15px;}
   .press-cards{gap:15px;}
-  .play-button { display: flex; }
-}
-
-@media(min-width:769px){
-  .hero-video-overlay { display: none; }
 }
