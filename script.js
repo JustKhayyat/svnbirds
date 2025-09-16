@@ -173,7 +173,6 @@ window.onload = () => {
     };
 
     window.addEventListener("mousemove", handleInteraction);
-    // Use touchstart for mobile to avoid interfering with scrolling
     hero.addEventListener("touchstart", handleInteraction);
 
     // Reset tilt on mouse/touch leave
