@@ -111,9 +111,9 @@ window.onload = () => {
     canvas.style.left = 0;
     canvas.style.width = "100%";
     canvas.style.height = "100%";
-    canvas.style.pointer-events = "none";
+    canvas.style.pointerEvents = "none";
     canvas.style.zIndex = 1;
-    hero.prepend(canvas); // Prepend to ensure it's behind the content
+    hero.prepend(canvas);
 
     const ctx = canvas.getContext("2d");
     let ripples = [];
@@ -127,7 +127,6 @@ window.onload = () => {
 
     function animate() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-
       ripples.forEach((r, i) => {
         r.radius += r.speed;
         r.alpha -= 0.01;
@@ -139,13 +138,12 @@ window.onload = () => {
           ctx.stroke();
         }
       });
-
       ripples = ripples.filter(r => r.alpha > 0);
       requestAnimationFrame(animate);
     }
     animate();
 
-    window.addEventListener("mousemove", e => {
+    const addRipple = (e) => {
       const rect = hero.getBoundingClientRect();
       ripples.push({
         x: e.clientX - rect.left,
@@ -154,12 +152,39 @@ window.onload = () => {
         speed: 1.5,
         alpha: 0.4
       });
+    };
 
-      const moveX = (e.clientX / window.innerWidth - 0.5) * 10;
-      const moveY = (e.clientY / window.innerHeight - 0.5) * 10;
-      const content = hero.querySelector(".hero-content");
-      if (content) content.style.transform = `perspective(800px) rotateX(${ -moveY }deg) rotateY(${ moveX }deg)`;
+    window.addEventListener("mousemove", addRipple);
+    window.addEventListener("touchmove", (e) => {
+      const touch = e.touches[0];
+      if (touch) {
+        addRipple(touch);
+      }
     });
+
+    window.addEventListener("touchcancel", () => {
+      ripples = [];
+    });
+
+    window.addEventListener("touchend", () => {
+      ripples = [];
+    });
+
+    window.addEventListener("touchleave", () => {
+      ripples = [];
+    });
+
+    window.addEventListener("touchenter", (e) => {
+      if (e.touches.length > 0) {
+        const touch = e.touches[0];
+        addRipple(touch);
+      }
+    });
+
+    const moveX = (e.clientX / window.innerWidth - 0.5) * 10;
+    const moveY = (e.clientY / window.innerHeight - 0.5) * 10;
+    const content = hero.querySelector(".hero-content");
+    if (content) content.style.transform = `perspective(800px) rotateX(${ -moveY }deg) rotateY(${ moveX }deg)`;
 
     hero.addEventListener("mouseleave", () => {
       const content = hero.querySelector(".hero-content");
@@ -168,13 +193,17 @@ window.onload = () => {
   }
 };
 
-// Autoplay fix for mobile browsers
-document.addEventListener("DOMContentLoaded", () => {
+// Autoplay fix for all browsers
+document.addEventListener("DOMContentLoaded", async () => {
   const video = document.querySelector(".hero-video");
   if (video) {
-    video.muted = true; // Ensure it's muted for autoplay
-    video.play().catch(error => {
-      console.log("Autoplay was prevented by the browser. Error:", error);
-    });
+    video.muted = true;
+    video.loop = true;
+    video.playsinline = true; // For iOS devices
+    try {
+      await video.play();
+    } catch (error) {
+      console.log("Autoplay was prevented by the browser.", error);
+    }
   }
 });
