@@ -111,7 +111,7 @@ window.onload = () => {
     canvas.style.left = 0;
     canvas.style.width = "100%";
     canvas.style.height = "100%";
-    canvas.style.pointerEvents = "none";
+    canvas.style.pointer-events = "none";
     canvas.style.zIndex = 1;
     hero.prepend(canvas); // Prepend to ensure it's behind the content
 
@@ -172,8 +172,9 @@ window.onload = () => {
 document.addEventListener("DOMContentLoaded", () => {
   const video = document.querySelector(".hero-video");
   if (video) {
+    video.muted = true; // Ensure it's muted for autoplay
     video.play().catch(error => {
-      console.log("Autoplay was prevented by the browser.");
+      console.log("Autoplay was prevented by the browser. Error:", error);
     });
   }
 });
