@@ -143,52 +143,54 @@ window.onload = () => {
     }
     animate();
 
-    const addRipple = (e) => {
+    const addRippleAndTilt = (e) => {
       const rect = hero.getBoundingClientRect();
+      let clientX, clientY;
+
+      if (e.touches && e.touches.length > 0) {
+        clientX = e.touches[0].clientX;
+        clientY = e.touches[0].clientY;
+      } else {
+        clientX = e.clientX;
+        clientY = e.clientY;
+      }
+
       ripples.push({
-        x: e.clientX - rect.left,
-        y: e.clientY - rect.top,
+        x: clientX - rect.left,
+        y: clientY - rect.top,
         radius: 0,
         speed: 1.5,
         alpha: 0.4
       });
+
+      // 3D Tilt Effect
+      const moveX = (clientX / window.innerWidth - 0.5) * 10;
+      const moveY = (clientY / window.innerHeight - 0.5) * 10;
+      const content = hero.querySelector(".hero-content");
+      if (content) {
+        content.style.transform = `perspective(800px) rotateX(${-moveY}deg) rotateY(${moveX}deg)`;
+      }
     };
 
-    window.addEventListener("mousemove", addRipple);
+    window.addEventListener("mousemove", addRippleAndTilt);
     window.addEventListener("touchmove", (e) => {
-      const touch = e.touches[0];
-      if (touch) {
-        addRipple(touch);
-      }
-    });
+      e.preventDefault(); // Prevents page scrolling while touching the hero section
+      addRippleAndTilt(e);
+    }, { passive: false });
 
-    window.addEventListener("touchcancel", () => {
-      ripples = [];
-    });
-
-    window.addEventListener("touchend", () => {
-      ripples = [];
-    });
-
-    window.addEventListener("touchleave", () => {
-      ripples = [];
-    });
-
-    window.addEventListener("touchenter", (e) => {
-      if (e.touches.length > 0) {
-        const touch = e.touches[0];
-        addRipple(touch);
-      }
-    });
-
-    const moveX = (e.clientX / window.innerWidth - 0.5) * 10;
-    const moveY = (e.clientY / window.innerHeight - 0.5) * 10;
-    const content = hero.querySelector(".hero-content");
-    if (content) content.style.transform = `perspective(800px) rotateX(${ -moveY }deg) rotateY(${ moveX }deg)`;
-
+    // Reset tilt on mouse/touch leave
     hero.addEventListener("mouseleave", () => {
       const content = hero.querySelector(".hero-content");
-      if (content) content.style.transform = "perspective(800px) rotateX(0deg) rotateY(0deg)";
+      if (content) {
+        content.style.transform = "perspective(800px) rotateX(0deg) rotateY(0deg)";
+      }
+    });
+
+    hero.addEventListener("touchend", () => {
+      const content = hero.querySelector(".hero-content");
+      if (content) {
+        content.style.transform = "perspective(800px) rotateX(0deg) rotateY(0deg)";
+      }
     });
   }
 };
@@ -203,7 +205,10 @@ document.addEventListener("DOMContentLoaded", async () => {
     try {
       await video.play();
     } catch (error) {
-      console.log("Autoplay was prevented by the browser.", error);
+      console.log("Autoplay was prevented by the browser. Error:", error);
     }
   }
 });
+
+This video provides a great visual explanation of how to create a cool [3D Tilting Card Effect with Mouse Tracking](https://www.youtube.com/watch?v=Z-3tPXf9a7M) using HTML, CSS, and JavaScript.
+http://googleusercontent.com/youtube_content/1
