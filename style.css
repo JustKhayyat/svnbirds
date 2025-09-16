@@ -22,7 +22,7 @@
 /* ========== Base ========== */
 * { margin: 0; padding: 0; box-sizing: border-box; }
 html, body { 
-  background: #000; 
+  background: #121212; 
   font-family: 'Grift', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
   color: #fff; 
   line-height: 1.5; 
