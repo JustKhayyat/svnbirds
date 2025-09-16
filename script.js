@@ -27,27 +27,18 @@ window.onload = () => {
     { title: "Figures", link: "https://music.empi.re/figures", cover: "covers/figures.jpg" },
     { title: "Langa", link: "https://music.empi.re/langa", cover: "covers/langa.jpg" }
   ];
-
   const grid = document.querySelector(".grid");
   if (grid) {
-    albums.forEach((a, i) => {
+    albums.forEach((a) => {
       const el = document.createElement("a");
       el.href = a.link;
       el.target = "_blank";
       el.rel = "noopener noreferrer";
       el.setAttribute("data-title", a.title);
       el.innerHTML = `<img loading="lazy" src="${a.cover}" alt="${a.title}">`;
-      el.style.opacity = 0;
-      el.style.transform = "translateY(20px)";
-      setTimeout(() => {
-        el.style.transition = "all .6s ease";
-        el.style.opacity = 1;
-        el.style.transform = "translateY(0)";
-      }, i * 80);
       grid.appendChild(el);
     });
   }
-
   // ---------- Populate Press ----------
   const pressLinks = [
     { title: "GRAMMYS – 5 Independent Record Labels Bringing The Sounds Of The Middle East & North Africa", url: "https://www.grammy.com/news/5-middle-east-north-africa-independent-record-labels-to-know-beirut-red-diamond", source: "GRAMMYS" },
@@ -63,23 +54,14 @@ window.onload = () => {
     { title: "SceneNoise – Arab Songs on Ramy S3", url: "https://scenenoise.com/Features/Here-are-All-the-Arab-Songs-You-Can-Hear-on-Season-Three-of-Ramy", source: "SceneNoise" },
     { title: "SceneNoise – Dafencii & Soulja Unite for Godzilla x Kong", url: "https://scenenoise.com/News/Dafencii-Soulja-Unite-for-Godzilla-x-Kong-The-New-Empire-Anthem", source: "SceneNoise" }
   ];
-
   const press = document.querySelector(".press-cards");
   if (press) {
-    pressLinks.forEach((p, i) => {
+    pressLinks.forEach((p) => {
       const d = document.createElement("div");
       d.innerHTML = `<div class="press-source">${p.source}</div><a href="${p.url}" target="_blank" rel="noopener noreferrer">${p.title.replace(p.source + " – ", "")}</a>`;
-      d.style.opacity = 0;
-      d.style.transform = "translateY(20px)";
-      setTimeout(() => {
-        d.style.transition = "all .6s ease";
-        d.style.opacity = 1;
-        d.style.transform = "translateY(0)";
-      }, i * 120);
       press.appendChild(d);
     });
   }
-
   // ---------- Hero Parallax + Subtitle Fade ----------
   window.addEventListener("scroll", () => {
     const scrollY = window.scrollY;
@@ -92,39 +74,20 @@ window.onload = () => {
       subtitle.style.pointerEvents = opacity > 0 ? "auto" : "none";
     }
   });
-
-  // ---------- Scroll Fade-ins ----------
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) entry.target.classList.add("fade-in");
-    });
-  }, { threshold: 0.2 });
-
-  document.querySelectorAll(".hero-content, .grid, .press-cards, .contact-section").forEach(el => observer.observe(el));
-
   // ---------- Hero Cursor Ripples + Tilt ----------
   const hero = document.querySelector(".hero");
   if (hero) {
     const canvas = document.createElement("canvas");
-    canvas.style.position = "absolute";
-    canvas.style.top = 0;
-    canvas.style.left = 0;
-    canvas.style.width = "100%";
-    canvas.style.height = "100%";
-    canvas.style.pointerEvents = "none";
-    canvas.style.zIndex = 1;
+    canvas.id = "hero-canvas";
     hero.prepend(canvas);
-
     const ctx = canvas.getContext("2d");
     let ripples = [];
-
     function resizeCanvas() {
       canvas.width = hero.offsetWidth;
       canvas.height = hero.offsetHeight;
     }
     window.addEventListener("resize", resizeCanvas);
     resizeCanvas();
-
     function animate() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       ripples.forEach((r, i) => {
@@ -142,11 +105,9 @@ window.onload = () => {
       requestAnimationFrame(animate);
     }
     animate();
-
     const handleInteraction = (e) => {
       const rect = hero.getBoundingClientRect();
       let clientX, clientY;
-
       if (e.touches && e.touches.length > 0) {
         clientX = e.touches[0].clientX;
         clientY = e.touches[0].clientY;
@@ -154,7 +115,6 @@ window.onload = () => {
         clientX = e.clientX;
         clientY = e.clientY;
       }
-
       ripples.push({
         x: clientX - rect.left,
         y: clientY - rect.top,
@@ -162,7 +122,6 @@ window.onload = () => {
         speed: 1.5,
         alpha: 0.4
       });
-
       // 3D Tilt Effect
       const moveX = (clientX / window.innerWidth - 0.5) * 10;
       const moveY = (clientY / window.innerHeight - 0.5) * 10;
@@ -171,11 +130,8 @@ window.onload = () => {
         content.style.transform = `perspective(800px) rotateX(${-moveY}deg) rotateY(${moveX}deg)`;
       }
     };
-
     window.addEventListener("mousemove", handleInteraction);
-    // Use touchstart for mobile to avoid interfering with scrolling
     hero.addEventListener("touchstart", handleInteraction);
-
     // Reset tilt on mouse/touch leave
     hero.addEventListener("mouseleave", () => {
       const content = hero.querySelector(".hero-content");
@@ -183,7 +139,6 @@ window.onload = () => {
         content.style.transform = "perspective(800px) rotateX(0deg) rotateY(0deg)";
       }
     });
-
     hero.addEventListener("touchend", () => {
       const content = hero.querySelector(".hero-content");
       if (content) {
@@ -192,7 +147,6 @@ window.onload = () => {
     });
   }
 };
-
 // Autoplay fix for all browsers
 document.addEventListener("DOMContentLoaded", async () => {
   const video = document.querySelector(".hero-video");
