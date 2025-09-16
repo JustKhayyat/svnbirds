@@ -166,17 +166,14 @@ window.onload = () => {
       if (content) content.style.transform = "perspective(800px) rotateX(0deg) rotateY(0deg)";
     });
   }
+};
 
-  // ---------- Mobile Autoplay Fix ----------
+// Autoplay fix for mobile browsers
+document.addEventListener("DOMContentLoaded", () => {
   const video = document.querySelector(".hero-video");
   if (video) {
-    // Check if the video is paused after the page loads
-    // This is a common pattern to force a muted video to play
-    if (video.paused) {
-      video.play().catch(error => {
-        // Autoplay was still prevented, log the error
-        console.log("Autoplay was prevented by the browser. Error:", error);
-      });
-    }
+    video.play().catch(error => {
+      console.log("Autoplay was prevented by the browser.");
+    });
   }
-};
+});
