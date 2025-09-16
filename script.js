@@ -170,14 +170,12 @@ window.onload = () => {
   // ---------- Mobile Autoplay Fix ----------
   const video = document.querySelector(".hero-video");
   if (video) {
-    const isMobile = /Mobi|Android/i.test(navigator.userAgent);
-    if (isMobile) {
-      video.autoplay = true;
-      video.loop = true;
-      video.muted = true;
+    // Check if the video is paused after the page loads
+    // This is a common pattern to force a muted video to play
+    if (video.paused) {
       video.play().catch(error => {
-        console.log("Autoplay was prevented by the browser.");
-        // Optional: show a message to the user that they need to click to play
+        // Autoplay was still prevented, log the error
+        console.log("Autoplay was prevented by the browser. Error:", error);
       });
     }
   }
