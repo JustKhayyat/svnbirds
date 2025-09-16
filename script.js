@@ -1,16 +1,3 @@
-// ---------- App State ----------
-let appState = { entered: false };
-
-// ---------- Enter Site ----------
-function enterSite() {
-  appState.entered = true;
-  const landing = document.getElementById("landing");
-  const main = document.getElementById("main");
-  if (landing) landing.style.display = "none";
-  if (main) main.style.display = "flex";
-  document.documentElement.scrollTo({ top: 0, behavior: "smooth" });
-}
-
 // ---------- On Load ----------
 window.onload = () => {
 
@@ -96,9 +83,9 @@ window.onload = () => {
   // ---------- Hero Parallax + Subtitle Fade ----------
   window.addEventListener("scroll", () => {
     const scrollY = window.scrollY;
-    const hero = document.querySelector(".hero-title");
+    const heroTitle = document.querySelector(".hero-title");
     const subtitle = document.querySelector(".hero-subtitle");
-    if (hero) hero.style.transform = `translateY(${scrollY * 0.2}px)`;
+    if (heroTitle) heroTitle.style.transform = `translateY(${scrollY * 0.2}px)`;
     if (subtitle) {
       const opacity = Math.max(1 - scrollY / 300, 0);
       subtitle.style.opacity = opacity;
@@ -119,14 +106,14 @@ window.onload = () => {
   const hero = document.querySelector(".hero");
   if (hero) {
     const canvas = document.createElement("canvas");
-    canvas.id = "hero-canvas";
     canvas.style.position = "absolute";
     canvas.style.top = 0;
     canvas.style.left = 0;
     canvas.style.width = "100%";
     canvas.style.height = "100%";
     canvas.style.pointerEvents = "none";
-    hero.appendChild(canvas);
+    canvas.style.zIndex = 1;
+    hero.prepend(canvas); // Prepend to ensure it's behind the content
 
     const ctx = canvas.getContext("2d");
     let ripples = [];
@@ -141,24 +128,23 @@ window.onload = () => {
     function animate() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      // draw ripples
       ripples.forEach((r, i) => {
         r.radius += r.speed;
         r.alpha -= 0.01;
-        ctx.beginPath();
-        ctx.arc(r.x, r.y, r.radius, 0, Math.PI * 2);
-        ctx.strokeStyle = `rgba(255,255,255,${r.alpha})`;
-        ctx.lineWidth = 2;
-        ctx.stroke();
+        if (r.alpha > 0) {
+          ctx.beginPath();
+          ctx.arc(r.x, r.y, r.radius, 0, Math.PI * 2);
+          ctx.strokeStyle = `rgba(255,255,255,${r.alpha})`;
+          ctx.lineWidth = 2;
+          ctx.stroke();
+        }
       });
 
-      // remove faded ripples
       ripples = ripples.filter(r => r.alpha > 0);
       requestAnimationFrame(animate);
     }
     animate();
 
-    // Cursor ripple + tilt
     window.addEventListener("mousemove", e => {
       const rect = hero.getBoundingClientRect();
       ripples.push({
@@ -169,18 +155,15 @@ window.onload = () => {
         alpha: 0.4
       });
 
-      // subtle tilt effect on content only
       const moveX = (e.clientX / window.innerWidth - 0.5) * 10;
       const moveY = (e.clientY / window.innerHeight - 0.5) * 10;
       const content = hero.querySelector(".hero-content");
       if (content) content.style.transform = `perspective(800px) rotateX(${ -moveY }deg) rotateY(${ moveX }deg)`;
     });
 
-    // Reset tilt when mouse leaves hero
-    window.addEventListener("mouseleave", () => {
+    hero.addEventListener("mouseleave", () => {
       const content = hero.querySelector(".hero-content");
       if (content) content.style.transform = "perspective(800px) rotateX(0deg) rotateY(0deg)";
     });
   }
-
 };
