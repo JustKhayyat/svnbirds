@@ -6,7 +6,7 @@ window.onload = () => {
     { title: "PRICE", link: "https://music.empi.re/price", cover: "covers/price.jpg" },
     { title: "KSHFF", link: "https://music.empi.re/kshff", cover: "covers/kshff.jpg" },
     { title: "Mozart", link: "https://music.empi.re/mozart", cover: "covers/mozart.jpg" },
-    { title: "Shark", link: "https://music.empi.re/shark", cover: "covers/montiyago-shark.jpeg" },
+    { title: "Shark", link: "https://music.empi.re/montiyago-shark.jpeg", cover: "covers/montiyago-shark.jpeg" },
     { title: "2020 Freestyle", link: "https://www.youtube.com/watch?v=Q4_NPZJoKzU", cover: "covers/2020-freestyle.jpg" },
     { title: "Donia", link: "https://music.empi.re/donia", cover: "covers/soulja-donia.jpg" },
     { title: "Argeen", link: "https://music.empi.re/argeen", cover: "covers/argeen.jpg" },
@@ -165,5 +165,40 @@ window.onload = () => {
       const content = hero.querySelector(".hero-content");
       if (content) content.style.transform = "perspective(800px) rotateX(0deg) rotateY(0deg)";
     });
+  }
+  
+  // ---------- Mobile Video Playback ----------
+  const video = document.querySelector(".hero-video");
+  const videoOverlay = document.querySelector(".hero-video-overlay");
+  
+  if (video && videoOverlay) {
+    const isMobile = /Mobi|Android/i.test(navigator.userAgent);
+    
+    if (isMobile) {
+      // Disable autoplay on mobile
+      video.autoplay = false;
+      video.loop = false;
+      video.muted = true;
+      video.load();
+
+      const playButton = videoOverlay.querySelector(".play-button");
+      playButton.style.display = 'block';
+
+      videoOverlay.addEventListener("click", () => {
+        if (video.paused) {
+          video.play().then(() => {
+            playButton.style.display = 'none';
+          }).catch(error => {
+            console.error("Video play failed:", error);
+          });
+        }
+      });
+    } else {
+      // Desktop behavior
+      video.autoplay = true;
+      video.loop = true;
+      video.muted = true;
+      videoOverlay.style.display = 'none';
+    }
   }
 };
