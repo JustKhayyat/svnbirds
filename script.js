@@ -143,7 +143,7 @@ window.onload = () => {
     }
     animate();
 
-    const addRippleAndTilt = (e) => {
+    const handleInteraction = (e) => {
       const rect = hero.getBoundingClientRect();
       let clientX, clientY;
 
@@ -172,10 +172,11 @@ window.onload = () => {
       }
     };
 
-    window.addEventListener("mousemove", addRippleAndTilt);
-    window.addEventListener("touchmove", (e) => {
-      e.preventDefault(); // Prevents page scrolling while touching the hero section
-      addRippleAndTilt(e);
+    window.addEventListener("mousemove", handleInteraction);
+    hero.addEventListener("touchstart", handleInteraction);
+    hero.addEventListener("touchmove", (e) => {
+      e.preventDefault(); // Prevents page scrolling
+      handleInteraction(e);
     }, { passive: false });
 
     // Reset tilt on mouse/touch leave
@@ -209,6 +210,3 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
   }
 });
-
-This video provides a great visual explanation of how to create a cool [3D Tilting Card Effect with Mouse Tracking](https://www.youtube.com/watch?v=Z-3tPXf9a7M) using HTML, CSS, and JavaScript.
-http://googleusercontent.com/youtube_content/1
