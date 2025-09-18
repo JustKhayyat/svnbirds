@@ -33,7 +33,7 @@
   </section>
 
   <div class="shop-grid" id="shop">
-    <div id='product-component-1758187714351'></div>
+    <div id='collection-component-1758188766317'></div>
 <script type="text/javascript">
 /*<![CDATA[*/
 (function () {
@@ -60,9 +60,9 @@
       storefrontAccessToken: '12566d7e5f9880e9f42ae93bdd94ca29',
     });
     ShopifyBuy.UI.onReady(client).then(function (ui) {
-      ui.createComponent('product', {
-        id: '8629195800636',
-        node: document.getElementById('product-component-1758187714351'),
+      ui.createComponent('collection', {
+        id: '298945052732',
+        node: document.getElementById('collection-component-1758188766317'),
         moneyFormat: 'LE%20%7B%7Bamount%7D%7D',
         options: {
   "product": {
@@ -71,13 +71,26 @@
         "@media (min-width: 601px)": {
           "max-width": "calc(25% - 20px)",
           "margin-left": "20px",
-          "margin-bottom": "50px"
+          "margin-bottom": "50px",
+          "width": "calc(25% - 20px)"
+        },
+        "img": {
+          "height": "calc(100% - 15px)",
+          "position": "absolute",
+          "left": "0",
+          "right": "0",
+          "top": "0"
+        },
+        "imgWrapper": {
+          "padding-top": "calc(75% + 15px)",
+          "position": "relative",
+          "height": "0"
         }
       },
       "title": {
         "font-family": "Montserrat, sans-serif",
         "font-weight": "normal",
-        "color": "#000000"
+        "color": "#f0f0f0"
       },
       "button": {
         "font-family": "Montserrat, sans-serif",
@@ -85,16 +98,16 @@
         "font-size": "13px",
         "padding-top": "14.5px",
         "padding-bottom": "14.5px",
+        "color": "#121212",
         ":hover": {
-          "background-color": "#1f1f1f"
+          "color": "#121212",
+          "background-color": "#d8d8d8"
         },
-        "background-color": "#121212",
+        "background-color": "#f0f0f0",
         ":focus": {
-          "background-color": "#1f1f1f"
+          "background-color": "#d8d8d8"
         },
-        "border-radius": "9px",
-        "padding-left": "17px",
-        "padding-right": "17px"
+        "border-radius": "9px"
       },
       "quantityInput": {
         "font-size": "13px",
@@ -103,23 +116,22 @@
       },
       "price": {
         "font-family": "Montserrat, sans-serif",
-        "font-weight": "bold"
+        "font-weight": "bold",
+        "color": "#d8d8d8"
       },
       "compareAt": {
         "font-family": "Montserrat, sans-serif",
-        "font-weight": "bold"
+        "font-weight": "bold",
+        "color": "#d8d8d8"
       },
       "unitPrice": {
         "font-family": "Montserrat, sans-serif",
-        "font-weight": "bold"
+        "font-weight": "bold",
+        "color": "#d8d8d8"
       }
     },
-    "buttonDestination": "modal",
-    "contents": {
-      "options": false
-    },
     "text": {
-      "button": "View product"
+      "button": "Add to cart"
     },
     "googleFonts": [
       "Montserrat"
@@ -155,16 +167,16 @@
         "font-size": "13px",
         "padding-top": "14.5px",
         "padding-bottom": "14.5px",
+        "color": "#121212",
         ":hover": {
-          "background-color": "#1f1f1f"
+          "color": "#121212",
+          "background-color": "#d8d8d8"
         },
-        "background-color": "#121212",
+        "background-color": "#f0f0f0",
         ":focus": {
-          "background-color": "#1f1f1f"
+          "background-color": "#d8d8d8"
         },
-        "border-radius": "9px",
-        "padding-left": "17px",
-        "padding-right": "17px"
+        "border-radius": "9px"
       },
       "quantityInput": {
         "font-size": "13px",
@@ -206,21 +218,7 @@
       "button": "Add to cart"
     }
   },
-  "option": {
-    "styles": {
-      "label": {
-        "font-family": "Montserrat, sans-serif",
-        "font-weight": "bold"
-      },
-      "select": {
-        "font-family": "Montserrat, sans-serif",
-        "font-weight": "bold"
-      }
-    },
-    "googleFonts": [
-      "Montserrat"
-    ]
-  },
+  "option": {},
   "cart": {
     "styles": {
       "button": {
@@ -229,12 +227,14 @@
         "font-size": "13px",
         "padding-top": "14.5px",
         "padding-bottom": "14.5px",
+        "color": "#121212",
         ":hover": {
-          "background-color": "#1f1f1f"
+          "color": "#121212",
+          "background-color": "#d8d8d8"
         },
-        "background-color": "#121212",
+        "background-color": "#f0f0f0",
         ":focus": {
-          "background-color": "#1f1f1f"
+          "background-color": "#d8d8d8"
         },
         "border-radius": "9px"
       },
@@ -300,16 +300,23 @@
       "toggle": {
         "font-family": "Montserrat, sans-serif",
         "font-weight": "bold",
-        "background-color": "#121212",
+        "background-color": "#f0f0f0",
         ":hover": {
-          "background-color": "#1f1f1f"
+          "background-color": "#d8d8d8"
         },
         ":focus": {
-          "background-color": "#1f1f1f"
+          "background-color": "#d8d8d8"
         }
       },
       "count": {
-        "font-size": "13px"
+        "font-size": "13px",
+        "color": "#121212",
+        ":hover": {
+          "color": "#121212"
+        }
+      },
+      "iconPath": {
+        "fill": "#121212"
       }
     },
     "googleFonts": [
