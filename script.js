@@ -1,5 +1,6 @@
 /* ========== On Load / Main Functionality ========== */
 window.onload = () => {
+  /* ========== Hero Video & Audio ========== */
   // Autoplay fix for all browsers
   const video = document.querySelector(".hero-video");
   if (video) {
@@ -12,6 +13,35 @@ window.onload = () => {
       console.log("Autoplay was prevented by the browser. Error:", error);
     }
   }
+
+  // Set up ambient and click sounds
+  const ambientAudio = new Audio('sounds/ambient-loop.mp3');
+  const clickAudio = new Audio('sounds/click.mp3');
+
+  // Ambient sound setup to bypass browser autoplay restrictions
+  ambientAudio.loop = true;
+  ambientAudio.volume = 0.5; // Set a lower volume for the ambient loop
+
+  function playAmbientAudio() {
+    ambientAudio.play().then(() => {
+      // Audio is playing, remove the one-time event listener
+      document.body.removeEventListener('mousedown', playAmbientAudio);
+      document.body.removeEventListener('touchstart', playAmbientAudio);
+    }).catch(error => {
+      console.log("Audio autoplay was prevented. Error:", error);
+    });
+  }
+
+  // Start the ambient sound on the first user interaction
+  document.body.addEventListener('mousedown', playAmbientAudio, { once: true });
+  document.body.addEventListener('touchstart', playAmbientAudio, { once: true });
+
+  // Play click sound on any mouse click
+  document.addEventListener('click', () => {
+    // Reset the audio to the beginning for each click
+    clickAudio.currentTime = 0;
+    clickAudio.play().catch(e => console.log("Click sound play failed:", e));
+  });
 
   /* ========== Populate Releases (Horizontal Scroll) ========== */
   const allReleases = [
