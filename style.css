@@ -141,18 +141,23 @@ html, body {
 .grid a:hover::after { opacity: 1; }
 
 /* ========== Press Cards ========== */
-.press-cards {
-  display: grid; grid-template-columns: repeat(auto-fit,minmax(320px,1fr));
-  gap: 25px; margin: 100px auto; max-width: 1200px; width: 100%; padding: 0 20px;
+.press-container {
+  max-width: 1200px;
+  padding: 0 20px;
+  margin: 60px auto;
 }
-.press-cards > div {
+.press-grid {
+  display: grid; grid-template-columns: repeat(auto-fit,minmax(320px,1fr));
+  gap: 25px;
+}
+.press-grid > div {
   background: rgba(255,255,255,.02); border: 1px solid rgba(255,255,255,.08);
   border-radius: 16px; padding: 25px; transition: transform .3s, box-shadow .3s;
 }
-.press-cards > div:hover { transform: translateY(-6px); box-shadow: 0 20px 40px rgba(0,0,0,.5); }
+.press-grid > div:hover { transform: translateY(-6px); box-shadow: 0 20px 40px rgba(0,0,0,.5); }
 .press-source { color: #a1a1a6; font-size: .75rem; font-weight: 700; margin-bottom: 8px; text-transform: uppercase; }
-.press-cards a { color: #fff; text-decoration: none; font-weight: 600; }
-.press-cards a:hover { opacity: .7; }
+.press-grid a { color: #fff; text-decoration: none; font-weight: 600; }
+.press-grid a:hover { opacity: .7; }
 
 /* ========== Contact ========== */
 .contact-section {
@@ -165,7 +170,7 @@ html, body {
 
 @media(max-width:768px){
   .grid{gap:15px;}
-  .press-cards{gap:15px;}
+  .press-grid{gap:15px;}
 }
 
 /* ========== Shop Grid ========== */
