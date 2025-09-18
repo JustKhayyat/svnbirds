@@ -27,6 +27,7 @@ window.onload = () => {
     { title: "Figures", link: "https://music.empi.re/figures", cover: "covers/figures.jpg" },
     { title: "Langa", link: "https://music.empi.re/langa", cover: "covers/langa.jpg" }
   ];
+
   const grid = document.querySelector(".grid");
   if (grid) {
     albums.forEach((a) => {
@@ -39,6 +40,7 @@ window.onload = () => {
       grid.appendChild(el);
     });
   }
+
   // ---------- Populate Press ----------
   const pressLinks = [
     { title: "GRAMMYS – 5 Independent Record Labels Bringing The Sounds Of The Middle East & North Africa", url: "https://www.grammy.com/news/5-middle-east-north-africa-independent-record-labels-to-know-beirut-red-diamond", source: "GRAMMYS" },
@@ -54,6 +56,7 @@ window.onload = () => {
     { title: "SceneNoise – Arab Songs on Ramy S3", url: "https://scenenoise.com/Features/Here-are-All-the-Arab-Songs-You-Can-Hear-on-Season-Three-of-Ramy", source: "SceneNoise" },
     { title: "SceneNoise – Dafencii & Soulja Unite for Godzilla x Kong", url: "https://scenenoise.com/News/Dafencii-Soulja-Unite-for-Godzilla-x-Kong-The-New-Empire-Anthem", source: "SceneNoise" }
   ];
+
   const press = document.querySelector(".press-cards");
   if (press) {
     pressLinks.forEach((p) => {
@@ -62,6 +65,7 @@ window.onload = () => {
       press.appendChild(d);
     });
   }
+
   // ---------- Hero Parallax + Subtitle Fade ----------
   window.addEventListener("scroll", () => {
     const scrollY = window.scrollY;
@@ -74,6 +78,7 @@ window.onload = () => {
       subtitle.style.pointerEvents = opacity > 0 ? "auto" : "none";
     }
   });
+
   // ---------- Hero Cursor Ripples + Tilt ----------
   const hero = document.querySelector(".hero");
   if (hero) {
