@@ -20,7 +20,8 @@ window.onload = () => {
 
   // Ambient sound setup to bypass browser autoplay restrictions
   ambientAudio.loop = true;
-  ambientAudio.volume = 0.5; // Set a lower volume for the ambient loop
+  ambientAudio.volume = 0.2; // Adjusted to a lower volume
+  ambientAudio.preload = 'auto'; // Add preload for faster load
 
   function playAmbientAudio() {
     ambientAudio.play().then(() => {
