@@ -88,6 +88,7 @@ html, body {
   position: relative;
   z-index: 2;
   transition: transform .05s ease-out;
+  user-select: none; /* Prevents text selection on hover */
 }
 
 .hero-title {
@@ -233,7 +234,7 @@ html, body {
   margin: 100px auto 60px;
   max-width: 1200px;
   font-size: 2.5rem;
-  font-weight: 200; /* Adjusted to ExtraLight */
+  font-weight: 200;
   color: #fff;
   text-transform: uppercase;
   letter-spacing: 5px;
