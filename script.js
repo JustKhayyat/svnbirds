@@ -10,7 +10,7 @@ document.addEventListener('mousemove', (e) => {
     heroVideo.style.transform = `translate(${x * 0.01}px, ${y * 0.01}px) scale(1.05)`;
 });
 
-/* ========== Infinite Scroll for Releases ========== */
+/* ========== Populate Releases (Horizontal Scroll) ========== */
 
 const allReleases = [
   { title: "PRICE", link: "https://music.empi.re/price", cover: "covers/price.jpg" },
@@ -39,9 +39,6 @@ const allReleases = [
 ];
 
 const releasesGrid = document.getElementById('releases');
-const releasesPerPage = 8;
-let releasesLoaded = 0;
-
 const createReleaseElement = (release) => {
     const releaseLink = document.createElement('a');
     releaseLink.href = release.link;
@@ -55,17 +52,10 @@ const createReleaseElement = (release) => {
     return releaseLink;
 };
 
-const loadMoreReleases = () => {
-    if (releasesLoaded < allReleases.length) {
-        const nextBatch = allReleases.slice(releasesLoaded, releasesLoaded + releasesPerPage);
-        nextBatch.forEach(release => {
-            releasesGrid.appendChild(createReleaseElement(release));
-        });
-        releasesLoaded += releasesPerPage;
-    }
-};
-
-loadMoreReleases();
+// Populate all releases at once for horizontal scroll
+allReleases.forEach(release => {
+    releasesGrid.appendChild(createReleaseElement(release));
+});
 
 /* ========== Infinite Scroll for Press ========== */
 
@@ -121,12 +111,10 @@ const loadMorePress = () => {
 
 loadMorePress();
 
-// Single scroll event listener for both sections
 window.addEventListener('scroll', () => {
     const scrollPosition = window.innerHeight + window.scrollY;
     const documentHeight = document.body.offsetHeight;
     if (scrollPosition >= documentHeight - 500) {
-        loadMoreReleases();
         loadMorePress();
     }
 });
