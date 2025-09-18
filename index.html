@@ -1,45 +1,410 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Website Title</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SVNBIRDS | Independent Music Label</title>
+  <meta name="description" content="SVNBIRDS is a leading independent music ecosystem for artists in the Middle East & North Africa. Discover new releases and cultural content from a 360 powerhouse in the regional music scene.">
+  <meta property="og:title" content="SVNBIRDS">
+  <meta property="og:description" content="SVNBIRDS is a leading independent music ecosystem for artists in the Middle East & North Africa.">
+  <meta property="og:image" content="cover-image.jpg">
+  <meta property="og:og:url" content="https://svnbirds.com">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@svnbirds">
+  <link rel="icon" href="favicon.png" type="image/png"/>
+  <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
+  <button id="mute-button" class="mute-btn">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2ZM10.5 8C10.5 7.72386 10.7239 7.5 11 7.5H13C13.2761 7.5 13.5 7.72386 13.5 16V8ZM14.5 8C14.5 7.72386 14.7239 7.5 15 7.5H17C17.2761 7.5 17.5 7.72386 17.5 8V16C17.5 16.2761 17.2761 16.5 17 16.5H15C14.7239 16.5 14.5 16.2761 14.5 16V8ZM6.5 8C6.5 7.72386 6.72386 7.5 7 7.5H9C9.27614 7.5 9.5 7.72386 9.5 8V16C9.5 16.2761 9.27614 16.5 9 16.5H7C6.72386 16.5 6.5 16.2761 6.5 16V8Z" fill="currentColor"/>
+    </svg>
+</button>
 
-    <button id="mute-button" class="mute-btn">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2ZM10.5 8C10.5 7.72386 10.7239 7.5 11 7.5H13C13.2761 7.5 13.5 7.72386 13.5 16V8ZM14.5 8C14.5 7.72386 14.7239 7.5 15 7.5H17C17.2761 7.5 17.5 7.72386 17.5 8V16C17.5 16.2761 17.2761 16.5 17 16.5H15C14.7239 16.5 14.5 16.2761 14.5 16V8ZM6.5 8C6.5 7.72386 6.72386 7.5 7 7.5H9C9.27614 7.5 9.5 7.72386 9.5 8V16C9.5 16.2761 9.27614 16.5 9 16.5H7C6.72386 16.5 6.5 16.2761 6.5 16V8Z" fill="currentColor"/>
-        </svg>
-    </button>
+  <section class="hero" id="hero">
+    <div class="video-container">
+      <video loop playsinline autoplay muted class="hero-video" poster="media/moving-light-streaks-poster.jpg">
+        <source src="media/moving-light-streaks.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+    </div>
+    <div class="hero-content">
+      <h1 class="hero-title">SVNBIRDS</h1>
+      <p class="hero-subtitle">360 Music Ecosystem</p>
+    </div>
+  </section>
 
-    <div class="hero">
-        <div class="video-container">
-            <video class="hero-video" src="video/bg-video.mp4" playsinline muted loop></video>
-        </div>
-        <div class="hero-content">
-            <h1 class="hero-title">MOON CHILD</h1>
-        </div>
-    </div>
+  <h2 class="section-title">Releases</h2>
+  <div class="releases-container">
+    <div class="scroll-container" id="releases"></div>
+  </div>
 
-    <div class="section-title">Releases</div>
-    <div class="releases-container">
-        <div id="releases" class="scroll-container"></div>
-    </div>
+  <h2 class="section-title">Shop</h2>
+  <div class="shop-grid" id="shop">
+    <div id='collection-component-1758190269461'></div>
+<script type="text/javascript">
+/*<![CDATA[*/
+(function () {
+  var scriptURL = 'https://sdks.shopifycdn.com/buy-button/latest/buy-button-storefront.min.js';
+  if (window.ShopifyBuy) {
+    if (window.ShopifyBuy.UI) {
+      ShopifyBuyInit();
+    } else {
+      loadScript();
+    }
+  } else {
+    loadScript();
+  }
+  function loadScript() {
+    var script = document.createElement('script');
+    script.async = true;
+    script.src = scriptURL;
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(script);
+    script.onload = ShopifyBuyInit;
+  }
+  function ShopifyBuyInit() {
+    var client = ShopifyBuy.buildClient({
+      domain: 'ijuc61-hr.myshopify.com',
+      storefrontAccessToken: '12566d7e5f9880e9f42ae93bdd94ca29',
+    });
+    ShopifyBuy.UI.onReady(client).then(function (ui) {
+      ui.createComponent('collection', {
+        id: '298945052732',
+        node: document.getElementById('collection-component-1758190269461'),
+        moneyFormat: 'LE%20%7B%7Bamount%7D%7D',
+        options: {
+  "product": {
+    "styles": {
+      "product": {
+        "@media (min-width: 601px)": {
+          "max-width": "calc(25% - 20px)",
+          "margin-left": "20px",
+          "margin-bottom": "50px",
+          "width": "calc(25% - 20px)"
+        }
+      },
+      "title": {
+        "font-family": "Montserrat, sans-serif",
+        "font-weight": "normal",
+        "font-size": "17px",
+        "color": "#f0f0f0"
+      },
+      "button": {
+        "font-family": "Montserrat, sans-serif",
+        "font-size": "13px",
+        "padding-top": "14.5px",
+        "padding-bottom": "14.5px",
+        "color": "#f0f0f0",
+        ":hover": {
+          "color": "#f0f0f0",
+          "background-color": "#4c4c4c"
+        },
+        "background-color": "#545454",
+        ":focus": {
+          "background-color": "#4c4c4c"
+        },
+        "border-radius": "9px",
+        "padding-left": "14px",
+        "padding-right": "14px"
+      },
+      "quantityInput": {
+        "font-size": "13px",
+        "padding-top": "14.5px",
+        "padding-bottom": "14.5px"
+      },
+      "price": {
+        "font-family": "Montserrat, sans-serif",
+        "font-weight": "bold",
+        "color": "#d8d8d8"
+      },
+      "compareAt": {
+        "font-family": "Montserrat, sans-serif",
+        "font-weight": "bold",
+        "color": "#d8d8d8"
+      },
+      "unitPrice": {
+        "font-family": "Montserrat, sans-serif",
+        "font-weight": "bold",
+        "color": "#d8d8d8"
+      }
+    },
+    "buttonDestination": "modal",
+    "contents": {
+      "options": false
+    },
+    "text": {
+      "button": "View product"
+    },
+    "googleFonts": [
+      "Montserrat"
+    ]
+  },
+  "productSet": {
+    "styles": {
+      "products": {
+        "@media (min-width: 601px)": {
+          "margin-left": "-20px"
+        }
+      }
+    }
+  },
+  "modalProduct": {
+    "contents": {
+      "img": false,
+      "imgWithCarousel": true,
+      "button": false,
+      "buttonWithQuantity": true
+    },
+    "styles": {
+      "product": {
+        "@media (min-width: 601px)": {
+          "max-width": "100%",
+          "margin-left": "0px",
+          "margin-bottom": "0px"
+        }
+      },
+      "button": {
+        "font-family": "Montserrat, sans-serif",
+        "font-size": "13px",
+        "padding-top": "14.5px",
+        "padding-bottom": "14.5px",
+        "color": "#f0f0f0",
+        ":hover": {
+          "color": "#f0f0f0",
+          "background-color": "#4c4c4c"
+        },
+        "background-color": "#545454",
+        ":focus": {
+          "background-color": "#4c4c4c"
+        },
+        "border-radius": "9px",
+        "padding-left": "14px",
+        "padding-right": "14px"
+      },
+      "quantityInput": {
+        "font-size": "13px",
+        "padding-top": "14.5px",
+        "padding-bottom": "14.5px"
+      },
+      "title": {
+        "font-family": "Montserrat, sans-serif",
+        "font-weight": "bold",
+        "font-size": "26px",
+        "color": "#d4d4d4"
+      },
+      "price": {
+        "font-family": "Montserrat, sans-serif",
+        "font-weight": "normal",
+        "font-size": "16px",
+        "color": "#acacac"
+      },
+      "compareAt": {
+        "font-family": "Montserrat, sans-serif",
+        "font-weight": "normal",
+        "font-size": "13.6px",
+        "color": "#acacac"
+      },
+      "unitPrice": {
+        "font-family": "Montserrat, sans-serif",
+        "font-weight": "normal",
+        "font-size": "13.6px",
+        "color": "#acacac"
+      },
+      "description": {
+        "font-family": "Montserrat, sans-serif",
+        "color": "#999999"
+      }
+    },
+    "googleFonts": [
+      "Montserrat"
+    ],
+    "text": {
+      "button": "Add to cart"
+    }
+  },
+  "modal": {
+    "styles": {
+      "modal": {
+        "background-color": "#121212"
+      }
+    }
+  },
+  "option": {
+    "styles": {
+      "label": {
+        "font-family": "Montserrat, sans-serif",
+        "font-weight": "bold"
+      },
+      "select": {
+        "font-family": "Montserrat, sans-serif",
+        "font-weight": "bold"
+      }
+    },
+    "googleFonts": [
+      "Montserrat"
+    ]
+  },
+  "cart": {
+    "styles": {
+      "button": {
+        "font-family": "Montserrat, sans-serif",
+        "font-size": "13px",
+        "padding-top": "14.5px",
+        "padding-bottom": "14.5px",
+        "color": "#f0f0f0",
+        ":hover": {
+          "color": "#f0f0f0",
+          "background-color": "#4c4c4c"
+        },
+        "background-color": "#545454",
+        ":focus": {
+          "background-color": "#4c4c4c"
+        },
+        "border-radius": "9px"
+      },
+      "title": {
+        "color": "#262626"
+      },
+      "header": {
+        "color": "#262626"
+      },
+      "lineItems": {
+        "color": "#262626"
+      },
+      "subtotalText": {
+        "color": "#262626"
+      },
+      "subtotal": {
+        "color": "#262626"
+      },
+      "notice": {
+        "color": "#262626"
+      },
+      "currency": {
+        "color": "#262626"
+      },
+      "close": {
+        "color": "#262626",
+        ":hover": {
+          "color": "#262626"
+        }
+      },
+      "empty": {
+        "color": "#262626"
+      },
+      "noteDescription": {
+        "color": "#262626"
+      },
+      "discountText": {
+        "color": "#262626"
+      },
+      "discountIcon": {
+        "fill": "#262626"
+      },
+      "discountAmount": {
+        "color": "#262626"
+      },
+      "cart": {
+        "background-color": "#d6d6d6"
+      },
+      "footer": {
+        "background-color": "#d6d6d6"
+      }
+    },
+    "text": {
+      "total": "Subtotal",
+      "button": "Checkout"
+    },
+    "googleFonts": [
+      "Montserrat"
+    ]
+  },
+  "toggle": {
+    "styles": {
+      "toggle": {
+        "font-family": "Montserrat, sans-serif",
+        "background-color": "#545454",
+        ":hover": {
+          "background-color": "#4c4c4c"
+        },
+        ":focus": {
+          "background-color": "#4c4c4c"
+        }
+      },
+      "count": {
+        "font-size": "13px",
+        "color": "#f0f0f0",
+        ":hover": {
+          "color": "#f0f0f0"
+        }
+      },
+      "iconPath": {
+        "fill": "#f0f0f0"
+      }
+    },
+    "googleFonts": [
+      "Montserrat"
+    ]
+  },
+  "lineItem": {
+    "styles": {
+      "variantTitle": {
+        "color": "#262626"
+      },
+      "title": {
+        "color": "#262626"
+      },
+      "price": {
+        "color": "#262626"
+      },
+      "fullPrice": {
+        "color": "#262626"
+      },
+      "discount": {
+        "color": "#262626"
+      },
+      "discountIcon": {
+        "fill": "#262626"
+      },
+      "quantity": {
+        "color": "#262626"
+      },
+      "quantityIncrement": {
+        "color": "#262626",
+        "border-color": "#262626"
+      },
+      "quantityDecrement": {
+        "color": "#262626",
+        "border-color": "#262626"
+      },
+      "quantityInput": {
+        "color": "#262626",
+        "border-color": "#262626"
+      }
+    }
+  }
+},
+      });
+    });
+  }
+})();
+/*]]>*/
+</script>
+  </div>
 
-    <div class="section-title">Press</div>
-    <div class="press-container">
-        <div id="press-grid" class="press-grid"></div>
-    </div>
+  <h2 class="section-title">Press</h2>
+  <div class="press-container">
+    <div class="press-grid" id="press-grid"></div>
+  </div>
 
-    <div class="contact-section">
-        <h2>CONTACT US</h2>
-        <a href="mailto:booking@email.com">booking@email.com</a>
-        <br>
-        <a href="mailto:info@email.com">info@email.com</a>
-    </div>
+  <div class="contact-section">
+    <h2>Contact</h2>
+    <p><a href="mailto:booking@svnbirds.com">booking@svnbirds.com</a></p>
+    <p><a href="https://www.instagram.com/svnbirdspro/" target="_blank">@svnbirdspro</a></p>
+  </div>
 
-    <script src="script.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/tsparticles@2/tsparticles.bundle.min.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
