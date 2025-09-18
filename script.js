@@ -1,8 +1,50 @@
-// ---------- On Load ----------
+/* ========== On Load / Main Functionality ========== */
 window.onload = () => {
+  /* ========== Hero Video & Audio ========== */
+  // Autoplay fix for all browsers
+  const video = document.querySelector(".hero-video");
+  if (video) {
+    video.muted = true;
+    video.loop = true;
+    video.playsinline = true;
+    try {
+      video.play();
+    } catch (error) {
+      console.log("Autoplay was prevented by the browser. Error:", error);
+    }
+  }
 
-  // ---------- Populate Releases ----------
-  const albums = [
+  // Set up ambient and click sounds
+  const ambientAudio = new Audio('sounds/ambient-loop.mp3');
+  const clickAudio = new Audio('sounds/click.mp3');
+
+  // Ambient sound setup to bypass browser autoplay restrictions
+  ambientAudio.loop = true;
+  ambientAudio.volume = 0.5; // Set a lower volume for the ambient loop
+
+  function playAmbientAudio() {
+    ambientAudio.play().then(() => {
+      // Audio is playing, remove the one-time event listener
+      document.body.removeEventListener('mousedown', playAmbientAudio);
+      document.body.removeEventListener('touchstart', playAmbientAudio);
+    }).catch(error => {
+      console.log("Audio autoplay was prevented. Error:", error);
+    });
+  }
+
+  // Start the ambient sound on the first user interaction
+  document.body.addEventListener('mousedown', playAmbientAudio, { once: true });
+  document.body.addEventListener('touchstart', playAmbientAudio, { once: true });
+
+  // Play click sound on any mouse click
+  document.addEventListener('click', () => {
+    // Reset the audio to the beginning for each click
+    clickAudio.currentTime = 0;
+    clickAudio.play().catch(e => console.log("Click sound play failed:", e));
+  });
+
+  /* ========== Populate Releases (Horizontal Scroll) ========== */
+  const allReleases = [
     { title: "PRICE", link: "https://music.empi.re/price", cover: "covers/price.jpg" },
     { title: "KSHFF", link: "https://music.empi.re/kshff", cover: "covers/kshff.jpg" },
     { title: "Mozart", link: "https://music.empi.re/mozart", cover: "covers/mozart.jpg" },
@@ -28,28 +70,29 @@ window.onload = () => {
     { title: "Langa", link: "https://music.empi.re/langa", cover: "covers/langa.jpg" }
   ];
 
-  const grid = document.querySelector(".grid");
-  if (grid) {
-    albums.forEach((a, i) => {
-      const el = document.createElement("a");
-      el.href = a.link;
-      el.target = "_blank";
-      el.rel = "noopener noreferrer";
-      el.setAttribute("data-title", a.title);
-      el.innerHTML = `<img loading="lazy" src="${a.cover}" alt="${a.title}">`;
-      el.style.opacity = 0;
-      el.style.transform = "translateY(20px)";
-      setTimeout(() => {
-        el.style.transition = "all .6s ease";
-        el.style.opacity = 1;
-        el.style.transform = "translateY(0)";
-      }, i * 80);
-      grid.appendChild(el);
+  const releasesGrid = document.getElementById('releases');
+  const createReleaseElement = (release) => {
+    const releaseLink = document.createElement('a');
+    releaseLink.href = release.link;
+    releaseLink.setAttribute('data-title', release.title);
+    
+    const releaseImage = document.createElement('img');
+    releaseImage.loading = 'lazy'; // Add lazy loading
+    releaseImage.src = release.cover;
+    releaseImage.alt = release.title;
+
+    releaseLink.appendChild(releaseImage);
+    return releaseLink;
+  };
+
+  if (releasesGrid) {
+    allReleases.forEach(release => {
+      releasesGrid.appendChild(createReleaseElement(release));
     });
   }
 
-  // ---------- Populate Press ----------
-  const pressLinks = [
+  /* ========== Infinite Scroll for Press ========== */
+  const allPress = [
     { title: "GRAMMYS – 5 Independent Record Labels Bringing The Sounds Of The Middle East & North Africa", url: "https://www.grammy.com/news/5-middle-east-north-africa-independent-record-labels-to-know-beirut-red-diamond", source: "GRAMMYS" },
     { title: "Hard Knock Radio – Suhel Nafar on Empowering Palestinian & Arab Artists", url: "https://hardknockradio.org/suhel-nafar-speaks-on-empowering-palestinian-and-arab-music-hip-hop-artists/", source: "Hard Knock Radio" },
     { title: "SceneNoise – 77: The Egyptian Producer Bringing SWANA Together", url: "https://scenenoise.com/Features/77-The-Egyptian-Producer-Bringing-SWANA-Together-from-Malaysia", source: "SceneNoise" },
@@ -64,45 +107,52 @@ window.onload = () => {
     { title: "SceneNoise – Dafencii & Soulja Unite for Godzilla x Kong", url: "https://scenenoise.com/News/Dafencii-Soulja-Unite-for-Godzilla-x-Kong-The-New-Empire-Anthem", source: "SceneNoise" }
   ];
 
-  const press = document.querySelector(".press-cards");
-  if (press) {
-    pressLinks.forEach((p, i) => {
-      const d = document.createElement("div");
-      d.innerHTML = `<div class="press-source">${p.source}</div><a href="${p.url}" target="_blank" rel="noopener noreferrer">${p.title.replace(p.source + " – ", "")}</a>`;
-      d.style.opacity = 0;
-      d.style.transform = "translateY(20px)";
-      setTimeout(() => {
-        d.style.transition = "all .6s ease";
-        d.style.opacity = 1;
-        d.style.transform = "translateY(0)";
-      }, i * 120);
-      press.appendChild(d);
-    });
-  }
+  const pressGrid = document.getElementById('press-grid');
+  const pressPerPage = 6;
+  let pressLoaded = 0;
 
-  // ---------- Hero Parallax + Subtitle Fade ----------
-  window.addEventListener("scroll", () => {
-    const scrollY = window.scrollY;
-    const heroTitle = document.querySelector(".hero-title");
-    const subtitle = document.querySelector(".hero-subtitle");
-    if (heroTitle) heroTitle.style.transform = `translateY(${scrollY * 0.2}px)`;
-    if (subtitle) {
-      const opacity = Math.max(1 - scrollY / 300, 0);
-      subtitle.style.opacity = opacity;
-      subtitle.style.pointerEvents = opacity > 0 ? "auto" : "none";
+  const createPressElement = (press) => {
+    const pressCard = document.createElement('div');
+    const pressLink = document.createElement('a');
+    
+    pressLink.href = press.url;
+    pressLink.target = '_blank';
+    pressLink.rel = 'noopener noreferrer';
+
+    const pressSource = document.createElement('div');
+    pressSource.className = 'press-source';
+    pressSource.textContent = press.source;
+
+    const pressTitle = document.createElement('h3');
+    pressTitle.textContent = press.title;
+
+    pressLink.appendChild(pressSource);
+    pressLink.appendChild(pressTitle);
+    pressCard.appendChild(pressLink);
+    return pressCard;
+  };
+
+  const loadMorePress = () => {
+    if (pressGrid && pressLoaded < allPress.length) {
+      const nextBatch = allPress.slice(pressLoaded, pressLoaded + pressPerPage);
+      nextBatch.forEach(press => {
+        pressGrid.appendChild(createPressElement(press));
+      });
+      pressLoaded += pressPerPage;
+    }
+  };
+
+  loadMorePress();
+
+  window.addEventListener('scroll', () => {
+    const scrollPosition = window.innerHeight + window.scrollY;
+    const documentHeight = document.body.offsetHeight;
+    if (scrollPosition >= documentHeight - 500) {
+      loadMorePress();
     }
   });
 
-  // ---------- Scroll Fade-ins ----------
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) entry.target.classList.add("fade-in");
-    });
-  }, { threshold: 0.2 });
-
-  document.querySelectorAll(".hero-content, .grid, .press-cards, .contact-section").forEach(el => observer.observe(el));
-
-  // ---------- Hero Cursor Ripples + Tilt ----------
+  /* ========== Hero Ripple and Tilt Effect ========== */
   const hero = document.querySelector(".hero");
   if (hero) {
     const canvas = document.createElement("canvas");
@@ -173,61 +223,54 @@ window.onload = () => {
     };
 
     window.addEventListener("mousemove", handleInteraction);
-    // Use touchstart for mobile to avoid interfering with scrolling
     hero.addEventListener("touchstart", handleInteraction);
 
-    // Reset tilt on mouse/touch leave
     hero.addEventListener("mouseleave", () => {
       const content = hero.querySelector(".hero-content");
       if (content) {
         content.style.transform = "perspective(800px) rotateX(0deg) rotateY(0deg)";
       }
-      });
+    });
 
-      hero.addEventListener("touchend", () => {
-        const content = hero.querySelector(".hero-content");
-        if (content) {
-          content.style.transform = "perspective(800px) rotateX(0deg) rotateY(0deg)";
-        }
-      });
-    }
+    hero.addEventListener("touchend", () => {
+      const content = hero.querySelector(".hero-content");
+      if (content) {
+        content.style.transform = "perspective(800px) rotateX(0deg) rotateY(0deg)";
+      }
+    });
+  }
 
-    // ---------- Audio Control ----------
-    const ambientAudio = new Audio('sounds/ambient-loop.mp3');
-    const muteButton = document.getElementById('mute-button');
-    ambientAudio.loop = true;
-    ambientAudio.volume = 0.2;
-    ambientAudio.preload = 'auto';
+  /* ========== Desktop Mouse Drag to Scroll Releases ========== */
+  const releasesContainer = document.querySelector('.releases-container');
+  let isDragging = false;
+  let startX;
+  let scrollLeft;
 
-    // Start with audio muted to comply with browser policies
-    ambientAudio.muted = true;
+  if (releasesContainer) {
+    releasesContainer.addEventListener('mousedown', (e) => {
+      isDragging = true;
+      releasesContainer.classList.add('active');
+      startX = e.pageX - releasesContainer.offsetLeft;
+      scrollLeft = releasesContainer.scrollLeft;
+      e.preventDefault(); // Prevents image drag
+    });
 
-    if (muteButton) {
-      muteButton.textContent = 'UNMUTE';
-      muteButton.addEventListener('click', () => {
-        if (ambientAudio.muted) {
-          ambientAudio.muted = false;
-          ambientAudio.play().catch(e => console.log("Audio play failed:", e));
-          muteButton.textContent = 'MUTE';
-        } else {
-          ambientAudio.muted = true;
-          muteButton.textContent = 'UNMUTE';
-        }
-      });
-    }
+    releasesContainer.addEventListener('mouseleave', () => {
+      isDragging = false;
+      releasesContainer.classList.remove('active');
+    });
+
+    releasesContainer.addEventListener('mouseup', () => {
+      isDragging = false;
+      releasesContainer.classList.remove('active');
+    });
+
+    releasesContainer.addEventListener('mousemove', (e) => {
+      if (!isDragging) return;
+      e.preventDefault();
+      const x = e.pageX - releasesContainer.offsetLeft;
+      const walk = (x - startX) * 2; // Adjust scroll speed
+      releasesContainer.scrollLeft = scrollLeft - walk;
+    });
+  }
 };
-
-// Autoplay fix for all browsers
-document.addEventListener("DOMContentLoaded", async () => {
-    const video = document.querySelector(".hero-video");
-    if (video) {
-        video.muted = true;
-        video.loop = true;
-        video.playsinline = true; // For iOS devices
-        try {
-            await video.play();
-        } catch (error) {
-            console.log("Autoplay was prevented by the browser. Error:", error);
-        }
-    }
-});
