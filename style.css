@@ -33,7 +33,6 @@ html, body {
   color: #fff; 
   line-height: 1.5; 
   overflow-x: hidden;
-  user-select: none; /* Prevents text selection on the entire website */
 }
 
 /* ========== Shop Button ========== */
@@ -234,7 +233,7 @@ html, body {
   margin: 100px auto 60px;
   max-width: 1200px;
   font-size: 2.5rem;
-  font-weight: 200;
+  font-weight: 200; /* Adjusted to ExtraLight */
   color: #fff;
   text-transform: uppercase;
   letter-spacing: 5px;
