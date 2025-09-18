@@ -122,6 +122,12 @@ html, body {
   .hero-subtitle { font-size: clamp(18px, 2vw, 28px); }
 }
 
+/* Fix for hero font size on very small screens */
+@media(max-width:480px){
+  .hero-title { font-size: 16vw; }
+  .hero-subtitle { font-size: 5vw; }
+}
+
 @keyframes fadeInUp {
   from { opacity: 0; transform: translateY(30px); }
   to { opacity: 1; transform: translateY(0); }
