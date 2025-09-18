@@ -122,10 +122,7 @@ html, body {
   margin: 60px auto;
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
 }
-.releases-container::-webkit-scrollbar { display: none; }
 .scroll-container {
   display: flex; 
   gap: 25px; 
