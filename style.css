@@ -231,18 +231,34 @@ html, body {
   color: #fff;
   text-transform: uppercase;
   letter-spacing: 5px;
-  text-shadow: 
-    -2px -2px 0 #000,
-    2px -2px 0 #000,
-    -2px 2px 0 #000,
-    2px 2px 0 #000,
-    4px 4px 0 rgba(255, 255, 255, 0.1),
-    6px 6px 0 rgba(255, 255, 255, 0.05);
+  position: relative;
+  animation: glitch 1.5s infinite;
 }
 
 @media(max-width: 768px) {
   .section-title {
     font-size: 2rem;
     margin: 60px auto 40px;
+  }
+}
+
+@keyframes glitch {
+  0%, 100% {
+    text-shadow: 0.05em 0 0 rgba(255, 0, 0, 0.75), -0.05em 0 0 rgba(0, 255, 0, 0.75), 0 0 0.1em rgba(0, 0, 255, 0.75);
+  }
+  14% {
+    text-shadow: 0.05em 0 0 rgba(255, 0, 0, 0.75), -0.05em 0 0 rgba(0, 255, 0, 0.75), 0 0 0.1em rgba(0, 0, 255, 0.75);
+  }
+  15% {
+    text-shadow: -0.05em -0.025em 0 rgba(255, 0, 0, 0.75), 0.025em 0.05em 0 rgba(0, 255, 0, 0.75), -0.05em 0 0.1em rgba(0, 0, 255, 0.75);
+  }
+  49% {
+    text-shadow: -0.05em -0.025em 0 rgba(255, 0, 0, 0.75), 0.025em 0.05em 0 rgba(0, 255, 0, 0.75), -0.05em 0 0.1em rgba(0, 0, 255, 0.75);
+  }
+  50% {
+    text-shadow: 0.025em 0.05em 0 rgba(255, 0, 0, 0.75), -0.05em -0.025em 0 rgba(0, 255, 0, 0.75), 0 0.05em 0.1em rgba(0, 0, 255, 0.75);
+  }
+  99% {
+    text-shadow: 0.025em 0.05em 0 rgba(255, 0, 0, 0.75), -0.05em -0.025em 0 rgba(0, 255, 0, 0.75), 0 0.05em 0.1em rgba(0, 0, 255, 0.75);
   }
 }
