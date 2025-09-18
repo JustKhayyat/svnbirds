@@ -231,6 +231,13 @@ html, body {
   color: #fff;
   text-transform: uppercase;
   letter-spacing: 5px;
+  text-shadow: 
+    -2px -2px 0 #000,
+    2px -2px 0 #000,
+    -2px 2px 0 #000,
+    2px 2px 0 #000,
+    4px 4px 0 rgba(255, 255, 255, 0.1),
+    6px 6px 0 rgba(255, 255, 255, 0.05);
 }
 
 @media(max-width: 768px) {
