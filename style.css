@@ -230,13 +230,14 @@ html, body {
 
 /* ========== Section Titles ========== */
 .section-title {
-  font-size: 2.5rem;
-  font-weight: 900;
   text-align: center;
-  text-transform: uppercase;
   margin: 100px auto 60px;
-  /* Adjust this line */
-  letter-spacing: 2px;
+  max-width: 1200px;
+  font-size: 2.5rem;
+  font-weight: 200; /* This line is corrected to restore the extra-light font */
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 2px; /* This is the improved letter-spacing */
 }
 
 @media(max-width: 768px) {
