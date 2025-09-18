@@ -115,30 +115,41 @@ html, body {
   to { opacity: 1; }
 }
 
-/* ========== Releases Grid ========== */
+/* ========== Releases Scrollable Grid ========== */
 .releases-container {
   padding: 0 20px;
-  max-width: 1200px;
-  margin: 0 auto;
-}
-.grid {
-  display: grid; 
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 25px; 
+  max-width: 100%;
   margin: 60px auto;
-  width: 100%; 
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
-.grid a { position: relative; border-radius: 12px; overflow: hidden; }
-.grid img { width: 100%; display: block; border-radius: 12px; transition: transform .3s; }
-.grid a:hover img { transform: scale(1.05); }
-.grid a::after {
+.releases-container::-webkit-scrollbar { display: none; }
+.scroll-container {
+  display: flex; 
+  gap: 25px; 
+  padding-bottom: 25px;
+  /* Add more items to make it scrollable for testing purposes */
+  min-width: calc(300px * 23 + 25px * 22); /* Adjust as needed */
+}
+.scroll-container a { 
+  position: relative; 
+  border-radius: 12px; 
+  overflow: hidden; 
+  min-width: 250px; /* Adjust item width */
+  max-width: 300px;
+}
+.scroll-container img { width: 100%; display: block; border-radius: 12px; transition: transform .3s; }
+.scroll-container a:hover img { transform: scale(1.05); }
+.scroll-container a::after {
   content: attr(data-title);
   position: absolute; bottom: 0; left: 0; right: 0;
   padding: 12px; background: linear-gradient(to top,rgba(0,0,0,.8),transparent);
   font-size: .9rem; font-weight: 600; text-align: left; color: #fff;
   opacity: 0; transition: opacity .3s;
 }
-.grid a:hover::after { opacity: 1; }
+.scroll-container a:hover::after { opacity: 1; }
 
 /* ========== Press Cards ========== */
 .press-container {
@@ -147,7 +158,8 @@ html, body {
   margin: 60px auto;
 }
 .press-grid {
-  display: grid; grid-template-columns: repeat(auto-fit,minmax(320px,1fr));
+  display: grid; 
+  grid-template-columns: repeat(auto-fit,minmax(320px,1fr));
   gap: 25px;
 }
 .press-grid > div {
