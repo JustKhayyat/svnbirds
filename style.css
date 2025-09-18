@@ -130,14 +130,12 @@ html, body {
   display: flex; 
   gap: 25px; 
   padding-bottom: 25px;
-  /* Add more items to make it scrollable for testing purposes */
-  min-width: calc(300px * 23 + 25px * 22); /* Adjust as needed */
 }
 .scroll-container a { 
   position: relative; 
   border-radius: 12px; 
   overflow: hidden; 
-  min-width: 250px; /* Adjust item width */
+  min-width: 250px; 
   max-width: 300px;
 }
 .scroll-container img { width: 100%; display: block; border-radius: 12px; transition: transform .3s; }
