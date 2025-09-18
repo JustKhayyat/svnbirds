@@ -33,6 +33,7 @@ html, body {
   color: #fff; 
   line-height: 1.5; 
   overflow-x: hidden;
+  user-select: none; /* Prevents text selection on the entire website */
 }
 
 /* ========== Shop Button ========== */
@@ -88,7 +89,6 @@ html, body {
   position: relative;
   z-index: 2;
   transition: transform .05s ease-out;
-  user-select: none; /* Prevents text selection on hover */
 }
 
 .hero-title {
