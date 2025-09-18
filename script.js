@@ -1,5 +1,17 @@
 /* ========== On Load / Main Functionality ========== */
 window.onload = () => {
+  // Autoplay fix for all browsers
+  const video = document.querySelector(".hero-video");
+  if (video) {
+    video.muted = true;
+    video.loop = true;
+    video.playsinline = true;
+    try {
+      video.play();
+    } catch (error) {
+      console.log("Autoplay was prevented by the browser. Error:", error);
+    }
+  }
 
   /* ========== Populate Releases (Horizontal Scroll) ========== */
   const allReleases = [
@@ -197,19 +209,38 @@ window.onload = () => {
       }
     });
   }
-};
 
-// Autoplay fix for all browsers
-document.addEventListener("DOMContentLoaded", async () => {
-  const video = document.querySelector(".hero-video");
-  if (video) {
-    video.muted = true;
-    video.loop = true;
-    video.playsinline = true;
-    try {
-      await video.play();
-    } catch (error) {
-      console.log("Autoplay was prevented by the browser. Error:", error);
-    }
+  /* ========== Desktop Mouse Drag to Scroll Releases ========== */
+  const releasesContainer = document.querySelector('.releases-container');
+  let isDragging = false;
+  let startX;
+  let scrollLeft;
+
+  if (releasesContainer) {
+    releasesContainer.addEventListener('mousedown', (e) => {
+      isDragging = true;
+      releasesContainer.classList.add('active');
+      startX = e.pageX - releasesContainer.offsetLeft;
+      scrollLeft = releasesContainer.scrollLeft;
+      e.preventDefault(); // Prevents image drag
+    });
+
+    releasesContainer.addEventListener('mouseleave', () => {
+      isDragging = false;
+      releasesContainer.classList.remove('active');
+    });
+
+    releasesContainer.addEventListener('mouseup', () => {
+      isDragging = false;
+      releasesContainer.classList.remove('active');
+    });
+
+    releasesContainer.addEventListener('mousemove', (e) => {
+      if (!isDragging) return;
+      e.preventDefault();
+      const x = e.pageX - releasesContainer.offsetLeft;
+      const walk = (x - startX) * 2; // Adjust scroll speed
+      releasesContainer.scrollLeft = scrollLeft - walk;
+    });
   }
-});
+};
