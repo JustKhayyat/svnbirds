@@ -123,10 +123,32 @@ html, body {
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
 }
+
+/* Custom Scrollbar Styles */
+.releases-container::-webkit-scrollbar {
+  height: 8px;
+}
+
+.releases-container::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+}
+
+.releases-container::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.3);
+  border-radius: 10px;
+  border: 2px solid rgba(18, 18, 18, 0.8);
+}
+
+.releases-container::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
 .scroll-container {
   display: flex; 
   gap: 25px; 
   padding-bottom: 25px;
+  animation: subtleMovement 4s ease-in-out infinite;
 }
 .scroll-container a { 
   position: relative; 
@@ -145,6 +167,12 @@ html, body {
   opacity: 0; transition: opacity .3s;
 }
 .scroll-container a:hover::after { opacity: 1; }
+
+@keyframes subtleMovement {
+  0% { transform: translateX(0); }
+  50% { transform: translateX(-10px); }
+  100% { transform: translateX(0); }
+}
 
 /* ========== Press Cards ========== */
 .press-container {
