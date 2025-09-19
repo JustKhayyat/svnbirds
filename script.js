@@ -72,11 +72,11 @@ window.onload = () => {
   ];
 
   const allArtists = [
-    { name: "Soulja", link: "soulja.html", photo: "media/artists/artist-soulja.png" },
-    { name: "Montiyago", link: "montiyago.html", photo: "media/artists/artist-montiyago.png" },
-    { name: "Khayyat", link: "khayyat.html", photo: "media/artists/artist-khayyat.png" },
-    { name: "77", link: "77.html", photo: "media/artists/artist-77.png" },
-    { name: "Big Moe", link: "bigmoe.html", photo: "media/artists/artist-bigmoe.png" }
+    { name: "Soulja", link: "soulja/", photo: "media/artists/artist-soulja.png" },
+    { name: "Montiyago", link: "montiyago/", photo: "media/artists/artist-montiyago.png" },
+    { name: "Khayyat", link: "khayyat/", photo: "media/artists/artist-khayyat.png" },
+    { name: "77", link: "77/", photo: "media/artists/artist-77.png" },
+    { name: "Big Moe", link: "bigmoe/", photo: "media/artists/artist-bigmoe.png" }
   ];
 
   const allPress = [
@@ -209,14 +209,14 @@ window.onload = () => {
   };
 
   /* ========== Check for current page and populate accordingly ========== */
-  if (document.getElementById('releases') && document.getElementById('artist-grid')) {
+  if (document.getElementById('discography')) {
+    // This is an artist page
+    populateArtistDiscography();
+  } else {
     // This is the main index page
     populateReleases();
     populateArtists();
     populatePress();
-  } else if (document.getElementById('discography')) {
-    // This is an artist page
-    populateArtistDiscography();
   }
 
 
