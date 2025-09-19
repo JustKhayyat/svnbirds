@@ -280,4 +280,128 @@ html, body {
     font-size: 2rem;
     margin: 60px auto 40px;
   }
+
+  /* ========== Artist Page Styling ========== */
+.artist-hero {
+  position: relative;
+  min-height: 50vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 0 20px;
+  overflow: hidden;
+}
+
+.artist-hero-content {
+  position: relative;
+  z-index: 2;
+  transition: transform .05s ease-out;
+}
+
+.artist-hero-image {
+  width: 100%;
+  max-width: 300px;
+  border-radius: 50%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border: 4px solid rgba(255, 255, 255, .1);
+  margin-bottom: 20px;
+}
+
+.artist-title {
+  font-size: clamp(3rem, 8vw, 6rem);
+  font-weight: 900;
+  line-height: 1.1;
+  color: #fff;
+  animation: fadeInUp 1s ease forwards;
+}
+
+.artist-subtitle {
+  font-size: clamp(1rem, 2vw, 1.5rem);
+  font-weight: 400;
+  color: #a1a1a6;
+  margin-top: 12px;
+  opacity: 0;
+  animation: fadeIn 1.4s ease forwards .4s;
+}
+
+.artist-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.artist-bio-section,
+.artist-socials-section {
+  text-align: center;
+  margin-top: 60px;
+}
+
+.artist-bio {
+  font-size: 1rem;
+  line-height: 1.8;
+  color: #a1a1a6;
+  max-width: 700px;
+  margin: 20px auto 0;
+}
+
+.social-links {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.social-link,
+.epk-download-btn {
+  background: rgba(255, 255, 255, .05);
+  border: 1px solid rgba(255, 255, 255, .2);
+  padding: 10px 20px;
+  border-radius: 8px;
+  color: #fff;
+  font-size: .85rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: all .3s;
+}
+
+.social-link:hover,
+.epk-download-btn:hover {
+  background: #fff;
+  color: #000;
+}
+
+.epk-download-btn {
+  display: inline-block;
+  margin-top: 20px;
+}
+
+.nav-btn {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: rgba(255, 255, 255, .05);
+  border: 1px solid rgba(255, 255, 255, .2);
+  padding: 10px 20px;
+  border-radius: 8px;
+  color: #fff;
+  font-size: .85rem;
+  font-weight: 700;
+  z-index: 1000;
+  cursor: pointer;
+  transition: all .3s;
+  text-decoration: none;
+}
+
+.nav-btn:hover {
+  background: #fff;
+  color: #000;
+}
+
+@media(max-width: 768px) {
+  .artist-hero-image {
+    max-width: 250px;
+  }
 }
