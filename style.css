@@ -277,7 +277,7 @@ html, body {
   }
 }
 
-/* ========== Artist Page Styling (New & Corrected) ========== */
+/* ========== Artist Page Styling ========== */
 .nav-btn {
   position: fixed;
   top: 20px;
@@ -296,49 +296,9 @@ html, body {
 }
 .nav-btn:hover { background: #fff; color: #000; }
 
-.artist-hero {
-  position: relative;
-  min-height: 50vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: 0 20px;
-  overflow: hidden;
-}
-
-.artist-hero-content {
-  position: relative;
-  z-index: 2;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-}
-
-.artist-hero-image {
+.hero-logo {
   width: 100%;
-  max-width: 300px;
-  border-radius: 50%;
-  aspect-ratio: 1 / 1;
-  object-fit: cover;
-  border: 4px solid rgba(255, 255, 255, .1);
-  margin-bottom: 20px;
-}
-
-.artist-title {
-  font-size: clamp(3rem, 8vw, 6rem);
-  font-weight: 900;
-  line-height: 1.1;
-  color: #fff;
-}
-
-.artist-subtitle {
-  font-size: clamp(1rem, 2vw, 1.5rem);
-  font-weight: 400;
-  color: #a1a1a6;
-  margin-top: 12px;
+  max-width: clamp(250px, 40vw, 500px);
 }
 
 .artist-container {
