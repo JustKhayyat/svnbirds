@@ -92,6 +92,39 @@ window.onload = () => {
     });
   }
 
+  /* ========== Populate Artists Grid ========== */
+  const allArtists = [
+    { name: "Soulja", link: "soulja.html", photo: "media/artists/artist-soulja.png" },
+    { name: "Montiyago", link: "montiyago.html", photo: "media/artists/artist-montiyago.png" },
+    { name: "Khayyat", link: "khayyat.html", photo: "media/artists/artist-khayyat.png" },
+    { name: "77", link: "77.html", photo: "media/artists/artist-77.png" },
+    { name: "Big Moe", link: "bigmoe.html", photo: "media/artists/artist-bigmoe.png" }
+  ];
+
+  const artistsGrid = document.getElementById('artist-grid');
+  const createArtistElement = (artist) => {
+    const artistLink = document.createElement('a');
+    artistLink.href = artist.link;
+    
+    const artistImage = document.createElement('img');
+    artistImage.loading = 'lazy';
+    artistImage.src = artist.photo;
+    artistImage.alt = artist.name;
+
+    const artistName = document.createElement('h3');
+    artistName.textContent = artist.name;
+
+    artistLink.appendChild(artistImage);
+    artistLink.appendChild(artistName);
+    return artistLink;
+  };
+
+  if (artistsGrid) {
+    allArtists.forEach(artist => {
+      artistsGrid.appendChild(createArtistElement(artist));
+    });
+  }
+
   /* ========== Infinite Scroll for Press ========== */
   const allPress = [
     { title: "GRAMMYS – 5 Independent Record Labels Bringing The Sounds Of The Middle East & North Africa", url: "https://www.grammy.com/news/5-middle-east-north-africa-independent-record-labels-to-know-beirut-red-diamond", source: "GRAMMYS" },
