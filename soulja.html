@@ -4,52 +4,83 @@
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Soulja | SVNBIRDS</title>
-  <meta name="description" content="Official website for Soulja, a leading artist on SVNBIRDS. Discover new music, EPK, and cultural content.">
+  <meta name="description" content="Official page for Soulja, an artist on the SVNBIRDS independent music label. Discover his biography, social media, and discography.">
   <link rel="icon" href="favicon.png" type="image/png"/>
   <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-  <a href="index.html" class="home-btn" rel="noopener noreferrer">SVNBIRDS</a>
-  <a class="shop-btn" href="#shop" rel="noopener noreferrer">Shop</a>
+  <a class="nav-btn home-btn" href="index.html">SVNBIRDS</a>
 
   <section class="artist-hero">
-    <div class="artist-hero-image-container">
-      <img src="media/artists/artist-soulja.png" alt="Soulja official photo">
-    </div>
     <div class="artist-hero-content">
-      <h1 class="artist-name">Soulja</h1>
-      <div class="social-links-container" id="social-links">
-        <a href="https://www.instagram.com/souljamusic/?hl=en" target="_blank">Instagram</a>
-        <a href="https://open.spotify.com/artist/4LmdLhcTV6FR8omNKEOtuN?si=OFpfGoeqRUSgK3YQd6fAPg" target="_blank">Spotify</a>
-        <a href="https://music.apple.com/ly/artist/soulja/1542465131" target="_blank">Apple Music</a>
-        <a href="https://www.youtube.com/channel/UCU-3aVH2u__JEZFCXShiRTQ" target="_blank">YouTube</a>
-      </div>
-      <a href="media/epks/soulja-epk.pdf" download class="epk-btn">Download EPK</a>
-    </div>
-  </section>
-
-  <section class="artist-releases-section">
-    <h2 class="section-title">Discography</h2>
-    <div class="releases-container">
-      <div class="scroll-container" id="artist-releases">
-        </div>
+      <img src="media/artists/artist-soulja.png" alt="Soulja" class="artist-hero-image">
+      <h1 class="artist-title">Soulja</h1>
+      <p class="artist-subtitle">Sudanese Rapper</p>
     </div>
   </section>
 
   <section class="artist-bio-section">
-    <div class="bio-container">
-      <h2 class="section-title">About the Artist</h2>
-      <p>Soulja, often celebrated as the Humble King of Sudanese Rap, is pioneering a new wave of hip-hop by blending Sudanese musical heritage with global rap influences. His signature fusion sound, showcased in hits like Qesas Leil and Donia, has earned him over 150 million streams and more than a dozen trend-charting releases on YouTube. In 2024, he claimed the most Shazamed track in Egypt while generating millions of user-driven creations and billions of views on TikTok. As his reach expands, Soulja continues to stand as a cultural ambassador, carrying Sudan’s voice and identity onto the world stage.</p>
+    <div class="artist-container">
+      <h2 class="section-title">About the artist</h2>
+      <p class="artist-bio">Soulja is a Sudanese artist who burst onto the scene in 2017 with his mixtape "Aka Soulja". After spending a few years in the USA, he returned to Sudan and established himself as a key figure in the country's rising hip-hop scene. His music blends elements of Sudanese culture and a variety of rap styles, earning him recognition and acclaim throughout the Middle East and North Africa. Currently residing in Cairo, Soulja is signed to SVNBIRDS where he released his debut album “The Top Freestyle” in collaboration with a number of up and coming artists and producers from the region, which has been featured on Spotify and Apple Music playlists and garnered significant press from the likes of SceneNoise and OkayAfrica. He is currently working on his sophomore album, due to be released in 2024.</p>
     </div>
   </section>
-  
+
+  <section class="artist-socials-section">
+    <div class="artist-container">
+      <h2 class="section-title">Connect</h2>
+      <div class="social-links">
+        <a href="https://instagram.com/aka_soulja" target="_blank" rel="noopener noreferrer" class="social-link">Instagram</a>
+        <a href="https://www.youtube.com/@SouljaSVD" target="_blank" rel="noopener noreferrer" class="social-link">YouTube</a>
+        <a href="https://soundcloud.com/aka_soulja" target="_blank" rel="noopener noreferrer" class="social-link">SoundCloud</a>
+      </div>
+      <a href="media/epks/soulja-epk.pdf" class="epk-download-btn" target="_blank" rel="noopener noreferrer">Download EPK</a>
+    </div>
+  </section>
+
+  <h2 class="section-title">Discography</h2>
+  <div class="releases-container">
+    <div class="scroll-container" id="discography"></div>
+  </div>
+
   <div class="contact-section">
     <h2>Contact</h2>
     <p><a href="mailto:booking@svnbirds.com">booking@svnbirds.com</a></p>
     <p><a href="https://www.instagram.com/svnbirdspro/" target="_blank">@svnbirdspro</a></p>
   </div>
-
+  <script src="https://cdn.jsdelivr.net/npm/tsparticles@2/tsparticles.bundle.min.js"></script>
   <script src="script.js"></script>
+  <script>
+    // Dynamically populate discography section for Soulja
+    document.addEventListener('DOMContentLoaded', () => {
+      const souljaReleases = [
+        { title: "Donia", link: "https://music.empi.re/donia", cover: "covers/soulja-donia.jpg" },
+        { title: "Dejavu Soulja", link: "https://music.empi.re/dejavusoulja", cover: "covers/dejavu-soulja.jpg" },
+        { title: "The Top Freestyle", link: "https://music.empi.re/thetopfreestyle", cover: "covers/the-top-freestyle.jpg" }
+      ];
+
+      const discographyGrid = document.getElementById('discography');
+      const createReleaseElement = (release) => {
+        const releaseLink = document.createElement('a');
+        releaseLink.href = release.link;
+        releaseLink.setAttribute('data-title', release.title);
+        
+        const releaseImage = document.createElement('img');
+        releaseImage.loading = 'lazy';
+        releaseImage.src = release.cover;
+        releaseImage.alt = release.title;
+
+        releaseLink.appendChild(releaseImage);
+        return releaseLink;
+      };
+
+      if (discographyGrid) {
+        souljaReleases.forEach(release => {
+          discographyGrid.appendChild(createReleaseElement(release));
+        });
+      }
+    });
+  </script>
 </body>
 </html>
