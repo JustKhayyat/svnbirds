@@ -43,6 +43,7 @@ html, body {
   padding: 10px 20px; border-radius: 8px;
   color: #fff; font-size: .85rem; font-weight: 700;
   z-index: 1000; cursor: pointer; transition: all .3s;
+  text-decoration: none; /* Add this to remove underline */
 }
 .shop-btn:hover { background: #fff; color: #000; }
 
@@ -125,7 +126,7 @@ html, body {
 /* ========== Releases Scrollable Grid ========== */
 .releases-container {
   padding: 0 20px;
-  max-width: 1200px; /* Adjusted to match other containers */
+  max-width: 1200px; 
   margin: 60px auto;
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
@@ -155,7 +156,6 @@ html, body {
   display: flex; 
   gap: 25px; 
   padding-bottom: 25px;
-  animation: subtleMovement 4s ease-in-out infinite;
 }
 .scroll-container a { 
   position: relative; 
@@ -175,11 +175,6 @@ html, body {
 }
 .scroll-container a:hover::after { opacity: 1; }
 
-@keyframes subtleMovement {
-  0% { transform: translateX(0); }
-  50% { transform: translateX(-10px); }
-  100% { transform: translateX(0); }
-}
 
 /* ========== Artists Grid ========== */
 .artist-grid {
@@ -269,10 +264,10 @@ html, body {
   margin: 100px auto 60px;
   max-width: 1200px;
   font-size: 2.5rem;
-  font-weight: 200; /* This line is corrected to restore the extra-light font */
+  font-weight: 200; 
   color: #fff;
   text-transform: uppercase;
-  letter-spacing: 2px; /* This is the improved letter-spacing */
+  letter-spacing: 2px;
 }
 
 @media(max-width: 768px) {
@@ -280,8 +275,27 @@ html, body {
     font-size: 2rem;
     margin: 60px auto 40px;
   }
+}
 
-  /* ========== Artist Page Styling ========== */
+/* ========== Artist Page Styling (New & Corrected) ========== */
+.nav-btn {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: rgba(255, 255, 255, .05);
+  border: 1px solid rgba(255, 255, 255, .2);
+  padding: 10px 20px;
+  border-radius: 8px;
+  color: #fff;
+  font-size: .85rem;
+  font-weight: 700;
+  z-index: 1000;
+  cursor: pointer;
+  transition: all .3s;
+  text-decoration: none;
+}
+.nav-btn:hover { background: #fff; color: #000; }
+
 .artist-hero {
   position: relative;
   min-height: 50vh;
@@ -297,7 +311,10 @@ html, body {
 .artist-hero-content {
   position: relative;
   z-index: 2;
-  transition: transform .05s ease-out;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
 }
 
 .artist-hero-image {
@@ -315,7 +332,6 @@ html, body {
   font-weight: 900;
   line-height: 1.1;
   color: #fff;
-  animation: fadeInUp 1s ease forwards;
 }
 
 .artist-subtitle {
@@ -323,8 +339,6 @@ html, body {
   font-weight: 400;
   color: #a1a1a6;
   margin-top: 12px;
-  opacity: 0;
-  animation: fadeIn 1.4s ease forwards .4s;
 }
 
 .artist-container {
@@ -376,28 +390,6 @@ html, body {
 .epk-download-btn {
   display: inline-block;
   margin-top: 20px;
-}
-
-.nav-btn {
-  position: fixed;
-  top: 20px;
-  right: 20px;
-  background: rgba(255, 255, 255, .05);
-  border: 1px solid rgba(255, 255, 255, .2);
-  padding: 10px 20px;
-  border-radius: 8px;
-  color: #fff;
-  font-size: .85rem;
-  font-weight: 700;
-  z-index: 1000;
-  cursor: pointer;
-  transition: all .3s;
-  text-decoration: none;
-}
-
-.nav-btn:hover {
-  background: #fff;
-  color: #000;
 }
 
 @media(max-width: 768px) {
