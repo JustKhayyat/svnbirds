@@ -101,22 +101,17 @@ html, body {
 }
 
 .hero-subtitle {
+  font-size: 4vw;
   font-weight: 400;
   color: #a1a1a6;
+  margin-top: 12px;
   opacity: 0;
   animation: fadeIn 1.4s ease forwards .4s;
-  
-  /* Updated styling for all screen sizes */
-  max-width: 700px;
-  margin: 12px auto 0;
-  text-align: center;
-  font-size: clamp(0.8rem, 1.5vw, 20px);
-  line-height: 1.6;
-  padding: 0 20px;
 }
 
 @media(min-width:768px){
   .hero-title { font-size: clamp(64px, 10vw, 140px); }
+  .hero-subtitle { font-size: clamp(18px, 2vw, 28px); }
 }
 
 @keyframes fadeInUp {
@@ -337,22 +332,8 @@ html, body {
   flex-wrap: wrap;
 }
 
-/* This is the new style for the social media icons */
-.social-icon {
-  width: 32px;
-  height: 32px;
-  border-radius: 8px;
-  transition: transform .3s;
-  opacity: 0.8;
-}
-
-.social-icon:hover {
-  transform: scale(1.1);
-  opacity: 1;
-}
-
-/* The previous social-link class is no longer needed but kept here for reference. */
-.social-link {
+.social-link,
+.epk-download-btn {
   background: rgba(255, 255, 255, .05);
   border: 1px solid rgba(255, 255, 255, .2);
   padding: 10px 20px;
@@ -364,7 +345,8 @@ html, body {
   transition: all .3s;
 }
 
-.social-link:hover {
+.social-link:hover,
+.epk-download-btn:hover {
   background: #fff;
   color: #000;
 }
