@@ -38,254 +38,11 @@ html, body {
 
 /* ========== Shop Button ========== */
 .shop-btn {
-  position: fixed; top: 20px; right: 20px;
-  background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.2);
-  padding: 10px 20px; border-radius: 8px;
-  color: #fff; font-size: .85rem; font-weight: 700;
-  z-index: 1000; cursor: pointer; transition: all .3s;
-  text-decoration: none; /* Add this to remove underline */
-}
-.shop-btn:hover { background: #fff; color: #000; }
-
-/* ========== Hero ========== */
-.hero {
-  position: relative;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: 0 16px;
-  overflow: hidden;
-  perspective: 800px;
-}
-
-.video-container {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  pointer-events: none;
-  z-index: 0;
-}
-
-.hero-video {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-#hero-canvas {
-  position: absolute;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  pointer-events: none;
-  z-index: 1;
-}
-
-.hero-content {
-  position: relative;
-  z-index: 2;
-  transition: transform .05s ease-out;
-}
-
-.hero-title {
-  font-size: 12vw;
-  font-weight: 900;
-  line-height: 1.1;
-  color: #fff;
-  animation: fadeInUp 1s ease forwards;
-}
-
-.hero-subtitle {
-  font-size: 4vw;
-  font-weight: 400;
-  color: #a1a1a6;
-  margin-top: 12px;
-  opacity: 0;
-  animation: fadeIn 1.4s ease forwards .4s;
-}
-
-@media(min-width:768px){
-  .hero-title { font-size: clamp(64px, 10vw, 140px); }
-  .hero-subtitle { font-size: clamp(18px, 2vw, 28px); }
-}
-
-@keyframes fadeInUp {
-  from { opacity: 0; transform: translateY(30px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-/* ========== Releases Scrollable Grid ========== */
-.releases-container {
-  padding: 0 20px;
-  max-width: 1200px; 
-  margin: 60px auto;
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-}
-
-/* Custom Scrollbar Styles */
-.releases-container::-webkit-scrollbar {
-  height: 8px;
-}
-
-.releases-container::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 10px;
-}
-
-.releases-container::-webkit-scrollbar-thumb {
-  background-color: rgba(255, 255, 255, 0.3);
-  border-radius: 10px;
-  border: 2px solid rgba(18, 18, 18, 0.8);
-}
-
-.releases-container::-webkit-scrollbar-thumb:hover {
-  background-color: rgba(255, 255, 255, 0.5);
-}
-
-.scroll-container {
-  display: flex; 
-  gap: 25px; 
-  padding-bottom: 25px;
-}
-.scroll-container a { 
-  position: relative; 
-  border-radius: 12px; 
-  overflow: hidden; 
-  min-width: 250px; 
-  max-width: 300px;
-}
-.scroll-container img { width: 100%; display: block; border-radius: 12px; transition: transform .3s; }
-.scroll-container a:hover img { transform: scale(1.05); }
-.scroll-container a::after {
-  content: attr(data-title);
-  position: absolute; bottom: 0; left: 0; right: 0;
-  padding: 12px; background: linear-gradient(to top,rgba(0,0,0,.8),transparent);
-  font-size: .9rem; font-weight: 600; text-align: left; color: #fff;
-  opacity: 0; transition: opacity .3s;
-}
-.scroll-container a:hover::after { opacity: 1; }
-
-
-/* ========== Artists Grid ========== */
-.artist-grid {
-  display: flex; 
-  flex-wrap: nowrap;
-  gap: 25px;
-  max-width: 1200px;
-  margin: 60px auto;
-  padding: 20px;
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-}
-.artist-grid a {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  text-decoration: none;
-  color: #fff;
-  transition: transform .3s;
-  min-width: 200px;
-}
-.artist-grid a:hover { transform: translateY(-6px); }
-.artist-grid img {
-  width: 100%;
-  max-width: 200px;
-  border-radius: 8px;
-  object-fit: cover;
-  aspect-ratio: 1 / 1;
-  border: none;
-  transition: transform .3s;
-}
-.artist-grid a:hover img { transform: scale(1.05); }
-.artist-grid h3 {
-  margin-top: 15px;
-  font-size: 1.2rem;
-  font-weight: 700;
-}
-
-/* ========== Press Cards ========== */
-.press-container {
-  max-width: 1200px;
-  padding: 0 20px;
-  margin: 60px auto;
-}
-.press-grid {
-  display: grid; 
-  grid-template-columns: repeat(auto-fit,minmax(320px,1fr));
-  gap: 25px;
-}
-.press-grid > div {
-  background: rgba(255,255,255,.02); border: 1px solid rgba(255,255,255,.08);
-  border-radius: 16px; padding: 25px; transition: transform .3s, box-shadow .3s;
-}
-.press-grid > div:hover { transform: translateY(-6px); box-shadow: 0 20px 40px rgba(0,0,0,.5); }
-.press-source { color: #a1a1a6; font-size: .75rem; font-weight: 700; margin-bottom: 8px; text-transform: uppercase; }
-.press-grid a { color: #fff; text-decoration: none; font-weight: 600; }
-.press-grid a:hover { opacity: .7; }
-
-/* ========== Contact ========== */
-.contact-section {
-  text-align: center; margin: 100px auto 60px; padding: 40px 20px; max-width: 800px;
-  background: rgba(255,255,255,.02); border-radius: 16px; border: 1px solid rgba(255,255,255,.08);
-}
-.contact-section h2 { margin-bottom: 20px; font-size: 1.6rem; font-weight: 700; }
-.contact-section a { color: #fff; font-weight: 600; text-decoration: none; }
-.contact-section a:hover { opacity: .7; }
-
-@media(max-width:768px){
-  .grid{gap:15px;}
-  .press-grid{gap:15px;}
-}
-
-/* ========== Shop Grid ========== */
-.shop-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 30px;
-  max-width: 1200px;
-  margin: 60px auto;
-  padding: 20px;
-  background: rgba(255, 255, 255, .02);
-  border: 1px solid rgba(255, 255, 255, .08);
-  border-radius: 16px;
-}
-
-/* ========== Section Titles ========== */
-.section-title {
-  text-align: center;
-  margin: 100px auto 60px;
-  max-width: 1200px;
-  font-size: 2.5rem;
-  font-weight: 200; 
-  color: #fff;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-}
-
-@media(max-width: 768px) {
-  .section-title {
-    font-size: 2rem;
-    margin: 60px auto 40px;
-  }
-}
-
-/* ========== Artist Page Styling ========== */
-.nav-btn {
-  position: fixed;
   top: 20px;
-  right: 20px;
-  background: rgba(255, 255, 255, .05);
+  left: 20px;
+  background: rgba(18, 18, 18, .05);
+  backdrop-filter: blur(5px);
   border: 1px solid rgba(255, 255, 255, .2);
   padding: 10px 20px;
   border-radius: 8px;
@@ -297,7 +54,7 @@ html, body {
   transition: all .3s;
   text-decoration: none;
 }
-.nav-btn:hover { background: #fff; color: #000; }
+.shop-btn:hover { background: #fff; color: #000; }
 
 .hero-logo {
   width: 100%;
@@ -333,40 +90,385 @@ html, body {
 }
 
 .social-icon {
-  width: 32px;
-  height: 32px;
-  border-radius: 8px;
-  transition: transform .3s, opacity .3s, background .3s, border .3s;
+  width: 30px;
+  height: auto;
+  transition: transform .2s;
 }
 
 .social-icon:hover {
   transform: scale(1.1);
-  opacity: 1;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .epk-download-btn {
   display: inline-block;
-  margin-top: 20px;
-  background: rgba(255, 255, 255, .05);
-  border: 1px solid rgba(255, 255, 255, .2);
+  margin-top: 30px;
   padding: 10px 20px;
+  border: 1px solid #fff;
   border-radius: 8px;
   color: #fff;
-  font-size: .85rem;
-  font-weight: 700;
   text-decoration: none;
-  transition: all .3s;
+  font-size: 1rem;
+  font-weight: 700;
+  transition: background-color .3s, color .3s;
 }
 
 .epk-download-btn:hover {
-  background: #fff;
-  color: #000;
+  background-color: #fff;
+  color: #121212;
 }
 
-@media(max-width: 768px) {
-  .artist-hero-image {
-    max-width: 250px;
+
+/* ========== Hero Section & Video ========== */
+.hero {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.video-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: -1;
+}
+
+.hero-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.7);
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+  transform: perspective(800px) rotateX(0deg) rotateY(0deg);
+  transition: transform 0.5s ease;
+  will-change: transform;
+}
+
+.hero-title {
+  font-size: clamp(3rem, 10vw, 8rem);
+  font-weight: 900;
+  line-height: 1.1;
+  text-transform: uppercase;
+  color: #fff;
+  text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  pointer-events: none;
+}
+
+.hero-subtitle {
+  font-size: clamp(1rem, 2.5vw, 2rem);
+  font-weight: 400;
+  color: #a1a1a6;
+  text-transform: uppercase;
+  letter-spacing: 0.1rem;
+  margin-top: 10px;
+  pointer-events: none;
+}
+
+/* ========== Ripple Effect (CSS) ========== */
+.ripple-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 1000;
+}
+
+.ripple-dot {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  background-color: #fff;
+  border-radius: 50%;
+  transform: scale(0);
+  opacity: 0;
+  will-change: transform, opacity;
+  animation: ripple-grow 1.5s forwards;
+}
+
+@keyframes ripple-grow {
+  to {
+    transform: scale(30);
+    opacity: 0;
   }
+}
+
+/* ========== Releases Section ========== */
+.section-title {
+  font-size: clamp(2rem, 5vw, 4rem);
+  text-align: center;
+  margin: 100px 0 50px;
+  font-weight: 900;
+}
+
+.releases-container {
+  display: flex;
+  overflow-x: scroll;
+  white-space: nowrap;
+  -webkit-overflow-scrolling: touch;
+  cursor: grab;
+}
+
+.releases-container.active {
+  cursor: grabbing;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.releases-container::-webkit-scrollbar {
+  display: none;
+}
+/* Hide scrollbar for IE, Edge and Firefox */
+.releases-container {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.scroll-container {
+  display: inline-flex;
+  gap: 30px;
+  padding: 0 20px;
+}
+
+.release-card {
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+  flex-shrink: 0;
+  text-decoration: none;
+  transition: transform .2s ease;
+}
+
+.release-card:hover {
+  transform: translateY(-10px);
+}
+
+.release-image {
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+}
+
+.release-info {
+  margin-top: 10px;
+}
+
+.release-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #fff;
+  white-space: normal;
+}
+
+.release-artist {
+  font-size: 0.9rem;
+  color: #a1a1a6;
+  white-space: normal;
+}
+
+
+/* ========== Artist Grid ========== */
+.artist-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 30px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.artist-card {
+  position: relative;
+  text-decoration: none;
+  display: block;
+}
+
+.artist-card img {
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+  transition: transform .3s ease;
+}
+
+.artist-card:hover img {
+  transform: scale(1.05);
+}
+
+.artist-name {
+  position: absolute;
+  bottom: 15px;
+  left: 15px;
+  font-size: 1.5rem;
+  font-weight: 900;
+  color: #fff;
+  text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+/* ========== Shop Grid ========== */
+.shop-grid {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.shopify-collection-wrapper {
+  margin: 0 auto;
+}
+
+/* ========== Press Section ========== */
+.press-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.press-card {
+  display: block;
+  text-decoration: none;
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  padding: 20px;
+  color: #fff;
+  transition: background-color .3s ease;
+}
+
+.press-card:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.press-logo {
+  max-width: 100px;
+  margin-bottom: 15px;
+  filter: grayscale(100%);
+  transition: filter .3s ease;
+}
+
+.press-card:hover .press-logo {
+  filter: grayscale(0%);
+}
+
+.press-quote {
+  font-style: italic;
+  font-size: 1rem;
+  margin-bottom: 10px;
+}
+
+.press-author {
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+/* ========== Contact Section ========== */
+.contact-section {
+  text-align: center;
+  padding: 100px 0;
+  font-size: 1rem;
+}
+
+.contact-section h2 {
+  font-size: clamp(2rem, 5vw, 4rem);
+  font-weight: 900;
+  margin-bottom: 20px;
+}
+
+.contact-section p a {
+  color: #fff;
+  text-decoration: none;
+  transition: color .3s;
+}
+
+.contact-section p a:hover {
+  color: #a1a1a6;
+}
+
+/* ========== Draggable Media Player ========== */
+.media-player {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    width: 280px;
+    background: rgba(18, 18, 18, 0.7);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    z-index: 1001;
+    cursor: grab;
+    transition: box-shadow 0.3s ease;
+}
+
+.media-player.dragging {
+    cursor: grabbing;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+}
+
+.media-player .player-header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px;
+}
+
+.media-player .player-title {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #fff;
+}
+
+.media-player .player-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    width: 100%;
+}
+
+.media-player .control-btn {
+    background: transparent;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    padding: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.media-player .control-btn:hover {
+    color: #a1a1a6;
+    transform: scale(1.1);
+}
+
+.media-player .control-btn:active {
+    transform: scale(0.9);
+}
+
+.media-player .control-btn svg {
+    width: 24px;
+    height: 24px;
+}
+
+.hidden {
+    display: none;
 }
