@@ -63,13 +63,13 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('touchend', stopDrag);
 
     // Audio Control
-    const ambientAudio = new Audio('/sounds/ambient-loop.mp3');
+    const ambientAudio = new Audio('sounds/ambient-loop.mp3');
     ambientAudio.loop = true;
     ambientAudio.volume = 0.05;
 
     // A simple playlist for 'skip' functionality
     const playlist = [
-        '/sounds/ambient-loop.mp3',
+        'sounds/ambient-loop.mp3',
         // Add more tracks here
     ];
     let currentTrackIndex = 0;
