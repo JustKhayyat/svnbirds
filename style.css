@@ -101,10 +101,17 @@ html, body {
 }
 
 .hero-subtitle {
-  font-size: 4vw;
+  /* Updated styling for proper alignment and sizing */
+  max-width: 700px;
+  margin: 20px auto 0;
+  text-align: center;
+  font-size: clamp(1rem, 2vw, 1.2rem);
+  line-height: 1.6;
+  padding: 0 20px;
+  
+  /* Original animation properties */
   font-weight: 400;
   color: #a1a1a6;
-  margin-top: 12px;
   opacity: 0;
   animation: fadeIn 1.4s ease forwards .4s;
 }
@@ -360,22 +367,10 @@ html, body {
   .artist-hero-image {
     max-width: 250px;
   }
-
-/* ========== Hero Subtitle Styling ========== */
-.hero-subtitle {
-  max-width: 700px;
-  margin: 20px auto 0;
-  text-align: center;
-  font-size: clamp(1rem, 2vw, 1.2rem);
-  line-height: 1.6;
-  padding: 0 20px;
-}
-
-/* Responsive adjustments for smaller screens */
-@media (max-width: 768px) {
+  
   .hero-subtitle {
-    margin: 10px auto 0;
     font-size: 1rem;
+    line-height: 1.6;
     padding: 0 20px;
-  } 
+  }
 }
