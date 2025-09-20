@@ -46,29 +46,31 @@ window.onload = () => {
 
   /* ========== Data for all releases and artists ========== */
   const allReleases = [
-    { title: "PRICE", link: "https://music.empi.re/price", cover: "/covers/price.jpg", artist: "Khayyat" },
-    { title: "KSHFF", link: "https://music.empi.re/kshff", cover: "/covers/kshff.jpg", artist: "Montiyago" },
-    { title: "Mozart", link: "https://music.empi.re/mozart", cover: "/covers/mozart.jpg", artist: "Khayyat" },
-    { title: "Shark", link: "https://music.empi.re/shark", cover: "/covers/montiyago-shark.jpeg", artist: "Montiyago" },
-    { title: "2020 Freestyle", link: "https://www.youtube.com/watch?v=Q4_NPZJoKzU", cover: "/covers/2020-freestyle.jpg", artist: "Big Moe" },
+    { title: "PRICE", link: "https://music.empi.re/price", cover: "/covers/price.jpg", artist: "Montiyago" },
+    { title: "KSHFF", link: "https://music.empi.re/kshff", cover: "/covers/kshff.jpg", artist: "Montiyago, Khayyat" },
+    { title: "Mozart", link: "https://music.empi.re/mozart", cover: "/covers/mozart.jpg", artist: "Montiyago" },
+    { title: "Shark", link: "https://music.empi.re/shark", cover: "/covers/montiyago-shark.jpeg", artist: "Montiyago, Big Moe" },
+    { title: "2020 Freestyle", link: "https://www.youtube.com/watch?v=Q4_NPZJoKzU", cover: "/covers/2020-freestyle.jpg", artist: "Soulja, Khayyat" },
     { title: "Donia", link: "https://music.empi.re/donia", cover: "/covers/soulja-donia.jpg", artist: "Soulja" },
-    { title: "Argeen", link: "https://music.empi.re/argeen", cover: "/covers/argeen.jpg", artist: "Big Moe" },
-    { title: "The Top Freestyle", link: "https://music.empi.re/thetopfreestyle", cover: "/covers/the-top-freestyle.jpg", artist: "Soulja" },
-    { title: "Suits", link: "https://music.empi.re/suits", cover: "/covers/suits.jpg", artist: "Khayyat" },
-    { title: "Ducati", link: "https://music.empi.re/ducati", cover: "/covers/ducati.jpg", artist: "77" },
-    { title: "Ntitled", link: "https://music.empi.re/ntitled", cover: "/covers/ntitled.jpg", artist: "Montiyago" },
-    { title: "Cima Montiyago", link: "https://music.empi.re/cimamontiyago", cover: "/covers/cima-montiyago.jpg", artist: "Montiyago" },
-    { title: "Messi", link: "https://music.empi.re/messi", cover: "/covers/messi.jpg", artist: "Big Moe" },
-    { title: "Tshreen", link: "https://music.empi.re/Tshreen", cover: "/covers/tshreen.jpg", artist: "Montiyago" },
-    { title: "Decor", link: "https://music.empi.re/decor", cover: "/covers/decor.jpg", artist: "Montiyago" },
-    { title: "Dejavu Soulja", link: "https://music.empi.re/dejavusoulja", cover: "/covers/dejavu-soulja.jpg", artist: "Soulja" },
-    { title: "Bader Khol3A", link: "https://music.empi.re/baderkhol3a", cover: "/covers/bader-khol3a.jpg", artist: "Khayyat" },
-    { title: "Boba", link: "https://music.empi.re/boba", cover: "/covers/boba.jpg", artist: "Big Moe" },
-    { title: "Lk Lk", link: "https://music.empi.re/LkLk", cover: "/covers/lk-lk.jpg", artist: "Big Moe" },
-    { title: "Fantastic Soulja", link: "https://music.empi.re/fantasticsoulja", cover: "/covers/fantastic-soulja.jpg", artist: "Soulja" },
-    { title: "Caribby", link: "https://music.empi.re/Caribby", cover: "/covers/caribby.jpg", artist: "77" },
-    { title: "Figures", link: "https://music.empi.re/figures", cover: "/covers/figures.jpg", artist: "77" },
-    { title: "Langa", link: "https://music.empi.re/langa", cover: "/covers/langa.jpg", artist: "77" }
+    { title: "Argeen", link: "https://music.empi.re/argeen", cover: "/covers/argeen.jpg", artist: "Soulja, 77" },
+    { title: "The Top Freestyle", link: "https://music.empi.re/thetopfreestyle", cover: "/covers/the-top-freestyle.jpg", artist: "Montiyago, 77" },
+    { title: "Suits", link: "https://music.empi.re/suits", cover: "/covers/suits.jpg", artist: "Soulja, Montiyago, 77" },
+    { title: "Ducati", link: "https://music.empi.re/ducati", cover: "/covers/ducati.jpg", artist: "Montiyago, Khayyat, 77" },
+    { title: "Cima", link: "https://music.empi.re/cimamontiyago", cover: "/covers/cima-montiyago.jpg", artist: "Montiyago, Big Moe" },
+    { title: "Messi", link: "https://music.empi.re/messi", cover: "/covers/messi.jpg", artist: "Soulja, Khayyat" },
+    { title: "Tshreen", link: "https://music.empi.re/Tshreen", cover: "/covers/tshreen.jpg", artist: "Soulja" },
+    { title: "Decor", link: "https://music.empi.re/decor", cover: "/covers/decor.jpg", artist: "Montiyago, 77" },
+    { title: "Dejavu Soulja", link: "https://music.empi.re/dejavu-soulja.jpg", cover: "/covers/dejavu-soulja.jpg", artist: "Soulja, Khayyat" },
+    { title: "Bader Khol3a", link: "https://music.empi.re/baderkhol3a", cover: "/covers/bader-khol3a.jpg", artist: "Montiyago" },
+    { title: "Boba", link: "https://music.empi.re/boba", cover: "/covers/boba.jpg", artist: "Soulja, Khayyat" },
+    { title: "Lk Lk", link: "https://music.empi.re/LkLk", cover: "/covers/lk-lk.jpg", artist: "Ntitled, Khayyat" },
+    { title: "Fantastic", link: "https://music.empi.re/fantasticsoulja", cover: "/covers/fantastic-soulja.jpg", artist: "Soulja" },
+    { title: "Caribby", link: "https://music.empi.re/Caribby", cover: "/covers/caribby.jpg", artist: "Soulja, 77" },
+    { title: "Figures", link: "https://music.empi.re/figures", cover: "/covers/figures.jpg", artist: "BeyKey" },
+    { title: "Langa", link: "https://music.empi.re/langa", cover: "/covers/langa.jpg", artist: "Khayyat, Tageel" },
+    { title: "Qesas", link: "https://music.empi.re/qesas", cover: "/covers/qesas.jpg", artist: "Soulja" },
+    { title: "Charleston", link: "https://music.empi.re/charleston", cover: "/covers/charleston.jpg", artist: "Soulja" },
+    { title: "Bringi", link: "https://music.empi.re/bringi", cover: "/covers/bringi.jpg", artist: "Soulja" }
   ];
 
   const allArtists = [
@@ -146,8 +148,10 @@ window.onload = () => {
     // Get artist name from a unique element on the page, like a body class or ID
     const artistName = document.body.dataset.artistName;
 
-    // Filter releases by the current artist
-    const artistReleases = allReleases.filter(release => release.artist === artistName);
+    // Filter releases by the current artist -- MODIFIED LOGIC HERE
+    const artistReleases = allReleases.filter(release => 
+      release.artist && release.artist.split(',').map(name => name.trim()).includes(artistName)
+    );
 
     // Populate the discography grid with the filtered releases
     artistReleases.forEach(release => {
