@@ -1,344 +1,363 @@
-/* ========== On Load / Main Functionality ========== */
-window.onload = () => {
-  /* ========== Hero Video & Audio ========== */
-  // Autoplay fix for all browsers
-  const video = document.querySelector(".hero-video");
-  if (video) {
-    video.muted = true;
-    video.loop = true;
-    video.playsinline = true;
-    try {
-      video.play();
-    } catch (error) {
-      console.log("Autoplay was prevented by the browser. Error:", error);
-    }
+/* ========== Fonts ========== */ 
+
+@font-face {
+  font-family: 'Grift';
+  src: url('fonts/Grift-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Grift';
+  src: url('fonts/Grift-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Grift';
+  src: url('fonts/Grift-ExtraBold.woff2') format('woff2');
+  font-weight: 900;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Grift';
+  src: url('fonts/Grift-ExtraLight.woff2') format('woff2');
+  font-weight: 200;
+  font-style: normal;
+}
+
+/* ========== Base ========== */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { 
+  background: #121212; 
+  font-family: 'Grift', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
+  color: #fff; 
+  line-height: 1.5; 
+  overflow-x: hidden;
+  user-select: none; /* Prevents text selection on the entire website */
+}
+
+/* ========== Shop Button ========== */
+.shop-btn {
+  position: fixed; top: 20px; right: 20px;
+  background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.2);
+  padding: 10px 20px; border-radius: 8px;
+  color: #fff; font-size: .85rem; font-weight: 700;
+  z-index: 1000; cursor: pointer; transition: all .3s;
+  text-decoration: none; /* Add this to remove underline */
+}
+.shop-btn:hover { background: #fff; color: #000; }
+
+/* ========== Hero ========== */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 0 16px;
+  overflow: hidden;
+  perspective: 800px;
+}
+
+.video-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.hero-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+#hero-canvas {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  transition: transform .05s ease-out;
+}
+
+.hero-title {
+  font-size: 12vw;
+  font-weight: 900;
+  line-height: 1.1;
+  color: #fff;
+  animation: fadeInUp 1s ease forwards;
+}
+
+.hero-subtitle {
+  font-size: 4vw;
+  font-weight: 400;
+  color: #a1a1a6;
+  margin-top: 12px;
+  opacity: 0;
+  animation: fadeIn 1.4s ease forwards .4s;
+}
+
+@media(min-width:768px){
+  .hero-title { font-size: clamp(64px, 10vw, 140px); }
+  .hero-subtitle { font-size: clamp(18px, 2vw, 28px); }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* ========== Releases Scrollable Grid ========== */
+.releases-container {
+  padding: 0 20px;
+  max-width: 1200px; 
+  margin: 60px auto;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Custom Scrollbar Styles */
+.releases-container::-webkit-scrollbar {
+  height: 8px;
+}
+
+.releases-container::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+}
+
+.releases-container::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.3);
+  border-radius: 10px;
+  border: 2px solid rgba(18, 18, 18, 0.8);
+}
+
+.releases-container::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+.scroll-container {
+  display: flex; 
+  gap: 25px; 
+  padding-bottom: 25px;
+}
+.scroll-container a { 
+  position: relative; 
+  border-radius: 12px; 
+  overflow: hidden; 
+  min-width: 250px; 
+  max-width: 300px;
+}
+.scroll-container img { width: 100%; display: block; border-radius: 12px; transition: transform .3s; }
+.scroll-container a:hover img { transform: scale(1.05); }
+.scroll-container a::after {
+  content: attr(data-title);
+  position: absolute; bottom: 0; left: 0; right: 0;
+  padding: 12px; background: linear-gradient(to top,rgba(0,0,0,.8),transparent);
+  font-size: .9rem; font-weight: 600; text-align: left; color: #fff;
+  opacity: 0; transition: opacity .3s;
+}
+.scroll-container a:hover::after { opacity: 1; }
+
+
+/* ========== Artists Grid ========== */
+.artist-grid {
+  display: flex; 
+  flex-wrap: nowrap;
+  gap: 25px;
+  max-width: 1200px;
+  margin: 60px auto;
+  padding: 20px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.artist-grid a {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  text-decoration: none;
+  color: #fff;
+  transition: transform .3s;
+  min-width: 200px;
+}
+.artist-grid a:hover { transform: translateY(-6px); }
+.artist-grid img {
+  width: 100%;
+  max-width: 200px;
+  border-radius: 8px;
+  object-fit: cover;
+  aspect-ratio: 1 / 1;
+  border: none;
+  transition: transform .3s;
+}
+.artist-grid a:hover img { transform: scale(1.05); }
+.artist-grid h3 {
+  margin-top: 15px;
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+/* ========== Press Cards ========== */
+.press-container {
+  max-width: 1200px;
+  padding: 0 20px;
+  margin: 60px auto;
+}
+.press-grid {
+  display: grid; 
+  grid-template-columns: repeat(auto-fit,minmax(320px,1fr));
+  gap: 25px;
+}
+.press-grid > div {
+  background: rgba(255,255,255,.02); border: 1px solid rgba(255,255,255,.08);
+  border-radius: 16px; padding: 25px; transition: transform .3s, box-shadow .3s;
+}
+.press-grid > div:hover { transform: translateY(-6px); box-shadow: 0 20px 40px rgba(0,0,0,.5); }
+.press-source { color: #a1a1a6; font-size: .75rem; font-weight: 700; margin-bottom: 8px; text-transform: uppercase; }
+.press-grid a { color: #fff; text-decoration: none; font-weight: 600; }
+.press-grid a:hover { opacity: .7; }
+
+/* ========== Contact ========== */
+.contact-section {
+  text-align: center; margin: 100px auto 60px; padding: 40px 20px; max-width: 800px;
+  background: rgba(255,255,255,.02); border-radius: 16px; border: 1px solid rgba(255,255,255,.08);
+}
+.contact-section h2 { margin-bottom: 20px; font-size: 1.6rem; font-weight: 700; }
+.contact-section a { color: #fff; font-weight: 600; text-decoration: none; }
+.contact-section a:hover { opacity: .7; }
+
+@media(max-width:768px){
+  .grid{gap:15px;}
+  .press-grid{gap:15px;}
+}
+
+/* ========== Shop Grid ========== */
+.shop-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 30px;
+  max-width: 1200px;
+  margin: 60px auto;
+  padding: 20px;
+  background: rgba(255, 255, 255, .02);
+  border: 1px solid rgba(255, 255, 255, .08);
+  border-radius: 16px;
+}
+
+/* ========== Section Titles ========== */
+.section-title {
+  text-align: center;
+  margin: 100px auto 60px;
+  max-width: 1200px;
+  font-size: 2.5rem;
+  font-weight: 200; 
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+@media(max-width: 768px) {
+  .section-title {
+    font-size: 2rem;
+    margin: 60px auto 40px;
   }
+}
 
-  // Set up ambient and click sounds
-  const ambientAudio = new Audio('sounds/ambient-loop.mp3');
-  const clickAudio = new Audio('sounds/click.mp3');
+/* ========== Artist Page Styling ========== */
+.nav-btn {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: rgba(255, 255, 255, .05);
+  border: 1px solid rgba(255, 255, 255, .2);
+  padding: 10px 20px;
+  border-radius: 8px;
+  color: #fff;
+  font-size: .85rem;
+  font-weight: 700;
+  z-index: 1000;
+  cursor: pointer;
+  transition: all .3s;
+  text-decoration: none;
+}
+.nav-btn:hover { background: #fff; color: #000; }
 
-  // Ambient sound setup to bypass browser autoplay restrictions
-  ambientAudio.loop = true;
-  ambientAudio.volume = 0.05; // Adjusted to a lower volume
-  ambientAudio.preload = 'auto'; // Add preload for faster load
+.hero-logo {
+  width: 100%;
+  max-width: clamp(250px, 40vw, 500px);
+}
 
-  function playAmbientAudio() {
-    ambientAudio.play().then(() => {
-      // Audio is playing, remove the one-time event listener
-      document.body.removeEventListener('mousedown', playAmbientAudio);
-      document.body.removeEventListener('touchstart', playAmbientAudio);
-    }).catch(error => {
-      console.log("Audio autoplay was prevented. Error:", error);
-    });
+.artist-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.artist-bio-section,
+.artist-socials-section {
+  text-align: center;
+  margin-top: 60px;
+}
+
+.artist-bio {
+  font-size: 1rem;
+  line-height: 1.8;
+  color: #a1a1a6;
+  max-width: 700px;
+  margin: 20px auto 0;
+}
+
+.social-links {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
+
+.social-link,
+.epk-download-btn {
+  background: rgba(255, 255, 255, .05);
+  border: 1px solid rgba(255, 255, 255, .2);
+  padding: 10px 20px;
+  border-radius: 8px;
+  color: #fff;
+  font-size: .85rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: all .3s;
+}
+
+.social-link:hover,
+.epk-download-btn:hover {
+  background: #fff;
+  color: #000;
+}
+
+.epk-download-btn {
+  display: inline-block;
+  margin-top: 20px;
+}
+
+@media(max-width: 768px) {
+  .artist-hero-image {
+    max-width: 250px;
   }
-
-  // Start the ambient sound on the first user interaction
-  document.body.addEventListener('mousedown', playAmbientAudio, { once: true });
-  document.body.addEventListener('touchstart', playAmbientAudio, { once: true });
-
-  // Play click sound on any mouse click
-  document.addEventListener('click', () => {
-    // Reset the audio to the beginning for each click
-    clickAudio.currentTime = 0;
-    clickAudio.play().catch(e => console.log("Click sound play failed:", e));
-  });
-
-  /* ========== Data for all releases and artists ========== */
-  const allReleases = [
-    { title: "PRICE", link: "https://music.empi.re/price", cover: "covers/price.jpg", artist: "Khayyat" },
-    { title: "KSHFF", link: "https://music.empi.re/kshff", cover: "covers/kshff.jpg", artist: "Montiyago" },
-    { title: "Mozart", link: "https://music.empi.re/mozart", cover: "covers/mozart.jpg", artist: "Khayyat" },
-    { title: "Shark", link: "https://music.empi.re/shark", cover: "covers/montiyago-shark.jpeg", artist: "Montiyago" },
-    { title: "2020 Freestyle", link: "https://www.youtube.com/watch?v=Q4_NPZJoKzU", cover: "covers/2020-freestyle.jpg", artist: "Big Moe" },
-    { title: "Donia", link: "https://music.empi.re/donia", cover: "covers/soulja-donia.jpg", artist: "Soulja" },
-    { title: "Argeen", link: "https://music.empi.re/argeen", cover: "covers/argeen.jpg", artist: "Big Moe" },
-    { title: "The Top Freestyle", link: "https://music.empi.re/thetopfreestyle", cover: "covers/the-top-freestyle.jpg", artist: "Soulja" },
-    { title: "Suits", link: "https://music.empi.re/suits", cover: "covers/suits.jpg", artist: "Khayyat" },
-    { title: "Ducati", link: "https://music.empi.re/ducati", cover: "covers/ducati.jpg", artist: "77" },
-    { title: "Ntitled", link: "https://music.empi.re/ntitled", cover: "covers/ntitled.jpg", artist: "Montiyago" },
-    { title: "Cima Montiyago", link: "https://music.empi.re/cimamontiyago", cover: "covers/cima-montiyago.jpg", artist: "Montiyago" },
-    { title: "Messi", link: "https://music.empi.re/messi", cover: "covers/messi.jpg", artist: "Big Moe" },
-    { title: "Tshreen", link: "https://music.empi.re/Tshreen", cover: "covers/tshreen.jpg", artist: "Montiyago" },
-    { title: "Decor", link: "https://music.empi.re/decor", cover: "covers/decor.jpg", artist: "Montiyago" },
-    { title: "Dejavu Soulja", link: "https://music.empi.re/dejavusoulja", cover: "covers/dejavu-soulja.jpg", artist: "Soulja" },
-    { title: "Bader Khol3A", link: "https://music.empi.re/baderkhol3a", cover: "covers/bader-khol3a.jpg", artist: "Khayyat" },
-    { title: "Boba", link: "https://music.empi.re/boba", cover: "covers/boba.jpg", artist: "Big Moe" },
-    { title: "Lk Lk", link: "https://music.empi.re/LkLk", cover: "covers/lk-lk.jpg", artist: "Big Moe" },
-    { title: "Fantastic Soulja", link: "https://music.empi.re/fantasticsoulja", cover: "covers/fantastic-soulja.jpg", artist: "Soulja" },
-    { title: "Caribby", link: "https://music.empi.re/Caribby", cover: "covers/caribby.jpg", artist: "77" },
-    { title: "Figures", link: "https://music.empi.re/figures", cover: "covers/figures.jpg", artist: "77" },
-    { title: "Langa", link: "https://music.empi.re/langa", cover: "covers/langa.jpg", artist: "77" }
-  ];
-
-  const allArtists = [
-    { name: "Soulja", link: "soulja/", photo: "media/artists/artist-soulja.png" },
-    { name: "Montiyago", link: "montiyago/", photo: "media/artists/artist-montiyago.png" },
-    { name: "Khayyat", link: "khayyat/", photo: "media/artists/artist-khayyat.png" },
-    { name: "77", link: "77/", photo: "media/artists/artist-77.png" },
-    { name: "Big Moe", link: "bigmoe/", photo: "media/artists/artist-bigmoe.png" }
-  ];
-
-  const allPress = [
-    { title: "GRAMMYS – 5 Independent Record Labels Bringing The Sounds Of The Middle East & North Africa", url: "https://www.grammy.com/news/5-middle-east-north-africa-independent-record-labels-to-know-beirut-red-diamond", source: "GRAMMYS" },
-    { title: "Hard Knock Radio – Suhel Nafar on Empowering Palestinian & Arab Artists", url: "https://hardknockradio.org/suhel-nafar-speaks-on-empowering-palestinian-and-arab-music-hip-hop-artists/", source: "Hard Knock Radio" },
-    { title: "SceneNoise – 77: The Egyptian Producer Bringing SWANA Together", url: "https://scenenoise.com/Features/77-The-Egyptian-Producer-Bringing-SWANA-Together-from-Malaysia", source: "SceneNoise" },
-    { title: "SceneNoise – Artist Spotlight: Soulja, Sudan's Suave Rap Star", url: "https://scenenoise.com/Features/Artist-Spotlight-Soulja-Sudan-s-Suave-Rap-Superstar", source: "SceneNoise" },
-    { title: "CairoScene – Labels & Collectives Taking Over XP Nite", url: "https://cairoscene.com/Noise/The-Labels-Collectives-Taking-Over-XP-Nite-in-Riyadh-Dec-7th-9th", source: "CairoScene" },
-    { title: "MDLBEAST – Labels at XP Nite in Riyadh", url: "https://mdlbeast.com/xp-feed/music-industry/the-labels-collectives-taking-over-xp-nite-in-riyadh-dec-7th-9th", source: "MDLBEAST" },
-    { title: "YUNG – Fresh Sounds from Sudan: 10 Releases", url: "https://thisisyungmea.com/fresh-sounds-from-sudan-10-new-releases-you-need-to-hear/", source: "YUNG" },
-    { title: "OkayAfrica – Rise of Sudanese Rap", url: "https://www.okayafrica.com/sudanese-rap-racism-music-industry/", source: "OkayAfrica" },
-    { title: "SceneNoise – Montiyago Drops 'Kalam Kteer'", url: "https://m.scenenoise.com/New-Music/Sudanese-Rapper-Montiyago-Releases-Debut-Single-Kalam-Ktee", source: "SceneNoise" },
-    { title: "MILLE WORLD – Introducing Rapper Montiyago", url: "https://www.milleworld.com/introducing-genre-bending-sudanese-rapper-montiyago/", source: "MILLE WORLD" },
-    { title: "SceneNoise – Arab Songs on Ramy S3", url: "https://scenenoise.com/Features/Here-are-All-the-Arab-Songs-You-Can-Hear-on-Season-Three-of-Ramy", source: "SceneNoise" },
-    { title: "SceneNoise – Dafencii & Soulja Unite for Godzilla x Kong", url: "https://scenenoise.com/News/Dafencii-Soulja-Unite-for-Godzilla-x-Kong-The-New-Empire-Anthem", source: "SceneNoise" }
-  ];
-
-
-  /* ========== Populate Main Page Sections ========== */
-  const populateReleases = () => {
-    const releasesGrid = document.getElementById('releases');
-    if (!releasesGrid) return;
-    allReleases.forEach(release => {
-      releasesGrid.appendChild(createReleaseElement(release));
-    });
-  };
-
-  const populateArtists = () => {
-    const artistsGrid = document.getElementById('artist-grid');
-    if (!artistsGrid) return;
-    allArtists.forEach(artist => {
-      artistsGrid.appendChild(createArtistElement(artist));
-    });
-  };
-
-  const populatePress = () => {
-    const pressGrid = document.getElementById('press-grid');
-    if (!pressGrid) return;
-    const pressPerPage = 6;
-    let pressLoaded = 0;
-
-    const loadMorePress = () => {
-      if (pressLoaded < allPress.length) {
-        const nextBatch = allPress.slice(pressLoaded, pressLoaded + pressPerPage);
-        nextBatch.forEach(press => {
-          pressGrid.appendChild(createPressElement(press));
-        });
-        pressLoaded += pressPerPage;
-      }
-    };
-
-    loadMorePress();
-    window.addEventListener('scroll', () => {
-      const scrollPosition = window.innerHeight + window.scrollY;
-      const documentHeight = document.body.offsetHeight;
-      if (scrollPosition >= documentHeight - 500) {
-        loadMorePress();
-      }
-    });
-  };
-
-  /* ========== Populate Artist Discography (New function for artist pages) ========== */
-  const populateArtistDiscography = () => {
-    const discographyGrid = document.getElementById('discography');
-    if (!discographyGrid) return;
-
-    // Get artist name from a unique element on the page, like a body class or ID
-    const artistName = document.body.dataset.artistName;
-
-    // Filter releases by the current artist
-    const artistReleases = allReleases.filter(release => release.artist === artistName);
-
-    // Populate the discography grid with the filtered releases
-    artistReleases.forEach(release => {
-      discographyGrid.appendChild(createReleaseElement(release));
-    });
-  };
-
-  /* ========== Helper Functions to create HTML elements ========== */
-  const createReleaseElement = (release) => {
-    const releaseLink = document.createElement('a');
-    releaseLink.href = release.link;
-    releaseLink.setAttribute('data-title', release.title);
-    
-    const releaseImage = document.createElement('img');
-    releaseImage.loading = 'lazy'; 
-    releaseImage.src = release.cover;
-    releaseImage.alt = release.title;
-
-    releaseLink.appendChild(releaseImage);
-    return releaseLink;
-  };
-
-  const createArtistElement = (artist) => {
-    const artistLink = document.createElement('a');
-    artistLink.href = artist.link;
-    
-    const artistImage = document.createElement('img');
-    artistImage.loading = 'lazy';
-    artistImage.src = artist.photo;
-    artistImage.alt = artist.name;
-
-    const artistName = document.createElement('h3');
-    artistName.textContent = artist.name;
-
-    artistLink.appendChild(artistImage);
-    artistLink.appendChild(artistName);
-    return artistLink;
-  };
-
-  const createPressElement = (press) => {
-    const pressCard = document.createElement('div');
-    const pressLink = document.createElement('a');
-    
-    pressLink.href = press.url;
-    pressLink.target = '_blank';
-    pressLink.rel = 'noopener noreferrer';
-
-    const pressSource = document.createElement('div');
-    pressSource.className = 'press-source';
-    pressSource.textContent = press.source;
-
-    const pressTitle = document.createElement('h3');
-    pressTitle.textContent = press.title;
-
-    pressLink.appendChild(pressSource);
-    pressLink.appendChild(pressTitle);
-    pressCard.appendChild(pressLink);
-    return pressCard;
-  };
-
-  /* ========== Check for current page and populate accordingly ========== */
-  if (document.getElementById('discography')) {
-    // This is an artist page
-    populateArtistDiscography();
-  } else {
-    // This is the main index page
-    populateReleases();
-    populateArtists();
-    populatePress();
-  }
-
-
-  /* ========== Hero Ripple and Tilt Effect (Main page only) ========== */
-  const hero = document.querySelector(".hero");
-  if (hero) {
-    const canvas = document.createElement("canvas");
-    canvas.style.position = "absolute";
-    canvas.style.top = 0;
-    canvas.style.left = 0;
-    canvas.style.width = "100%";
-    canvas.style.height = "100%";
-    canvas.style.pointerEvents = "none";
-    canvas.style.zIndex = 1;
-    hero.prepend(canvas);
-
-    const ctx = canvas.getContext("2d");
-    let ripples = [];
-
-    function resizeCanvas() {
-      canvas.width = hero.offsetWidth;
-      canvas.height = hero.offsetHeight;
-    }
-    window.addEventListener("resize", resizeCanvas);
-    resizeCanvas();
-
-    function animate() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ripples.forEach((r, i) => {
-        r.radius += r.speed;
-        r.alpha -= 0.01;
-        if (r.alpha > 0) {
-          ctx.beginPath();
-          ctx.arc(r.x, r.y, r.radius, 0, Math.PI * 2);
-          ctx.strokeStyle = `rgba(255,255,255,${r.alpha})`;
-          ctx.lineWidth = 2;
-          ctx.stroke();
-        }
-      });
-      ripples = ripples.filter(r => r.alpha > 0);
-      requestAnimationFrame(animate);
-    }
-    animate();
-
-    const handleInteraction = (e) => {
-      const rect = hero.getBoundingClientRect();
-      let clientX, clientY;
-
-      if (e.touches && e.touches.length > 0) {
-        clientX = e.touches[0].clientX;
-        clientY = e.touches[0].clientY;
-      } else {
-        clientX = e.clientX;
-        clientY = e.clientY;
-      }
-
-      ripples.push({
-        x: clientX - rect.left,
-        y: clientY - rect.top,
-        radius: 0,
-        speed: 1.5,
-        alpha: 0.4
-      });
-
-      // 3D Tilt Effect
-      const moveX = (clientX / window.innerWidth - 0.5) * 10;
-      const moveY = (clientY / window.innerHeight - 0.5) * 10;
-      const content = hero.querySelector(".hero-content");
-      if (content) {
-        content.style.transform = `perspective(800px) rotateX(${-moveY}deg) rotateY(${moveX}deg)`;
-      }
-    };
-
-    window.addEventListener("mousemove", handleInteraction);
-    hero.addEventListener("touchstart", handleInteraction);
-
-    hero.addEventListener("mouseleave", () => {
-      const content = hero.querySelector(".hero-content");
-      if (content) {
-        content.style.transform = "perspective(800px) rotateX(0deg) rotateY(0deg)";
-      }
-    });
-
-    hero.addEventListener("touchend", () => {
-      const content = hero.querySelector(".hero-content");
-      if (content) {
-        content.style.transform = "perspective(800px) rotateX(0deg) rotateY(0deg)";
-      }
-    });
-  }
-
-  /* ========== Desktop Mouse Drag to Scroll Releases (Main page only) ========== */
-  const releasesContainer = document.querySelector('.releases-container');
-  let isDragging = false;
-  let startX;
-  let scrollLeft;
-
-  if (releasesContainer) {
-    releasesContainer.addEventListener('mousedown', (e) => {
-      isDragging = true;
-      releasesContainer.classList.add('active');
-      startX = e.pageX - releasesContainer.offsetLeft;
-      scrollLeft = releasesContainer.scrollLeft;
-      e.preventDefault(); 
-    });
-
-    releasesContainer.addEventListener('mouseleave', () => {
-      isDragging = false;
-      releasesContainer.classList.remove('active');
-    });
-
-    releasesContainer.addEventListener('mouseup', () => {
-      isDragging = false;
-      releasesContainer.classList.remove('active');
-    });
-
-    releasesContainer.addEventListener('mousemove', (e) => {
-      if (!isDragging) return;
-      e.preventDefault();
-      const x = e.pageX - releasesContainer.offsetLeft;
-      const walk = (x - startX) * 2;
-      releasesContainer.scrollLeft = scrollLeft - walk;
-    });
-  }
-};
+}
