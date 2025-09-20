@@ -47,6 +47,7 @@ window.onload = () => {
   /* ========== Data for all releases and artists ========== */
   const allReleases = [
     { title: "PRICE", link: "https://music.empi.re/price", cover: "/covers/price.jpg", artist: "Montiyago" },
+    { title: "HALA", link: "https://music.empi.re/hala", cover: "/covers/hala.jpg", artist: "Khayyat, Ntitled" },
     { title: "KSHFF", link: "https://music.empi.re/kshff", cover: "/covers/kshff.jpg", artist: "Montiyago, Khayyat" },
     { title: "Mozart", link: "https://music.empi.re/mozart", cover: "/covers/mozart.jpg", artist: "Montiyago" },
     { title: "Shark", link: "https://music.empi.re/shark", cover: "/covers/montiyago-shark.jpeg", artist: "Montiyago, Big Moe" },
@@ -69,8 +70,7 @@ window.onload = () => {
     { title: "Figures", link: "https://music.empi.re/figures", cover: "/covers/figures.jpg", artist: "BeyKey" },
     { title: "Langa", link: "https://music.empi.re/langa", cover: "/covers/langa.jpg", artist: "Khayyat, Tageel" },
     { title: "Qesas", link: "https://music.empi.re/qesas", cover: "/covers/qesas.jpg", artist: "Soulja" },
-    { title: "Charleston", link: "https://music.empi.re/charleston", cover: "/covers/charleston.jpg", artist: "Soulja" },
-    { title: "Bringi", link: "https://music.empi.re/bringi", cover: "/covers/bringi.jpg", artist: "Soulja" }
+    { title: "Charleston", link: "https://www.youtube.com/watch?v=IDZ2r1z96_g", cover: "/covers/charleston.jpg", artist: "Soulja" }
   ];
 
   const allArtists = [
