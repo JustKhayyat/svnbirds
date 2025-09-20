@@ -15,298 +15,334 @@ window.onload = () => {
   }
 
   // Set up ambient and click sounds
+  const ambientAudio = new Audio('/sounds/ambient-loop.mp3');
   const clickAudio = new Audio('/sounds/click.mp3');
+
+  // Ambient sound setup to bypass browser autoplay restrictions
+  ambientAudio.loop = true;
+  ambientAudio.volume = 0.05; // Adjusted to a lower volume
+  ambientAudio.preload = 'auto'; // Add preload for faster load
+
+  function playAmbientAudio() {
+    ambientAudio.play().then(() => {
+      // Audio is playing, remove the one-time event listener
+      document.body.removeEventListener('mousedown', playAmbientAudio);
+      document.body.removeEventListener('touchstart', playAmbientAudio);
+    }).catch(error => {
+      console.log("Audio autoplay was prevented. Error:", error);
+    });
+  }
+
+  // Start the ambient sound on the first user interaction
+  document.body.addEventListener('mousedown', playAmbientAudio, { once: true });
+  document.body.addEventListener('touchstart', playAmbientAudio, { once: true });
 
   // Play click sound on any mouse click
   document.addEventListener('click', () => {
-    clickAudio.currentTime = 0; // Rewind to the start
-    clickAudio.play().catch(e => console.log("Click sound error:", e));
+    // Reset the audio to the beginning for each click
+    clickAudio.currentTime = 0;
+    clickAudio.play().catch(e => console.log("Click sound play failed:", e));
   });
 
-  /* ========== Hero Hover/Tilt Effect ========== */
-  const hero = document.getElementById("hero");
-  if (hero) {
-    const heroContent = hero.querySelector(".hero-content");
-
-    const handleTilt = (e) => {
-      const rect = hero.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-      const tiltX = (y - rect.height / 2) / 10;
-      const tiltY = (x - rect.width / 2) / 10;
-      heroContent.style.transform = `perspective(800px) rotateX(${tiltX}deg) rotateY(${tiltY}deg)`;
-    };
-
-    hero.addEventListener("mousemove", handleTilt);
-    hero.addEventListener("mouseleave", () => {
-      heroContent.style.transform = "perspective(800px) rotateX(0deg) rotateY(0deg)";
-    });
-
-    // Touch events for mobile
-    hero.addEventListener("touchmove", (e) => {
-      e.preventDefault();
-      handleTilt(e.touches[0]);
-    });
-    hero.addEventListener("touchend", () => {
-      heroContent.style.transform = "perspective(800px) rotateX(0deg) rotateY(0deg)";
-    });
-  }
-
-  /* ========== Ripple Effect ========== */
-  const body = document.body;
-  const rippleOverlay = document.createElement("div");
-  rippleOverlay.classList.add("ripple-overlay");
-  body.appendChild(rippleOverlay);
-
-  document.addEventListener('mousedown', (e) => {
-    const dot = document.createElement('div');
-    dot.classList.add('ripple-dot');
-    dot.style.left = `${e.clientX}px`;
-    dot.style.top = `${e.clientY}px`;
-    rippleOverlay.appendChild(dot);
-    setTimeout(() => dot.remove(), 2000); // Remove after animation
-  });
-
-  document.addEventListener('touchstart', (e) => {
-    const dot = document.createElement('div');
-    dot.classList.add('ripple-dot');
-    dot.style.left = `${e.touches[0].clientX}px`;
-    dot.style.top = `${e.touches[0].clientY}px`;
-    rippleOverlay.appendChild(dot);
-    setTimeout(() => dot.remove(), 2000); // Remove after animation
-  });
-
-  /* ========== Dynamic Content Population ========== */
-  const allArtists = ["Soulja", "Montiyago", "Khayyat", "77", "Big Moe"];
-  
+  /* ========== Data for all releases and artists ========== */
   const allReleases = [
-    {
-      title: "Qesas",
-      artist: "Soulja",
-      type: "Single",
-      year: 2024,
-      image: "/media/releases/qesas.png",
-      url: "https://music.svnbirds.com/Qesas",
-    },
-    {
-      title: "A'mal",
-      artist: "Soulja",
-      type: "EP",
-      year: 2023,
-      image: "/media/releases/amal-ep.png",
-      url: "https://music.svnbirds.com/A'mal",
-    },
-    {
-      title: "Lel",
-      artist: "Soulja",
-      type: "Single",
-      year: 2022,
-      image: "/media/releases/lel.png",
-      url: "https://music.svnbirds.com/Lel",
-    },
-    {
-      title: "Doppler",
-      artist: "Montiyago",
-      type: "EP",
-      year: 2023,
-      image: "/media/releases/doppler.png",
-      url: "https://music.svnbirds.com/Doppler",
-    },
-    {
-      title: "Bader Khol3a",
-      artist: "Montiyago",
-      type: "Single",
-      year: 2022,
-      image: "/media/releases/bader-khol3a.png",
-      url: "https://music.svnbirds.com/BaderKhol3a",
-    },
+    { title: "PRICE", link: "https://music.empi.re/price", cover: "/covers/price.jpg", artist: "Montiyago" },
+    { title: "HALA", link: "https://music.empi.re/hala", cover: "/covers/hala.jpg", artist: "Khayyat, Ntitled" },
+    { title: "KSHFF", link: "https://music.empi.re/kshff", cover: "/covers/kshff.jpg", artist: "Montiyago, Khayyat" },
+    { title: "Mozart", link: "https://music.empi.re/mozart", cover: "/covers/mozart.jpg", artist: "Montiyago" },
+    { title: "Shark", link: "https://music.empi.re/shark", cover: "/covers/montiyago-shark.jpeg", artist: "Montiyago, Big Moe" },
+    { title: "2020 Freestyle", link: "https://www.youtube.com/watch?v=Q4_NPZJoKzU", cover: "/covers/2020-freestyle.jpg", artist: "Soulja, Khayyat" },
+    { title: "Donia", link: "https://music.empi.re/donia", cover: "/covers/soulja-donia.jpg", artist: "Soulja" },
+    { title: "Argeen", link: "https://music.empi.re/argeen", cover: "/covers/argeen.jpg", artist: "Soulja, 77" },
+    { title: "The Top Freestyle", link: "https://music.empi.re/thetopfreestyle", cover: "/covers/the-top-freestyle.jpg", artist: "Montiyago, 77" },
+    { title: "Suits", link: "https://music.empi.re/suits", cover: "/covers/suits.jpg", artist: "Soulja, Montiyago, 77" },
+    { title: "Ducati", link: "https://music.empi.re/ducati", cover: "/covers/ducati.jpg", artist: "Montiyago, Khayyat, 77" },
+    { title: "Cima", link: "https://music.empi.re/cimamontiyago", cover: "/covers/cima-montiyago.jpg", artist: "Montiyago, Big Moe" },
+    { title: "Messi", link: "https://music.empi.re/messi", cover: "/covers/messi.jpg", artist: "Soulja, Khayyat" },
+    { title: "Tshreen", link: "https://music.empi.re/Tshreen", cover: "/covers/tshreen.jpg", artist: "Soulja" },
+    { title: "Decor", link: "https://music.empi.re/decor", cover: "/covers/decor.jpg", artist: "Montiyago, 77" },
+    { title: "Dejavu Soulja", link: "https://music.empi.re/dejavu-soulja.jpg", cover: "/covers/dejavu-soulja.jpg", artist: "Soulja, Khayyat" },
+    { title: "Bader Khol3a", link: "https://music.empi.re/baderkhol3a", cover: "/covers/bader-khol3a.jpg", artist: "Montiyago" },
+    { title: "Boba", link: "https://music.empi.re/boba", cover: "/covers/boba.jpg", artist: "Soulja, Khayyat" },
+    { title: "Lk Lk", link: "https://music.empi.re/LkLk", cover: "/covers/lk-lk.jpg", artist: "Ntitled, Khayyat" },
+    { title: "Fantastic", link: "https://music.empi.re/fantasticsoulja", cover: "/covers/fantastic-soulja.jpg", artist: "Soulja" },
+    { title: "Caribby", link: "https://music.empi.re/Caribby", cover: "/covers/caribby.jpg", artist: "Soulja, 77" },
+    { title: "Figures", link: "https://music.empi.re/figures", cover: "/covers/figures.jpg", artist: "BeyKey" },
+    { title: "Langa", link: "https://music.empi.re/langa", cover: "/covers/langa.jpg", artist: "Khayyat, Tageel" },
+    { title: "Qesas", link: "https://music.empi.re/qesas", cover: "/covers/qesas.jpeg", artist: "Soulja" },
+    { title: "Charleston", link: "https://www.youtube.com/watch?v=IDZ2r1z96_g", cover: "/covers/charleston.jpeg", artist: "Soulja" }
+  ];
+
+  const allArtists = [
+    { name: "Soulja", link: "soulja/", photo: "/media/artists/artist-soulja.png" },
+    { name: "Montiyago", link: "montiyago/", photo: "/media/artists/artist-montiyago.png" },
+    { name: "Khayyat", link: "khayyat/", photo: "/media/artists/artist-khayyat.png" },
+    { name: "77", link: "77/", photo: "/media/artists/artist-77.png" },
+    { name: "Big Moe", link: "bigmoe/", photo: "/media/artists/artist-bigmoe.png" }
   ];
 
   const allPress = [
-    {
-      source: "Rolling Stone",
-      quote: "77 is a mastermind behind the scenes, creating sonic landscapes that define the new wave of Arabic hip-hop.",
-      image: "/media/press/rolling-stone.png",
-      url: "https://example.com/rolling-stone-77"
-    },
+    { title: "GRAMMYS – 5 Independent Record Labels Bringing The Sounds Of The Middle East & North Africa", url: "https://www.grammy.com/news/5-middle-east-north-africa-independent-record-labels-to-know-beirut-red-diamond", source: "GRAMMYS" },
+    { title: "Hard Knock Radio – Suhel Nafar on Empowering Palestinian & Arab Artists", url: "https://hardknockradio.org/suhel-nafar-speaks-on-empowering-palestinian-and-arab-music-hip-hop-artists/", source: "Hard Knock Radio" },
+    { title: "SceneNoise – 77: The Egyptian Producer Bringing SWANA Together", url: "https://scenenoise.com/Features/77-The-Egyptian-Producer-Bringing-SWANA-Together-from-Malaysia", source: "SceneNoise" },
+    { title: "SceneNoise – Artist Spotlight: Soulja, Sudan's Suave Rap Star", url: "https://scenenoise.com/Features/Artist-Spotlight-Soulja-Sudan-s-Suave-Rap-Superstar", source: "SceneNoise" },
+    { title: "CairoScene – Labels & Collectives Taking Over XP Nite", url: "https://cairoscene.com/Noise/The-Labels-Collectives-Taking-Over-XP-Nite-in-Riyadh-Dec-7th-9th", source: "CairoScene" },
+    { title: "MDLBEAST – Labels at XP Nite in Riyadh", url: "https://mdlbeast.com/xp-feed/music-industry/the-labels-collectives-taking-over-xp-nite-in-riyadh-dec-7th-9th", source: "MDLBEAST" },
+    { title: "YUNG – Fresh Sounds from Sudan: 10 Releases", url: "https://thisisyungmea.com/fresh-sounds-from-sudan-10-new-releases-you-need-to-hear/", source: "YUNG" },
+    { title: "OkayAfrica – Rise of Sudanese Rap", url: "https://www.okayafrica.com/sudanese-rap-racism-music-industry/", source: "OkayAfrica" },
+    { title: "SceneNoise – Montiyago Drops 'Kalam Kteer'", url: "https://m.scenenoise.com/New-Music/Sudanese-Rapper-Montiyago-Releases-Debut-Single-Kalam-Ktee", source: "SceneNoise" },
+    { title: "MILLE WORLD – Introducing Rapper Montiyago", url: "https://www.milleworld.com/introducing-genre-bending-sudanese-rapper-montiyago/", source: "MILLE WORLD" },
+    { title: "SceneNoise – Arab Songs on Ramy S3", url: "https://scenenoise.com/Features/Here-are-All-the-Arab-Songs-You-Can-Hear-on-Season-Three-of-Ramy", source: "SceneNoise" },
+    { title: "SceneNoise – Dafencii & Soulja Unite for Godzilla x Kong", url: "https://scenenoise.com/News/Dafencii-Soulja-Unite-for-Godzilla-x-Kong-The-New-Empire-Anthem", source: "SceneNoise" }
   ];
 
 
-  function createReleaseCard(release) {
-    const card = document.createElement('a');
-    card.href = release.url;
-    card.classList.add('release-card');
-    card.target = '_blank';
-    card.rel = 'noopener noreferrer';
+  /* ========== Populate Main Page Sections ========== */
+  const populateReleases = () => {
+    const releasesGrid = document.getElementById('releases');
+    if (!releasesGrid) return;
+    allReleases.forEach(release => {
+      releasesGrid.appendChild(createReleaseElement(release));
+    });
+  };
 
-    const image = document.createElement('img');
-    image.src = release.image;
-    image.alt = release.title;
-    image.classList.add('release-image');
+  const populateArtists = () => {
+    const artistsGrid = document.getElementById('artist-grid');
+    if (!artistsGrid) return;
+    allArtists.forEach(artist => {
+      artistsGrid.appendChild(createArtistElement(artist));
+    });
+  };
 
-    const info = document.createElement('div');
-    info.classList.add('release-info');
-
-    const title = document.createElement('div');
-    title.classList.add('release-title');
-    title.textContent = release.title;
-
-    const artist = document.createElement('div');
-    artist.classList.add('release-artist');
-    artist.textContent = release.artist;
-
-    info.appendChild(title);
-    info.appendChild(artist);
-    card.appendChild(image);
-    card.appendChild(info);
-    
-    return card;
-  }
-
-  function populateReleases(releases) {
-    const releasesContainer = document.getElementById('releases');
-    if (releasesContainer) {
-      releases.forEach(release => {
-        releasesContainer.appendChild(createReleaseCard(release));
-      });
-    }
-  }
-
-  function createArtistCard(artist) {
-    const card = document.createElement('a');
-    card.href = `/${artist.toLowerCase()}/index.html`;
-    card.classList.add('artist-card');
-
-    const image = document.createElement('img');
-    image.src = `/media/artists/artist-${artist.toLowerCase().replace(' ', '-')}.png`;
-    image.alt = artist;
-    
-    const name = document.createElement('div');
-    name.classList.add('artist-name');
-    name.textContent = artist;
-
-    card.appendChild(image);
-    card.appendChild(name);
-    
-    return card;
-  }
-
-  function populateArtists() {
-    const artistGrid = document.getElementById('artist-grid');
-    if (artistGrid) {
-      allArtists.forEach(artist => {
-        artistGrid.appendChild(createArtistCard(artist));
-      });
-    }
-  }
-
-  function createPressCard(press) {
-    const card = document.createElement('a');
-    card.href = press.url;
-    card.classList.add('press-card');
-    card.target = '_blank';
-    card.rel = 'noopener noreferrer';
-
-    const logo = document.createElement('img');
-    logo.src = press.image;
-    logo.alt = `${press.source} logo`;
-    logo.classList.add('press-logo');
-
-    const quote = document.createElement('p');
-    quote.classList.add('press-quote');
-    quote.textContent = press.quote;
-
-    const author = document.createElement('p');
-    author.classList.add('press-author');
-    author.textContent = `- ${press.source}`;
-
-    card.appendChild(logo);
-    card.appendChild(quote);
-    card.appendChild(author);
-
-    return card;
-  }
-
-  function populatePress() {
+  const populatePress = () => {
     const pressGrid = document.getElementById('press-grid');
-    if (pressGrid) {
-      allPress.forEach(press => {
-        pressGrid.appendChild(createPressCard(press));
-      });
-    }
-  }
+    if (!pressGrid) return;
+    const pressPerPage = 6;
+    let pressLoaded = 0;
 
-  /* ========== Artist Page Functionality ========== */
-  function populateArtistDiscography() {
-    const artistBody = document.querySelector('body[data-artist-name]');
-    if (artistBody) {
-      const artistName = artistBody.getAttribute('data-artist-name');
-      const artistReleases = allReleases.filter(release => release.artist === artistName);
-      populateReleases(artistReleases);
-    }
-  }
+    const loadMorePress = () => {
+      if (pressLoaded < allPress.length) {
+        const nextBatch = allPress.slice(pressLoaded, pressLoaded + pressPerPage);
+        nextBatch.forEach(press => {
+          pressGrid.appendChild(createPressElement(press));
+        });
+        pressLoaded += pressPerPage;
+      }
+    };
 
-  // Initial population based on the page type
-  const isArtistPage = document.querySelector('body[data-artist-name]');
-  if (isArtistPage) {
+    loadMorePress();
+    window.addEventListener('scroll', () => {
+      const scrollPosition = window.innerHeight + window.scrollY;
+      const documentHeight = document.body.offsetHeight;
+      if (scrollPosition >= documentHeight - 500) {
+        loadMorePress();
+      }
+    });
+  };
+
+  /* ========== Populate Artist Discography (New function for artist pages) ========== */
+  const populateArtistDiscography = () => {
+    const discographyGrid = document.getElementById('discography');
+    if (!discographyGrid) return;
+
+    // Get artist name from a unique element on the page, like a body class or ID
+    const artistName = document.body.dataset.artistName;
+
+    // Filter releases by the current artist -- MODIFIED LOGIC HERE
+    const artistReleases = allReleases.filter(release => 
+      release.artist && release.artist.split(',').map(name => name.trim()).includes(artistName)
+    );
+
+    // Populate the discography grid with the filtered releases
+    artistReleases.forEach(release => {
+      discographyGrid.appendChild(createReleaseElement(release));
+    });
+  };
+
+  /* ========== Helper Functions to create HTML elements ========== */
+  const createReleaseElement = (release) => {
+    const releaseLink = document.createElement('a');
+    releaseLink.href = release.link;
+    releaseLink.setAttribute('data-title', release.title);
+    
+    const releaseImage = document.createElement('img');
+    releaseImage.loading = 'lazy'; 
+    releaseImage.src = release.cover;
+    releaseImage.alt = release.title;
+
+    releaseLink.appendChild(releaseImage);
+    return releaseLink;
+  };
+
+  const createArtistElement = (artist) => {
+    const artistLink = document.createElement('a');
+    artistLink.href = artist.link;
+    
+    const artistImage = document.createElement('img');
+    artistImage.loading = 'lazy';
+    artistImage.src = artist.photo;
+    artistImage.alt = artist.name;
+
+    const artistName = document.createElement('h3');
+    artistName.textContent = artist.name;
+
+    artistLink.appendChild(artistImage);
+    artistLink.appendChild(artistName);
+    return artistLink;
+  };
+
+  const createPressElement = (press) => {
+    const pressCard = document.createElement('div');
+    const pressLink = document.createElement('a');
+    
+    pressLink.href = press.url;
+    pressLink.target = '_blank';
+    pressLink.rel = 'noopener noreferrer';
+
+    const pressSource = document.createElement('div');
+    pressSource.className = 'press-source';
+    pressSource.textContent = press.source;
+
+    const pressTitle = document.createElement('h3');
+    pressTitle.textContent = press.title;
+
+    pressLink.appendChild(pressSource);
+    pressLink.appendChild(pressTitle);
+    pressCard.appendChild(pressLink);
+    return pressCard;
+  };
+
+  /* ========== Check for current page and populate accordingly ========== */
+  if (document.getElementById('discography')) {
+    // This is an artist page
     populateArtistDiscography();
   } else {
-    populateReleases(allReleases);
+    // This is the main index page
+    populateReleases();
     populateArtists();
     populatePress();
   }
-};
 
-/* ========== Desktop Mouse Drag to Scroll Releases (Main page only) ========== */
-const releasesContainer = document.querySelector('.releases-container');
-let isDragging = false;
-let startX;
-let scrollLeft;
 
-if (releasesContainer) {
+  /* ========== Hero Ripple and Tilt Effect (Main page only) ========== */
+  const hero = document.querySelector(".hero");
+  if (hero) {
+    const canvas = document.createElement("canvas");
+    canvas.style.position = "absolute";
+    canvas.style.top = 0;
+    canvas.style.left = 0;
+    canvas.style.width = "100%";
+    canvas.style.height = "100%";
+    canvas.style.pointerEvents = "none";
+    canvas.style.zIndex = 1;
+    hero.prepend(canvas);
+
+    const ctx = canvas.getContext("2d");
+    let ripples = [];
+
+    function resizeCanvas() {
+      canvas.width = hero.offsetWidth;
+      canvas.height = hero.offsetHeight;
+    }
+    window.addEventListener("resize", resizeCanvas);
+    resizeCanvas();
+
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ripples.forEach((r, i) => {
+        r.radius += r.speed;
+        r.alpha -= 0.01;
+        if (r.alpha > 0) {
+          ctx.beginPath();
+          ctx.arc(r.x, r.y, r.radius, 0, Math.PI * 2);
+          ctx.strokeStyle = `rgba(255,255,255,${r.alpha})`;
+          ctx.lineWidth = 2;
+          ctx.stroke();
+        }
+      });
+      ripples = ripples.filter(r => r.alpha > 0);
+      requestAnimationFrame(animate);
+    }
+    animate();
+
+    const handleInteraction = (e) => {
+      const rect = hero.getBoundingClientRect();
+      let clientX, clientY;
+
+      if (e.touches && e.touches.length > 0) {
+        clientX = e.touches[0].clientX;
+        clientY = e.touches[0].clientY;
+      } else {
+        clientX = e.clientX;
+        clientY = e.clientY;
+      }
+
+      ripples.push({
+        x: clientX - rect.left,
+        y: clientY - rect.top,
+        radius: 0,
+        speed: 1.5,
+        alpha: 0.4
+      });
+
+      // 3D Tilt Effect
+      const moveX = (clientX / window.innerWidth - 0.5) * 10;
+      const moveY = (clientY / window.innerHeight - 0.5) * 10;
+      const content = hero.querySelector(".hero-content");
+      if (content) {
+        content.style.transform = `perspective(800px) rotateX(${-moveY}deg) rotateY(${moveX}deg)`;
+      }
+    };
+
+    window.addEventListener("mousemove", handleInteraction);
+    hero.addEventListener("touchstart", handleInteraction);
+
+    hero.addEventListener("mouseleave", () => {
+      const content = hero.querySelector(".hero-content");
+      if (content) {
+        content.style.transform = "perspective(800px) rotateX(0deg) rotateY(0deg)";
+      }
+    });
+
+    hero.addEventListener("touchend", () => {
+      const content = hero.querySelector(".hero-content");
+      if (content) {
+        content.style.transform = "perspective(800px) rotateX(0deg) rotateY(0deg)";
+      }
+    });
+  }
+
+  /* ========== Desktop Mouse Drag to Scroll Releases (Main page only) ========== */
+  const releasesContainer = document.querySelector('.releases-container');
+  let isDragging = false;
+  let startX;
+  let scrollLeft;
+
+  if (releasesContainer) {
     releasesContainer.addEventListener('mousedown', (e) => {
-        isDragging = true;
-        releasesContainer.classList.add('active');
-        startX = e.pageX - releasesContainer.offsetLeft;
-        scrollLeft = releasesContainer.scrollLeft;
-        e.preventDefault(); 
+      isDragging = true;
+      releasesContainer.classList.add('active');
+      startX = e.pageX - releasesContainer.offsetLeft;
+      scrollLeft = releasesContainer.scrollLeft;
+      e.preventDefault(); 
     });
 
     releasesContainer.addEventListener('mouseleave', () => {
-        isDragging = false;
-        releasesContainer.classList.remove('active');
+      isDragging = false;
+      releasesContainer.classList.remove('active');
     });
 
     releasesContainer.addEventListener('mouseup', () => {
-        isDragging = false;
-        releasesContainer.classList.remove('active');
+      isDragging = false;
+      releasesContainer.classList.remove('active');
     });
 
     releasesContainer.addEventListener('mousemove', (e) => {
-        if (!isDragging) return;
-        e.preventDefault();
-        const x = e.pageX - releasesContainer.offsetLeft;
-        const walk = (x - startX) * 2;
-        releasesContainer.scrollLeft = scrollLeft - walk;
+      if (!isDragging) return;
+      e.preventDefault();
+      const x = e.pageX - releasesContainer.offsetLeft;
+      const walk = (x - startX) * 2;
+      releasesContainer.scrollLeft = scrollLeft - walk;
     });
-
-    // Mobile touch events
-    releasesContainer.addEventListener('touchstart', (e) => {
-        isDragging = true;
-        releasesContainer.classList.add('active');
-        startX = e.touches[0].pageX - releasesContainer.offsetLeft;
-        scrollLeft = releasesContainer.scrollLeft;
-    });
-
-    releasesContainer.addEventListener('touchend', () => {
-        isDragging = false;
-        releasesContainer.classList.remove('active');
-    });
-
-    releasesContainer.addEventListener('touchmove', (e) => {
-        if (!isDragging) return;
-        const x = e.touches[0].pageX - releasesContainer.offsetLeft;
-        const walk = (x - startX) * 2;
-        releasesContainer.scrollLeft = scrollLeft - walk;
-    });
-}
+  }
+};
