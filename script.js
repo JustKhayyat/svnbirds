@@ -15,8 +15,8 @@ window.onload = () => {
   }
 
   // Set up ambient and click sounds
-  const ambientAudio = new Audio('sounds/ambient-loop.mp3');
-  const clickAudio = new Audio('sounds/click.mp3');
+  const ambientAudio = new Audio('/sounds/ambient-loop.mp3');
+  const clickAudio = new Audio('/sounds/click.mp3');
 
   // Ambient sound setup to bypass browser autoplay restrictions
   ambientAudio.loop = true;
@@ -46,37 +46,37 @@ window.onload = () => {
 
   /* ========== Data for all releases and artists ========== */
   const allReleases = [
-    { title: "PRICE", link: "https://music.empi.re/price", cover: "covers/price.jpg", artist: "Khayyat" },
-    { title: "KSHFF", link: "https://music.empi.re/kshff", cover: "covers/kshff.jpg", artist: "Montiyago" },
-    { title: "Mozart", link: "https://music.empi.re/mozart", cover: "covers/mozart.jpg", artist: "Khayyat" },
-    { title: "Shark", link: "https://music.empi.re/shark", cover: "covers/montiyago-shark.jpeg", artist: "Montiyago" },
-    { title: "2020 Freestyle", link: "https://www.youtube.com/watch?v=Q4_NPZJoKzU", cover: "covers/2020-freestyle.jpg", artist: "Big Moe" },
-    { title: "Donia", link: "https://music.empi.re/donia", cover: "covers/soulja-donia.jpg", artist: "Soulja" },
-    { title: "Argeen", link: "https://music.empi.re/argeen", cover: "covers/argeen.jpg", artist: "Big Moe" },
-    { title: "The Top Freestyle", link: "https://music.empi.re/thetopfreestyle", cover: "covers/the-top-freestyle.jpg", artist: "Soulja" },
-    { title: "Suits", link: "https://music.empi.re/suits", cover: "covers/suits.jpg", artist: "Khayyat" },
-    { title: "Ducati", link: "https://music.empi.re/ducati", cover: "covers/ducati.jpg", artist: "77" },
-    { title: "Ntitled", link: "https://music.empi.re/ntitled", cover: "covers/ntitled.jpg", artist: "Montiyago" },
-    { title: "Cima Montiyago", link: "https://music.empi.re/cimamontiyago", cover: "covers/cima-montiyago.jpg", artist: "Montiyago" },
-    { title: "Messi", link: "https://music.empi.re/messi", cover: "covers/messi.jpg", artist: "Big Moe" },
-    { title: "Tshreen", link: "https://music.empi.re/Tshreen", cover: "covers/tshreen.jpg", artist: "Montiyago" },
-    { title: "Decor", link: "https://music.empi.re/decor", cover: "covers/decor.jpg", artist: "Montiyago" },
-    { title: "Dejavu Soulja", link: "https://music.empi.re/dejavusoulja", cover: "covers/dejavu-soulja.jpg", artist: "Soulja" },
-    { title: "Bader Khol3A", link: "https://music.empi.re/baderkhol3a", cover: "covers/bader-khol3a.jpg", artist: "Khayyat" },
-    { title: "Boba", link: "https://music.empi.re/boba", cover: "covers/boba.jpg", artist: "Big Moe" },
-    { title: "Lk Lk", link: "https://music.empi.re/LkLk", cover: "covers/lk-lk.jpg", artist: "Big Moe" },
-    { title: "Fantastic Soulja", link: "https://music.empi.re/fantasticsoulja", cover: "covers/fantastic-soulja.jpg", artist: "Soulja" },
-    { title: "Caribby", link: "https://music.empi.re/Caribby", cover: "covers/caribby.jpg", artist: "77" },
-    { title: "Figures", link: "https://music.empi.re/figures", cover: "covers/figures.jpg", artist: "77" },
-    { title: "Langa", link: "https://music.empi.re/langa", cover: "covers/langa.jpg", artist: "77" }
+    { title: "PRICE", link: "https://music.empi.re/price", cover: "/covers/price.jpg", artist: "Khayyat" },
+    { title: "KSHFF", link: "https://music.empi.re/kshff", cover: "/covers/kshff.jpg", artist: "Montiyago" },
+    { title: "Mozart", link: "https://music.empi.re/mozart", cover: "/covers/mozart.jpg", artist: "Khayyat" },
+    { title: "Shark", link: "https://music.empi.re/shark", cover: "/covers/montiyago-shark.jpeg", artist: "Montiyago" },
+    { title: "2020 Freestyle", link: "https://www.youtube.com/watch?v=Q4_NPZJoKzU", cover: "/covers/2020-freestyle.jpg", artist: "Big Moe" },
+    { title: "Donia", link: "https://music.empi.re/donia", cover: "/covers/soulja-donia.jpg", artist: "Soulja" },
+    { title: "Argeen", link: "https://music.empi.re/argeen", cover: "/covers/argeen.jpg", artist: "Big Moe" },
+    { title: "The Top Freestyle", link: "https://music.empi.re/thetopfreestyle", cover: "/covers/the-top-freestyle.jpg", artist: "Soulja" },
+    { title: "Suits", link: "https://music.empi.re/suits", cover: "/covers/suits.jpg", artist: "Khayyat" },
+    { title: "Ducati", link: "https://music.empi.re/ducati", cover: "/covers/ducati.jpg", artist: "77" },
+    { title: "Ntitled", link: "https://music.empi.re/ntitled", cover: "/covers/ntitled.jpg", artist: "Montiyago" },
+    { title: "Cima Montiyago", link: "https://music.empi.re/cimamontiyago", cover: "/covers/cima-montiyago.jpg", artist: "Montiyago" },
+    { title: "Messi", link: "https://music.empi.re/messi", cover: "/covers/messi.jpg", artist: "Big Moe" },
+    { title: "Tshreen", link: "https://music.empi.re/Tshreen", cover: "/covers/tshreen.jpg", artist: "Montiyago" },
+    { title: "Decor", link: "https://music.empi.re/decor", cover: "/covers/decor.jpg", artist: "Montiyago" },
+    { title: "Dejavu Soulja", link: "https://music.empi.re/dejavusoulja", cover: "/covers/dejavu-soulja.jpg", artist: "Soulja" },
+    { title: "Bader Khol3A", link: "https://music.empi.re/baderkhol3a", cover: "/covers/bader-khol3a.jpg", artist: "Khayyat" },
+    { title: "Boba", link: "https://music.empi.re/boba", cover: "/covers/boba.jpg", artist: "Big Moe" },
+    { title: "Lk Lk", link: "https://music.empi.re/LkLk", cover: "/covers/lk-lk.jpg", artist: "Big Moe" },
+    { title: "Fantastic Soulja", link: "https://music.empi.re/fantasticsoulja", cover: "/covers/fantastic-soulja.jpg", artist: "Soulja" },
+    { title: "Caribby", link: "https://music.empi.re/Caribby", cover: "/covers/caribby.jpg", artist: "77" },
+    { title: "Figures", link: "https://music.empi.re/figures", cover: "/covers/figures.jpg", artist: "77" },
+    { title: "Langa", link: "https://music.empi.re/langa", cover: "/covers/langa.jpg", artist: "77" }
   ];
 
   const allArtists = [
-    { name: "Soulja", link: "soulja/", photo: "media/artists/artist-soulja.png" },
-    { name: "Montiyago", link: "montiyago/", photo: "media/artists/artist-montiyago.png" },
-    { name: "Khayyat", link: "khayyat/", photo: "media/artists/artist-khayyat.png" },
-    { name: "77", link: "77/", photo: "media/artists/artist-77.png" },
-    { name: "Big Moe", link: "bigmoe/", photo: "media/artists/artist-bigmoe.png" }
+    { name: "Soulja", link: "soulja/", photo: "/media/artists/artist-soulja.png" },
+    { name: "Montiyago", link: "montiyago/", photo: "/media/artists/artist-montiyago.png" },
+    { name: "Khayyat", link: "khayyat/", photo: "/media/artists/artist-khayyat.png" },
+    { name: "77", link: "77/", photo: "/media/artists/artist-77.png" },
+    { name: "Big Moe", link: "bigmoe/", photo: "/media/artists/artist-bigmoe.png" }
   ];
 
   const allPress = [
