@@ -332,8 +332,23 @@ html, body {
   flex-wrap: wrap;
 }
 
-.social-link,
+.social-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  transition: transform .3s, opacity .3s, background .3s, border .3s;
+}
+
+.social-icon:hover {
+  transform: scale(1.1);
+  opacity: 1;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
 .epk-download-btn {
+  display: inline-block;
+  margin-top: 20px;
   background: rgba(255, 255, 255, .05);
   border: 1px solid rgba(255, 255, 255, .2);
   padding: 10px 20px;
@@ -345,15 +360,9 @@ html, body {
   transition: all .3s;
 }
 
-.social-link:hover,
 .epk-download-btn:hover {
   background: #fff;
   color: #000;
-}
-
-.epk-download-btn {
-  display: inline-block;
-  margin-top: 20px;
 }
 
 @media(max-width: 768px) {
