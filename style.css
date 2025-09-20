@@ -337,8 +337,22 @@ html, body {
   flex-wrap: wrap;
 }
 
-.social-link,
-.epk-download-btn {
+/* This is the new style for the social media icons */
+.social-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  transition: transform .3s;
+  opacity: 0.8;
+}
+
+.social-icon:hover {
+  transform: scale(1.1);
+  opacity: 1;
+}
+
+/* The previous social-link class is no longer needed but kept here for reference. */
+.social-link {
   background: rgba(255, 255, 255, .05);
   border: 1px solid rgba(255, 255, 255, .2);
   padding: 10px 20px;
@@ -350,8 +364,7 @@ html, body {
   transition: all .3s;
 }
 
-.social-link:hover,
-.epk-download-btn:hover {
+.social-link:hover {
   background: #fff;
   color: #000;
 }
