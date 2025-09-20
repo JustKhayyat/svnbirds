@@ -101,17 +101,22 @@ html, body {
 }
 
 .hero-subtitle {
-  font-size: 4vw;
   font-weight: 400;
   color: #a1a1a6;
-  margin-top: 12px;
   opacity: 0;
   animation: fadeIn 1.4s ease forwards .4s;
+  
+  /* Updated styling for all screen sizes */
+  max-width: 700px;
+  margin: 12px auto 0;
+  text-align: center;
+  font-size: clamp(1rem, 2vw, 28px);
+  line-height: 1.6;
+  padding: 0 20px;
 }
 
 @media(min-width:768px){
   .hero-title { font-size: clamp(64px, 10vw, 140px); }
-  .hero-subtitle { font-size: clamp(18px, 2vw, 28px); }
 }
 
 @keyframes fadeInUp {
@@ -359,12 +364,5 @@ html, body {
 @media(max-width: 768px) {
   .artist-hero-image {
     max-width: 250px;
-  }
-
-  .hero-subtitle {
-    font-size: 1rem;
-    line-height: 1.6;
-    padding: 0 20px;
-    margin: 10px auto 0;
   }
 }
