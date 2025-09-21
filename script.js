@@ -174,23 +174,40 @@
     updatePlayer();
   };
 
-  // =================== PAGE INIT ===================
-  const initPage = () => {
-    const artistName = document.body.dataset.artistName;
+ // =================== PAGE INIT ===================
+const initPage = () => {
+  const artistName = document.body.dataset.artistName;
 
-    if (!artistName) {
-      // Home page
-      initHeroVideo();
-      populateReleases('releases');
-      populateArtists();
-      populatePress();
-      if (window.ShopifyBuy && typeof initShopify === "function") initShopify();
-    } else {
-      // Artist page
-      populateArtistDiscography();
+  // Clear previous dynamic content if switching pages
+  const releasesContainer = document.getElementById('releases');
+  const artistGrid = document.getElementById('artist-grid');
+  const pressGrid = document.getElementById('press-grid');
+  const shopContainer = document.getElementById('collection-component-1758190269461');
+  const discographyContainer = document.getElementById('discography');
+
+  if (releasesContainer) releasesContainer.innerHTML = '';
+  if (artistGrid) artistGrid.innerHTML = '';
+  if (pressGrid) pressGrid.innerHTML = '';
+  if (discographyContainer) discographyContainer.innerHTML = '';
+  if (shopContainer) shopContainer.innerHTML = '';
+
+  if (!artistName) {
+    // Home page
+    initHeroVideo();
+    populateReleases('releases');
+    populateArtists();
+    populatePress();
+    if (window.ShopifyBuy && typeof initShopify === "function") {
+      initShopify();
     }
-    initPlayerToggle();
-  };
+  } else {
+    // Artist page
+    populateArtistDiscography();
+  }
+
+  initPlayerToggle();
+};
+
 
   // =================== AJAX NAVIGATION ===================
   const initNavigation = () => {
