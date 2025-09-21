@@ -200,11 +200,17 @@
       url.pathname = normalizePath(url.pathname);
 
       // FIXED NAVIGATION LOGIC: Only add '/index.html' for root or paths without file extensions
-      const pathSegments = url.pathname.split('/').filter(segment => segment);
-      const lastSegment = pathSegments[pathSegments.length - 1];
-      if (url.pathname === '/' || !lastSegment.includes('.')) {
-          url.pathname += '/index.html';
-      }
+      // CORRECTED NAVIGATION LOGIC: Handle both root and directory paths
+const pathSegments = url.pathname.split('/').filter(segment => segment);
+const lastSegment = pathSegments[pathSegments.length - 1];
+
+if (url.pathname === '/') {
+    // Root path - go to index.html
+    url.pathname = '/index.html';
+} else if (!lastSegment.includes('.')) {
+    // This is a directory path like /seventyseven - navigate to /seventyseven/index.html
+    url.pathname = url.pathname.endsWith('/') ? url.pathname + 'index.html' : url.pathname + '/index.html';
+}
 
       try {
         const res = await fetch(url.href);
