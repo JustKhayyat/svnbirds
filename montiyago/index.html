@@ -9,51 +9,66 @@
 </head>
 <body data-artist-name="Montiyago">
 
-  <a href="/" class="nav-btn">Home</a>
-  
-  <section class="hero" id="hero">
-    <div class="hero-content">
-      <img src="/media/logos/logo-montiyago.png" alt="Montiyago" class="hero-logo">
-    </div>
-  </section>
+  <!-- WRAP EVERYTHING EXCEPT PLAYER -->
+  <div id="page-content">
 
-  <div class="artist-container">
-    <div class="artist-bio-section">
-      <p class="artist-bio">Montiyago is a genre-bending Sudanese artist whose eclectic style ranges from boom-bap to trap and 2-step, maintaining unpredictability while always staying true to his lyrical voice. He broke onto the regional scene with his debut EP Doppler (2023), and has since released standout tracks such as “Bader Khol3a,” “Klashat,” “Ducati,” and “London,” many of which have earned millions of streams. Backed by the independent ecosystem SVNBIRDS, Montiyago’s growth is rooted in versatility, authenticity, and a commitment to sonic exploration. As his audience expands across Egypt, Sudan, and the wider Arab world, Montiyago is widely considered one of the most promising voices shaping the future of Arabic hip hop.</p>
-    </div>
-    <div class="artist-socials-section">
-      <div class="social-links">
-        <a href="https://www.instagram.com/_montiyago_/" target="_blank" rel="noopener noreferrer">
-          <img src="/media/icons/instagram-icon.svg" alt="Instagram" class="social-icon">
-        </a>
-        <a href="https://www.tiktok.com/@montiyago" target="_blank" rel="noopener noreferrer">
-          <img src="/media/icons/tiktok-icon.svg" alt="TikTok" class="social-icon">
-        </a>
-        <a href="https://www.youtube.com/channel/UCd3_6bCRXBE_fETQNTR2ITA" target="_blank" rel="noopener noreferrer">
-          <img src="/media/icons/youtube-icon.svg" alt="YouTube" class="social-icon">
-        </a>
-        <a href="https://open.spotify.com/artist/46MsyReAQf8kF6M4tD38Bk" target="_blank" rel="noopener noreferrer">
-          <img src="/media/icons/spotify-icon.svg" alt="Spotify" class="social-icon">
-        </a>
-        <a href="https://music.apple.com/artist/montiyago/1554992796" target="_blank" rel="noopener noreferrer">
-          <img src="/media/icons/applemusic-icon.svg" alt="Apple Music" class="social-icon">
-        </a>
+    <a href="/" class="nav-btn">Home</a>
+    
+    <section class="hero" id="hero">
+      <div class="hero-content">
+        <img src="/media/logos/logo-montiyago.png" alt="Montiyago" class="hero-logo">
       </div>
-      <a href="/media/epks/montiyago-epk.pdf" class="epk-download-btn" download>Download EPK</a>
+    </section>
+
+    <div class="artist-container">
+      <div class="artist-bio-section">
+        <p class="artist-bio">
+          Montiyago is a genre-bending Sudanese artist whose eclectic style ranges from boom-bap to trap and 2-step, maintaining unpredictability while always staying true to his lyrical voice. He broke onto the regional scene with his debut EP Doppler (2023), and has since released standout tracks such as “Bader Khol3a,” “Klashat,” “Ducati,” and “London,” many of which have earned millions of streams. Backed by the independent ecosystem SVNBIRDS, Montiyago’s growth is rooted in versatility, authenticity, and a commitment to sonic exploration. As his audience expands across Egypt, Sudan, and the wider Arab world, Montiyago is widely considered one of the most promising voices shaping the future of Arabic hip hop.
+        </p>
+      </div>
+      <div class="artist-socials-section">
+        <div class="social-links">
+          <a href="https://www.instagram.com/_montiyago_/" target="_blank" rel="noopener noreferrer">
+            <img src="/media/icons/instagram-icon.svg" alt="Instagram" class="social-icon">
+          </a>
+          <a href="https://www.tiktok.com/@montiyago" target="_blank" rel="noopener noreferrer">
+            <img src="/media/icons/tiktok-icon.svg" alt="TikTok" class="social-icon">
+          </a>
+          <a href="https://www.youtube.com/channel/UCd3_6bCRXBE_fETQNTR2ITA" target="_blank" rel="noopener noreferrer">
+            <img src="/media/icons/youtube-icon.svg" alt="YouTube" class="social-icon">
+          </a>
+          <a href="https://open.spotify.com/artist/46MsyReAQf8kF6M4tD38Bk" target="_blank" rel="noopener noreferrer">
+            <img src="/media/icons/spotify-icon.svg" alt="Spotify" class="social-icon">
+          </a>
+          <a href="https://music.apple.com/artist/montiyago/1554992796" target="_blank" rel="noopener noreferrer">
+            <img src="/media/icons/applemusic-icon.svg" alt="Apple Music" class="social-icon">
+          </a>
+        </div>
+        <a href="/media/epks/montiyago-epk.pdf" class="epk-download-btn" download>Download EPK</a>
+      </div>
     </div>
-  </div>
 
-  <h2 class="section-title">Discography</h2>
-  <div class="releases-container">
-    <div class="scroll-container" id="discography"></div>
-  </div>
+    <h2 class="section-title">Discography</h2>
+    <div class="releases-container">
+      <div class="scroll-container" id="discography"></div>
+    </div>
 
-  <div class="contact-section">
-    <h2>Contact</h2>
-    <p><a href="mailto:booking@svnbirds.com">booking@svnbirds.com</a></p>
-    <p><a href="https://www.instagram.com/svnbirdspro/" target="_blank">@svnbirdspro</a></p>
-  </div>
+    <div class="contact-section">
+      <h2>Contact</h2>
+      <p><a href="mailto:booking@svnbirds.com">booking@svnbirds.com</a></p>
+      <p><a href="https://www.instagram.com/svnbirdspro/" target="_blank">@svnbirdspro</a></p>
+    </div>
 
+  </div>
+  <!-- END #page-content WRAP -->
+
+  <!-- Player Toggle Button -->
+  <button id="player-toggle" class="player-toggle">▲</button>
+
+  <!-- Persistent Media Player -->
+  <iframe src="/player.html" id="player-frame" scrolling="no"></iframe>
+
+  <!-- Script -->
   <script src="/script.js"></script>
 </body>
 </html>
