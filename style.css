@@ -379,27 +379,53 @@ html, body {
   border: none;
   z-index: 9999;
   background: transparent;
-  transition: height 0.3s;
+  transition: height 0.3s ease; /* Smoother transition */
 }
 
-/* Add to your style.css */
+/* ========== Player Toggle Button ========== */
 .player-toggle {
   position: fixed;
-  bottom: 100px; /* 80px player + 20px gap for desktop */
+  bottom: 80px; /* Directly above the 80px player */
   left: 20px;
   z-index: 10000;
-  width: 40px;
-  height: 40px;
-  background-color: #111;
+  width: 30px;
+  height: 15px;
+  background-color: rgba(18, 18, 18, 0.9);
   color: #fff;
   border: none;
-  border-radius: 4px;
-  font-size: 24px;
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+  border-bottom: none;
+  font-size: 12px;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+  padding: 0;
+}
+
+.player-toggle:hover {
+  background-color: rgba(40, 40, 40, 0.9);
+  transform: translateY(-1px);
+}
+
+/* Optional: Add a subtle border to connect them */
+.player-toggle::after {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: 5px;
+  right: 5px;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* When player is collapsed */
+#player-frame[style*="height: 30px"] ~ .player-toggle,
+#player-frame.collapsed ~ .player-toggle {
+  bottom: 30px; /* Directly above the 30px player */
 }
 
 @media(max-width: 768px) {
@@ -408,7 +434,17 @@ html, body {
   }
 
   .player-toggle {
-    bottom: 130px; /* 110px player + 20px gap */
+    bottom: 110px; /* Above mobile player height */
+    width: 40px;
+    height: 20px;
+    font-size: 14px;
   }
-}
-
+  
+  #player-frame[style*="height: 110px"] ~ .player-toggle {
+    bottom: 110px;
+  }
+  
+  #player-frame[style*="height: 30px"] ~ .player-toggle {
+    bottom: 30px;
+  }
+} 
