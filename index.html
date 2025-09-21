@@ -16,44 +16,51 @@
 </head>
 
 <body>
-  <a class="shop-btn" href="#shop" rel="noopener noreferrer">Shop</a>
 
-  <section class="hero" id="hero">
-    <div class="video-container">
-      <video loop playsinline autoplay muted class="hero-video" poster="media/moving-light-streaks-poster.jpg">
-        <source src="media/moving-light-streaks.mp4" type="video/mp4">
-        Your browser does not support the video tag.
-      </video>
+  <!-- WRAP EVERYTHING EXCEPT PLAYER -->
+  <div id="page-content">
+
+    <a class="shop-btn" href="#shop" rel="noopener noreferrer">Shop</a>
+
+    <section class="hero" id="hero">
+      <div class="video-container">
+        <video loop playsinline autoplay muted class="hero-video" poster="media/moving-light-streaks-poster.jpg">
+          <source src="media/moving-light-streaks.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+      </div>
+      <div class="hero-content">
+        <h1 class="hero-title">SVNBIRDS</h1>
+        <p class="hero-subtitle">360 Music Ecosystem</p>
+      </div>
+    </section>
+
+    <h2 class="section-title">Releases</h2>
+    <div class="releases-container">
+      <div class="scroll-container" id="releases"></div>
     </div>
-    <div class="hero-content">
-      <h1 class="hero-title">SVNBIRDS</h1>
-      <p class="hero-subtitle">360 Music Ecosystem</p>
+
+    <h2 class="section-title">Artists</h2>
+    <div class="artist-grid" id="artist-grid"></div>
+
+    <h2 class="section-title">Shop</h2>
+    <div class="shop-grid" id="shop">
+      <div id='collection-component-1758190269461'></div>
     </div>
-  </section>
 
-  <h2 class="section-title">Releases</h2>
-  <div class="releases-container">
-    <div class="scroll-container" id="releases"></div>
+    <h2 class="section-title">Press</h2>
+    <div class="press-container">
+      <div class="press-grid" id="press-grid"></div>
+    </div>
+
+    <div class="contact-section">
+      <h2>Contact</h2>
+      <p><a href="mailto:booking@svnbirds.com">booking@svnbirds.com</a></p>
+      <p><a href="https://www.instagram.com/svnbirdspro/" target="_blank">@svnbirdspro</a></p>
+    </div>
+
   </div>
-
-  <h2 class="section-title">Artists</h2>
-  <div class="artist-grid" id="artist-grid"></div>
-
-  <h2 class="section-title">Shop</h2>
-  <div class="shop-grid" id="shop">
-    <div id='collection-component-1758190269461'></div>
-  </div>
-
-  <h2 class="section-title">Press</h2>
-  <div class="press-container">
-    <div class="press-grid" id="press-grid"></div>
-  </div>
-
-  <div class="contact-section">
-    <h2>Contact</h2>
-    <p><a href="mailto:booking@svnbirds.com">booking@svnbirds.com</a></p>
-    <p><a href="https://www.instagram.com/svnbirdspro/" target="_blank">@svnbirdspro</a></p>
-  </div>
+  <!-- END #page-content WRAP -->
 
   <!-- Persistent Media Player -->
   <iframe src="/player.html" id="player-frame" scrolling="no"></iframe>
