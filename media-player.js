@@ -1,137 +1,109 @@
-/* ========== Draggable Media Player Functionality with Mobile Support ========== */
 document.addEventListener('DOMContentLoaded', () => {
     const player = document.getElementById('media-player');
     const handle = document.getElementById('player-handle');
     const playPauseBtn = document.getElementById('play-pause-btn');
+    const muteUnmuteBtn = document.getElementById('mute-unmute-btn');
     const prevBtn = document.getElementById('prev-btn');
     const nextBtn = document.getElementById('next-btn');
-    const muteUnmuteBtn = document.getElementById('mute-unmute-btn');
-    const playIcon = playPauseBtn.querySelector('.play-icon');
-    const pauseIcon = playPauseBtn.querySelector('.pause-icon');
-    const volumeUpIcon = muteUnmuteBtn.querySelector('.volume-up-icon');
-    const volumeMuteIcon = muteUnmuteBtn.querySelector('.volume-mute-icon');
-    const trackNameElement = document.getElementById('track-name'); // New element to display track name
 
-    // Make the player draggable on both desktop and mobile
     let isDragging = false;
-    let offsetX, offsetY;
+    let offsetX = 0;
+    let offsetY = 0;
 
-    const startDrag = (e) => {
-        isDragging = true;
-        player.classList.add('dragging');
-        const clientX = e.clientX || e.touches[0].clientX;
-        const clientY = e.clientY || e.touches[0].clientY;
-        offsetX = clientX - player.getBoundingClientRect().left;
-        offsetY = clientY - player.getBoundingClientRect().top;
-    };
+    // Draggable functionality
+    if (player && handle) {
+        handle.addEventListener('mousedown', (e) => {
+            isDragging = true;
+            player.classList.add('dragging');
+            offsetX = e.clientX - player.getBoundingClientRect().left;
+            offsetY = e.clientY - player.getBoundingClientRect().top;
+            e.preventDefault();
+        });
 
-    const drag = (e) => {
-        if (!isDragging) return;
-        e.preventDefault();
-        const clientX = e.clientX || e.touches[0].clientX;
-        const clientY = e.clientY || e.touches[0].clientY;
-          
-        let newLeft = clientX - offsetX;
-        let newTop = clientY - offsetY;
+        document.addEventListener('mousemove', (e) => {
+            if (!isDragging) return;
+            const newX = e.clientX - offsetX;
+            const newY = e.clientY - offsetY;
+            
+            player.style.left = `${newX}px`;
+            player.style.top = `${newY}px`;
+        });
 
-        // Boundary checks to keep the player within the viewport
-        const playerRect = player.getBoundingClientRect();
-        if (newLeft < 0) newLeft = 0;
-        if (newTop < 0) newTop = 0;
-        if (newLeft + playerRect.width > window.innerWidth) newLeft = window.innerWidth - playerRect.width;
-        if (newTop + playerRect.height > window.innerHeight) newTop = window.innerHeight - playerRect.height;
-          
-        player.style.left = `${newLeft}px`;
-        player.style.top = `${newTop}px`;
-    };
+        document.addEventListener('mouseup', () => {
+            isDragging = false;
+            player.classList.remove('dragging');
+        });
 
-    const stopDrag = () => {
-        isDragging = false;
-        player.classList.remove('dragging');
-    };
+        // Touch events for mobile dragging
+        handle.addEventListener('touchstart', (e) => {
+            isDragging = true;
+            player.classList.add('dragging');
+            const touch = e.touches[0];
+            offsetX = touch.clientX - player.getBoundingClientRect().left;
+            offsetY = touch.clientY - player.getBoundingClientRect().top;
+            e.preventDefault();
+        });
 
-    // Desktop Events
-    handle.addEventListener('mousedown', startDrag);
-    document.addEventListener('mousemove', drag);
-    document.addEventListener('mouseup', stopDrag);
+        document.addEventListener('touchmove', (e) => {
+            if (!isDragging) return;
+            const touch = e.touches[0];
+            const newX = touch.clientX - offsetX;
+            const newY = touch.clientY - offsetY;
 
-    // Mobile Events
-    handle.addEventListener('touchstart', (e) => {
-        e.preventDefault(); // Prevents page scrolling while dragging
-        startDrag(e);
-    });
-    document.addEventListener('touchmove', drag);
-    document.addEventListener('touchend', stopDrag);
+            player.style.left = `${newX}px`;
+            player.style.top = `${newY}px`;
+        });
 
-    // Audio Control
-    const ambientAudio = new Audio();
-    ambientAudio.loop = true;
-    ambientAudio.volume = 0.05;
+        document.addEventListener('touchend', () => {
+            isDragging = false;
+            player.classList.remove('dragging');
+        });
+    }
 
-    // A simple playlist for 'skip' functionality
-    const playlist = [
-        { src: 'sounds/ambient-loop.mp3', name: 'Ambience By Khayyat' },
-        { src: 'sounds/future.mp3', name: 'Future By Khayyat' },
-        { src: 'sounds/thoughts.mp3', name: 'Thoughts By Khayyat' },
-        { src: 'sounds/night.mp3', name: 'Night By Khayyat' },
-        { src: 'sounds/replicant.mp3', name: 'Replicant By Khayyat' },
-        { src: 'sounds/starry.mp3', name: 'Starry By Khayyat' },
-    ];
-    let currentTrackIndex = 0;
+    // Play/Pause button logic
+    if (playPauseBtn) {
+        playPauseBtn.addEventListener('click', () => {
+            const isPlaying = playPauseBtn.classList.toggle('playing');
+            const playIcon = playPauseBtn.querySelector('.play-icon');
+            const pauseIcon = playPauseBtn.querySelector('.pause-icon');
+            if (isPlaying) {
+                playIcon.classList.add('hidden');
+                pauseIcon.classList.remove('hidden');
+            } else {
+                playIcon.classList.remove('hidden');
+                pauseIcon.classList.add('hidden');
+            }
+        });
+    }
 
-    const loadTrack = (index) => {
-        ambientAudio.src = playlist[index].src;
-        ambientAudio.load();
-        trackNameElement.textContent = playlist[index].name; // Update the display name
-    };
+    // Mute/Unmute button logic
+    if (muteUnmuteBtn) {
+        muteUnmuteBtn.addEventListener('click', () => {
+            const isMuted = muteUnmuteBtn.classList.toggle('muted');
+            const volumeUpIcon = muteUnmuteBtn.querySelector('.volume-up-icon');
+            const volumeMuteIcon = muteUnmuteBtn.querySelector('.volume-mute-icon');
+            if (isMuted) {
+                volumeUpIcon.classList.add('hidden');
+                volumeMuteIcon.classList.remove('hidden');
+            } else {
+                volumeUpIcon.classList.remove('hidden');
+                volumeMuteIcon.classList.add('hidden');
+            }
+        });
+    }
 
-    const playAudio = () => {
-        ambientAudio.play();
-        playIcon.classList.add('hidden');
-        pauseIcon.classList.remove('hidden');
-    };
+    // Prev/Next button logic (Placeholder)
+    if (prevBtn) {
+        prevBtn.addEventListener('click', () => {
+            console.log('Previous track clicked');
+            // Add your logic to switch to the previous track
+        });
+    }
 
-    const pauseAudio = () => {
-        ambientAudio.pause();
-        playIcon.classList.remove('hidden');
-        pauseIcon.classList.add('hidden');
-    };
-
-    // Play/Pause button functionality
-    playPauseBtn.addEventListener('click', () => {
-        if (ambientAudio.paused) {
-            playAudio();
-        } else {
-            pauseAudio();
-        }
-    });
-
-    // Mute/Unmute functionality
-    muteUnmuteBtn.addEventListener('click', () => {
-        if (ambientAudio.muted) {
-            ambientAudio.muted = false;
-            volumeUpIcon.classList.remove('hidden');
-            volumeMuteIcon.classList.add('hidden');
-        } else {
-            ambientAudio.muted = true;
-            volumeUpIcon.classList.add('hidden');
-            volumeMuteIcon.classList.remove('hidden');
-        }
-    });
-
-    // Skip functionality
-    nextBtn.addEventListener('click', () => {
-        currentTrackIndex = (currentTrackIndex + 1) % playlist.length;
-        loadTrack(currentTrackIndex);
-        playAudio();
-    });
-
-    prevBtn.addEventListener('click', () => {
-        currentTrackIndex = (currentTrackIndex - 1 + playlist.length) % playlist.length;
-        loadTrack(currentTrackIndex);
-        playAudio();
-    });
-
-    // Initial load
-    loadTrack(currentTrackIndex);
+    if (nextBtn) {
+        nextBtn.addEventListener('click', () => {
+            console.log('Next track clicked');
+            // Add your logic to switch to the next track
+        });
+    }
 });
