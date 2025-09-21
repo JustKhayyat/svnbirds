@@ -386,3 +386,23 @@ html, body {
     height: 100px; /* easier to tap on mobile */
   }
 }
+
+/* Add to your style.css */
+.player-toggle {
+  position: fixed;
+  bottom: 80px; /* sits just above the player (player height is 80px) */
+  left: 20px;   /* left side of the screen */
+  z-index: 10000;
+  width: 40px;
+  height: 40px;
+  background-color: #111;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-size: 24px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
