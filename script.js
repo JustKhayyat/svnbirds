@@ -61,7 +61,7 @@
 
   const createArtistElement = a => {
     const link = document.createElement('a');
-    link.href = `/${a.link}/`; // ensure single trailing slash
+    link.href = `/${a.link}/`; // single trailing slash
     const img = document.createElement('img');
     img.loading = 'lazy';
     img.src = a.photo;
@@ -100,7 +100,7 @@
 
   const populateArtists = () => {
     const grid = document.getElementById('artist-grid');
-    if (!grid) return;
+    if (!    grid) return;
     grid.innerHTML = '';
     allArtists.forEach(a => grid.appendChild(createArtistElement(a)));
   };
@@ -135,10 +135,10 @@
   // =================== POPULATE SHOP ===================
   const populateShop = () => {
     const shopContainer = document.getElementById('collection-component-1758190269461');
-    if (!shopContainer) return; 
-    shopContainer.innerHTML = ''; 
+    if (!shopContainer) return;
+    shopContainer.innerHTML = '';
     if (window.ShopifyBuy && typeof initShopify === "function") {
-      initShopify(); 
+      initShopify();
     }
   };
 
@@ -188,12 +188,14 @@
     const artistName = document.body.dataset.artistName;
 
     if (!artistName) {
+      // Home page
       initHeroVideo();
       populateReleases('releases');
       populateArtists();
       populatePress();
       populateShop();
     } else {
+      // Artist page
       populateArtistDiscography();
     }
 
@@ -216,7 +218,7 @@
 
       let url = new URL(link.href, window.location.origin);
 
-      // force numeric or folder links to fetch index.html
+      // Normalize and force folder links to fetch index.html
       url.pathname = normalizePath(url.pathname);
       if (!url.pathname.endsWith('.html')) url.pathname += '/index.html';
 
