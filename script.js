@@ -90,7 +90,7 @@
     return card;
   };
 
-  // =================== POPULATE FUNCTIONS ===================
+  // =================== POPULATE SECTIONS ===================
   const populateReleases = containerId => {
     const container = document.getElementById(containerId);
     if (!container) return;
@@ -129,7 +129,7 @@
     releases.forEach(r => container.appendChild(createReleaseElement(r)));
   };
 
-  // =================== HERO VIDEO (optional) ===================
+  // =================== HERO VIDEO ===================
   const initHeroVideo = () => {
     const video = document.querySelector(".hero-video");
     if (!video) return;
@@ -141,91 +141,107 @@
 
   // =================== PAGE INIT ===================
   const initPage = () => {
-    const artistName = document.body.dataset.artistName;
-
-    // Optional: hero video
     initHeroVideo();
 
+    const artistName = document.body.dataset.artistName;
     if (artistName) {
-      // Artist page
       populateArtistDiscography();
     } else {
-      // Main page
       populateReleases('releases');
       populateArtists();
       populatePress();
-      // Shopify only on main page
-      if (typeof ShopifyBuy !== 'undefined') {
-        const shopifyScript = document.createElement('script');
-        shopifyScript.src = '/shopify.js';
-        document.body.appendChild(shopifyScript);
-      }
     }
   };
 
   document.addEventListener('DOMContentLoaded', initPage);
 
-  // =================== AJAX NAVIGATION WITH FADE ===================
-  const initAjaxNavigation = () => {
-    const contentContainer = document.getElementById('page-content');
-    if (!contentContainer) return;
+  // =================== PLAYER TOGGLE ===================
+  const playerToggle = document.getElementById('player-toggle');
+  const playerFrame = document.getElementById('player-frame');
+  let isExpanded = true;
 
-    const fadeDuration = 300; // ms
-
-    const isInternalLink = link =>
-      link.hostname === window.location.hostname &&
-      !link.hasAttribute("target") &&
-      !link.href.includes("#");
-
-    const fadeOut = el =>
-      new Promise(resolve => {
-        el.style.transition = `opacity ${fadeDuration}ms`;
-        el.style.opacity = 0;
-        setTimeout(resolve, fadeDuration);
-      });
-
-    const fadeIn = el =>
-      new Promise(resolve => {
-        el.style.transition = `opacity ${fadeDuration}ms`;
-        el.style.opacity = 1;
-        setTimeout(resolve, fadeDuration);
-      });
-
-    const loadPage = async (url) => {
-      try {
-        await fadeOut(contentContainer);
-
-        const res = await fetch(url);
-        const html = await res.text();
-        const doc = new DOMParser().parseFromString(html, "text/html");
-        const newContent = doc.querySelector('#page-content');
-
-        if (!newContent) throw new Error("No #page-content found");
-
-        [...doc.body.attributes].forEach(attr => document.body.setAttribute(attr.name, attr.value));
-        contentContainer.innerHTML = newContent.innerHTML;
-
-        window.history.pushState({}, "", url);
-
-        initPage(); // re-run page init after new content
-        await fadeIn(contentContainer);
-      } catch (err) {
-        console.error("Navigation error:", err);
-        window.location.href = url;
-      }
-    };
-
-    document.addEventListener('click', e => {
-      const link = e.target.closest("a");
-      if (!link || !isInternalLink(link)) return;
-      e.preventDefault();
-      loadPage(link.href);
-    });
-
-    window.addEventListener('popstate', () => loadPage(window.location.href));
+  const updatePlayer = () => {
+    if(isExpanded){
+      playerFrame.style.height = "80px";
+      playerToggle.textContent = "▲";
+    } else {
+      playerFrame.style.height = "30px";
+      playerToggle.textContent = "▼";
+    }
   };
 
-  // Initialize AJAX
-  initAjaxNavigation();
+  playerToggle.addEventListener('click', () => {
+    isExpanded = !isExpanded;
+    updatePlayer();
+  });
+
+  updatePlayer();
+
+  // =================== AJAX NAVIGATION ===================
+  const ajaxLinks = document.querySelectorAll('a.nav-btn, a[href^="/"]:not([target="_blank"])');
+
+  ajaxLinks.forEach(link => {
+    link.addEventListener('click', e => {
+      const href = link.getAttribute('href');
+      if (href.startsWith('http') || href.startsWith('#')) return;
+      e.preventDefault();
+
+      fetch(href)
+        .then(r => r.text())
+        .then(htmlText => {
+          const parser = new DOMParser();
+          const doc = parser.parseFromString(htmlText, 'text/html');
+
+          // Replace page content
+          const newContent = doc.getElementById('page-content');
+          if (newContent) {
+            const oldContent = document.getElementById('page-content');
+            oldContent.replaceWith(newContent);
+          }
+
+          // Update body data-artist-name attribute
+          if (doc.body.hasAttribute('data-artist-name')) {
+            document.body.setAttribute('data-artist-name', doc.body.getAttribute('data-artist-name'));
+          } else {
+            document.body.removeAttribute('data-artist-name');
+          }
+
+          // Update title
+          document.title = doc.title;
+
+          // Re-init JS for the new page
+          initPage();
+
+          // Push new state
+          window.history.pushState({ url: href }, '', href);
+        })
+        .catch(err => console.error(err));
+    });
+  });
+
+  window.addEventListener('popstate', e => {
+    const href = e.state?.url || '/';
+    fetch(href)
+      .then(r => r.text())
+      .then(htmlText => {
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(htmlText, 'text/html');
+
+        const newContent = doc.getElementById('page-content');
+        if (newContent) {
+          const oldContent = document.getElementById('page-content');
+          oldContent.replaceWith(newContent);
+        }
+
+        if (doc.body.hasAttribute('data-artist-name')) {
+          document.body.setAttribute('data-artist-name', doc.body.getAttribute('data-artist-name'));
+        } else {
+          document.body.removeAttribute('data-artist-name');
+        }
+
+        document.title = doc.title;
+        initPage();
+      });
+  });
 
 })();
