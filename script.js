@@ -188,60 +188,70 @@
   };
 
   // =================== AJAX NAVIGATION ===================
-  const initNavigation = () => {
-    console.log("Initializing navigation...");
+const initNavigation = () => {
+  console.log("Initializing navigation...");
+  
+  // Use event delegation to catch clicks on dynamically created elements
+  document.addEventListener('click', async e => {
+    const link = e.target.closest('a');
     
-    document.body.addEventListener('click', async e => {
-      const link = e.target.closest('a');
-      
-      // Skip if not a link or external/mailto links
-      if (!link) return;
-      if (link.target === "_blank" || link.href.startsWith("mailto:") || link.href.startsWith("tel:")) return;
-      if (!link.href.includes(window.location.origin)) return;
-      
-      console.log("Clicked link:", link.href, "Artist:", link.closest('[data-artist]'));
-      
-      e.preventDefault();
-      
-      const url = new URL(link.href);
-      console.log("Attempting to navigate to:", url.href);
-      
-      try {
-        const response = await fetch(url.href);
-        console.log("Fetch response status:", response.status);
-        
-        if (!response.ok) {
-          throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-        }
-        
-        const html = await response.text();
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(html, 'text/html');
-        const newContent = doc.getElementById('page-content');
-        
-        if (newContent) {
-          console.log("Successfully loaded content for:", url.pathname);
-          document.getElementById('page-content').replaceWith(newContent);
-          document.body.dataset.artistName = doc.body.dataset.artistName || "";
-          window.history.pushState({}, "", url.pathname);
-          initPage();
-          window.scrollTo(0, 0);
-        } else {
-          console.error("No page-content element found in response");
-          window.location.href = url.href; // Fallback
-        }
-      } catch (error) {
-        console.error("AJAX navigation failed:", error);
-        console.log("Falling back to regular navigation...");
-        window.location.href = url.href;
+    // Skip if not a link or external/mailto links
+    if (!link) return;
+    if (link.target === "_blank" || link.href.startsWith("mailto:") || link.href.startsWith("tel:")) return;
+    if (!link.href.includes(window.location.origin)) return;
+    
+    console.log("Clicked link:", link.href);
+    
+    e.preventDefault();
+    
+    const url = new URL(link.href);
+    console.log("Attempting to navigate to:", url.href);
+    
+    try {
+      // Add /index.html to directory paths
+      if (!url.pathname.includes('.') && !url.pathname.endsWith('/')) {
+        url.pathname += '/index.html';
       }
-    });
-    
-    window.addEventListener('popstate', () => {
-      console.log("Popstate detected, reloading page");
-      window.location.reload();
-    });
-  };
+      
+      const response = await fetch(url.href);
+      console.log("Fetch response status:", response.status);
+      
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+      }
+      
+      const html = await response.text();
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(html, 'text/html');
+      const newContent = doc.getElementById('page-content');
+      
+      if (newContent) {
+        console.log("Successfully loaded content for:", url.pathname);
+        document.getElementById('page-content').replaceWith(newContent);
+        document.body.dataset.artistName = doc.body.dataset.artistName || "";
+        
+        // Update URL without index.html for clean URLs
+        const cleanPath = url.pathname.replace('/index.html', '');
+        window.history.pushState({}, "", cleanPath);
+        
+        initPage();
+        window.scrollTo(0, 0);
+      } else {
+        console.error("No page-content element found in response");
+        window.location.href = url.href; // Fallback
+      }
+    } catch (error) {
+      console.error("AJAX navigation failed:", error);
+      console.log("Falling back to regular navigation...");
+      window.location.href = url.href;
+    }
+  });
+  
+  window.addEventListener('popstate', () => {
+    console.log("Popstate detected, reloading page");
+    window.location.reload();
+  });
+};
 
   // =================== INITIALIZE ===================
   document.addEventListener('DOMContentLoaded', () => {
