@@ -199,15 +199,18 @@ const initPage = () => {
     populateReleases('releases');
     populateArtists();
     populatePress();
-    populateShop(); // cleaner
   } else {
     // Artist page
     populateArtistDiscography();
   }
 
+  // Always try to populate shop if container exists
+  populateShop();
+
   // Always init player toggle
   initPlayerToggle();
 };
+
 
   // =================== AJAX NAVIGATION ===================
   const initNavigation = () => {
