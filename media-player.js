@@ -5,12 +5,40 @@ document.addEventListener('DOMContentLoaded', () => {
     const muteUnmuteBtn = document.getElementById('mute-unmute-btn');
     const prevBtn = document.getElementById('prev-btn');
     const nextBtn = document.getElementById('next-btn');
+    const trackNameElement = document.getElementById('track-name');
+    const audio = new Audio(); // Create a new audio element
 
+    // The playlist you provided
+    const playlist = [
+        { src: 'sounds/ambient-loop.mp3', name: 'Ambience By Khayyat' },
+        { src: 'sounds/future.mp3', name: 'Future By Khayyat' },
+        { src: 'sounds/thoughts.mp3', name: 'Thoughts By Khayyat' },
+        { src: 'sounds/night.mp3', name: 'Night By Khayyat' },
+        { src: 'sounds/replicant.mp3', name: 'Replicant By Khayyat' },
+        { src: 'sounds/starry.mp3', name: 'Starry By Khayyat' },
+    ];
+    let currentTrackIndex = 0;
+
+    // Function to load and play a track
+    const loadTrack = (index) => {
+        const track = playlist[index];
+        audio.src = track.src;
+        audio.load();
+        trackNameElement.textContent = track.name;
+        audio.play();
+        playPauseBtn.classList.add('playing');
+        playPauseBtn.querySelector('.play-icon').classList.add('hidden');
+        playPauseBtn.querySelector('.pause-icon').classList.remove('hidden');
+    };
+
+    // Initial load of the first track
+    loadTrack(currentTrackIndex);
+
+    // Draggable functionality
     let isDragging = false;
     let offsetX = 0;
     let offsetY = 0;
 
-    // Draggable functionality
     if (player && handle) {
         handle.addEventListener('mousedown', (e) => {
             isDragging = true;
@@ -34,7 +62,6 @@ document.addEventListener('DOMContentLoaded', () => {
             player.classList.remove('dragging');
         });
 
-        // Touch events for mobile dragging
         handle.addEventListener('touchstart', (e) => {
             isDragging = true;
             player.classList.add('dragging');
@@ -63,15 +90,16 @@ document.addEventListener('DOMContentLoaded', () => {
     // Play/Pause button logic
     if (playPauseBtn) {
         playPauseBtn.addEventListener('click', () => {
-            const isPlaying = playPauseBtn.classList.toggle('playing');
-            const playIcon = playPauseBtn.querySelector('.play-icon');
-            const pauseIcon = playPauseBtn.querySelector('.pause-icon');
-            if (isPlaying) {
-                playIcon.classList.add('hidden');
-                pauseIcon.classList.remove('hidden');
+            if (audio.paused) {
+                audio.play();
+                playPauseBtn.classList.add('playing');
+                playPauseBtn.querySelector('.play-icon').classList.add('hidden');
+                playPauseBtn.querySelector('.pause-icon').classList.remove('hidden');
             } else {
-                playIcon.classList.remove('hidden');
-                pauseIcon.classList.add('hidden');
+                audio.pause();
+                playPauseBtn.classList.remove('playing');
+                playPauseBtn.querySelector('.play-icon').classList.remove('hidden');
+                playPauseBtn.querySelector('.pause-icon').classList.add('hidden');
             }
         });
     }
@@ -79,31 +107,32 @@ document.addEventListener('DOMContentLoaded', () => {
     // Mute/Unmute button logic
     if (muteUnmuteBtn) {
         muteUnmuteBtn.addEventListener('click', () => {
-            const isMuted = muteUnmuteBtn.classList.toggle('muted');
-            const volumeUpIcon = muteUnmuteBtn.querySelector('.volume-up-icon');
-            const volumeMuteIcon = muteUnmuteBtn.querySelector('.volume-mute-icon');
-            if (isMuted) {
-                volumeUpIcon.classList.add('hidden');
-                volumeMuteIcon.classList.remove('hidden');
+            audio.muted = !audio.muted;
+            if (audio.muted) {
+                muteUnmuteBtn.classList.add('muted');
+                muteUnmuteBtn.querySelector('.volume-up-icon').classList.add('hidden');
+                muteUnmuteBtn.querySelector('.volume-mute-icon').classList.remove('hidden');
             } else {
-                volumeUpIcon.classList.remove('hidden');
-                volumeMuteIcon.classList.add('hidden');
+                muteUnmuteBtn.classList.remove('muted');
+                muteUnmuteBtn.querySelector('.volume-up-icon').classList.remove('hidden');
+                muteUnmuteBtn.querySelector('.volume-mute-icon').classList.add('hidden');
             }
         });
     }
 
-    // Prev/Next button logic (Placeholder)
+    // Previous button logic
     if (prevBtn) {
         prevBtn.addEventListener('click', () => {
-            console.log('Previous track clicked');
-            // Add your logic to switch to the previous track
+            currentTrackIndex = (currentTrackIndex - 1 + playlist.length) % playlist.length;
+            loadTrack(currentTrackIndex);
         });
     }
 
+    // Next button logic
     if (nextBtn) {
         nextBtn.addEventListener('click', () => {
-            console.log('Next track clicked');
-            // Add your logic to switch to the next track
+            currentTrackIndex = (currentTrackIndex + 1) % playlist.length;
+            loadTrack(currentTrackIndex);
         });
     }
 });
