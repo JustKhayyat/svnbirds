@@ -204,44 +204,50 @@
     initPlayerToggle();
   };
 
-  // =================== AJAX NAVIGATION ===================
-  const initNavigation = () => {
-    const scrollPositions = {};
+ // =================== AJAX NAVIGATION ===================
+const initNavigation = () => {
+  const scrollPositions = {};
 
-    document.body.addEventListener('click', async e => {
-      const link = e.target.closest('a');
-      if (!link || link.target === "_blank" || link.href.startsWith("mailto:")) return;
-      if (!link.href.includes(window.location.origin)) return;
+  document.body.addEventListener('click', async e => {
+    const link = e.target.closest('a');
+    if (!link || link.target === "_blank" || link.href.startsWith("mailto:")) return;
+    if (!link.href.includes(window.location.origin)) return;
 
-      e.preventDefault();
-      scrollPositions[window.location.pathname] = window.scrollY;
+    e.preventDefault();
+    scrollPositions[window.location.pathname] = window.scrollY;
 
-      const url = link.href;
-      try {
-        const res = await fetch(url);
-        const html = await res.text();
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(html, 'text/html');
+    let url = link.href;
+    // Append index.html if the link ends with a slash
+    let urlToFetch = url.endsWith('/') ? url + 'index.html' : url;
 
-        const newContent = doc.getElementById('page-content');
-        if (newContent) {
-          document.getElementById('page-content').replaceWith(newContent);
-          document.body.dataset.artistName = doc.body.dataset.artistName || "";
+    try {
+      const res = await fetch(urlToFetch);
+      const html = await res.text();
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(html, 'text/html');
 
-          window.history.pushState({}, "", url);
-          initPage();
-          window.scrollTo(0, scrollPositions[new URL(url).pathname] || 0);
-        }
-      } catch (err) {
-        console.error("Navigation error:", err);
-        window.location.href = url;
+      const newContent = doc.getElementById('page-content');
+      if (newContent) {
+        document.getElementById('page-content').replaceWith(newContent);
+        document.body.dataset.artistName = doc.body.dataset.artistName || "";
+
+        // Update browser URL without showing index.html
+        const cleanUrl = urlToFetch.endsWith('index.html') ? urlToFetch.replace(/index\.html$/, '') : urlToFetch;
+        window.history.pushState({}, "", cleanUrl);
+
+        initPage();
+        window.scrollTo(0, scrollPositions[new URL(url).pathname] || 0);
       }
-    });
+    } catch (err) {
+      console.error("Navigation error:", err);
+      window.location.href = url;
+    }
+  });
 
-    window.addEventListener('popstate', () => {
-      window.location.reload();
-    });
-  };
+  window.addEventListener('popstate', () => {
+    window.location.reload();
+  });
+};
 
   // =================== INITIALIZE ===================
   document.addEventListener('DOMContentLoaded', () => {
