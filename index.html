@@ -55,45 +55,56 @@
     <p><a href="https://www.instagram.com/svnbirdspro/" target="_blank">@svnbirdspro</a></p>
   </div>
 
-  <!-- Media Player -->
-  <div id="media-player">
-    <div id="player-content">
-      <div id="track-info">
-        <span id="player-status">Now Playing</span>
-        <span id="track-name">Ambient Loop</span>
-      </div>
-      <div id="player-controls">
-        <button id="prev-btn" class="player-btn">
-          <svg fill="currentColor" viewBox="0 0 20 20">
-            <path d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"></path>
-          </svg>
-        </button>
-        <button id="play-pause-btn" class="player-btn">
-          <svg class="play-icon" fill="currentColor" viewBox="0 0 20 20">
-            <path d="M12.875 10.334l-5.657-3.264A1 1 0 006 7.999v6.526a1 1 0 001.218.84l5.657-3.264a1 1 0 000-1.688z"></path>
-          </svg>
-          <svg class="pause-icon hidden" fill="currentColor" viewBox="0 0 20 20">
-            <path d="M6 5.5A.5.5 0 016.5 5h3a.5.5 0 01.5.5v9a.5.5 0 01-.5.5h-3a.5.5 0 01-.5-.5v-9zm8-1a.5.5 0 00-.5.5v9a.5.5 0 00.5.5h3a.5.5 0 00.5-.5v-9a.5.5 0 00-.5-.5h-3z"></path>
-          </svg>
-        </button>
-        <button id="next-btn" class="player-btn">
-          <svg fill="currentColor" viewBox="0 0 20 20">
-            <path d="M7.293 14.707a1 1 0 010-1.414L10.586 10l-3.293-3.293a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"></path>
-          </svg>
-        </button>
-        <button id="mute-unmute-btn" class="player-btn">
-          <svg class="volume-up-icon" fill="currentColor" viewBox="0 0 20 20">
-            <path d="M10 3.293V2.5a.5.5 0 00-.854-.354L5.293 5.293A.5.5 0 015 5.5v9a.5.5 0 01.293.454l3.853 3.144A.5.5 0 0010 17.5V16.707a.5.5 0 00.854.354l3.853-3.144A.5.5 0 0015 13.5v-7a.5.5 0 00-.147-.354l-3.853-3.144zM11 5.5v9l3-2.439V7.939L11 5.5zm-1 9.57v-9.14L6.207 9.5z"></path>
-          </svg>
-          <!-- Proper mute icon -->
-          <svg class="volume-mute-icon hidden" fill="currentColor" viewBox="0 0 20 20">
-            <path d="M9 7H5v6h4l5 4V3l-5 4z"></path>
-            <path d="M14.59 5.41L13.17 6.83 15.34 9l-2.17 2.17 1.42 1.42L16.76 10l-2.17-2.17 1.42-1.42z"></path>
-          </svg>
-        </button>
-      </div>
+ <!-- Media Player -->
+<div id="media-player">
+  <div id="player-content">
+    <div id="track-info">
+      <span id="player-status">Now Playing</span>
+      <span id="track-name">Ambient Loop</span>
+    </div>
+    <div id="player-controls">
+      <!-- Prev -->
+      <button id="prev-btn" class="player-btn">
+        <svg fill="currentColor" viewBox="0 0 24 24">
+          <path d="M15 18l-6-6 6-6v12zM6 6h2v12H6V6z"/>
+        </svg>
+      </button>
+
+      <!-- Play / Pause -->
+      <button id="play-pause-btn" class="player-btn">
+        <!-- Play -->
+        <svg class="play-icon" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M8 5v14l11-7z"/>
+        </svg>
+        <!-- Pause -->
+        <svg class="pause-icon hidden" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
+        </svg>
+      </button>
+
+      <!-- Next -->
+      <button id="next-btn" class="player-btn">
+        <svg fill="currentColor" viewBox="0 0 24 24">
+          <path d="M9 6l6 6-6 6V6zm9 0h-2v12h2V6z"/>
+        </svg>
+      </button>
+
+      <!-- Mute / Unmute -->
+      <button id="mute-unmute-btn" class="player-btn">
+        <!-- Volume Up -->
+        <svg class="volume-up-icon" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.06c1.48-.74 2.5-2.26 2.5-4.03z"/>
+        </svg>
+        <!-- Volume Mute -->
+        <svg class="volume-mute-icon hidden" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v8.06c1.48-.74 2.5-2.26 2.5-4.03z" opacity="0.3"/>
+          <path d="M3 9v6h4l5 5V4L7 9H3zm13.59 3l2.12-2.12-1.41-1.41L15.17 10l-2.12-2.12-1.41 1.41L13.76 12l-2.12 2.12 1.41 1.41L15.17 14l2.12 2.12 1.41-1.41L16.59 12z"/>
+        </svg>
+      </button>
     </div>
   </div>
+</div>
+
 
   <script src="https://cdn.jsdelivr.net/npm/tsparticles@2/tsparticles.bundle.min.js"></script>
   <script src="script.js"></script>
