@@ -1,12 +1,12 @@
 document.addEventListener('DOMContentLoaded', () => {
     const player = document.getElementById('media-player');
-    const handle = document.getElementById('player-handle'); // kept for compatibility but not required
     const playPauseBtn = document.getElementById('play-pause-btn');
     const muteUnmuteBtn = document.getElementById('mute-unmute-btn');
     const prevBtn = document.getElementById('prev-btn');
     const nextBtn = document.getElementById('next-btn');
     const trackNameElement = document.getElementById('track-name');
-    const audio = new Audio(); // Create a new audio element
+    const statusElement = document.getElementById('player-status');
+    const audio = new Audio();
 
     // Playlist
     const playlist = [
@@ -25,15 +25,17 @@ document.addEventListener('DOMContentLoaded', () => {
         audio.src = track.src;
         audio.load();
         trackNameElement.textContent = track.name;
+        if (statusElement) statusElement.textContent = 'Paused';
     };
 
     const playTrack = () => {
-        audio.play().catch(e => {
-            // autoplay may be blocked; user must press play
+        audio.play().catch(() => {
+            // autoplay blocked until user interacts
         });
         playPauseBtn.classList.add('playing');
         if (playPauseBtn.querySelector('.play-icon')) playPauseBtn.querySelector('.play-icon').classList.add('hidden');
         if (playPauseBtn.querySelector('.pause-icon')) playPauseBtn.querySelector('.pause-icon').classList.remove('hidden');
+        if (statusElement) statusElement.textContent = 'Now Playing';
     };
 
     const pauseTrack = () => {
@@ -41,13 +43,21 @@ document.addEventListener('DOMContentLoaded', () => {
         playPauseBtn.classList.remove('playing');
         if (playPauseBtn.querySelector('.play-icon')) playPauseBtn.querySelector('.play-icon').classList.remove('hidden');
         if (playPauseBtn.querySelector('.pause-icon')) playPauseBtn.querySelector('.pause-icon').classList.add('hidden');
+        if (statusElement) statusElement.textContent = 'Paused';
     };
 
-    // Initial load of the first track, but keep paused
+    // Initial load of the first track (start paused)
     loadTrack(currentTrackIndex);
     pauseTrack();
 
-    // --- Draggable functionality (anywhere on the player EXCEPT controls) ---
+    // --- Auto-advance when track ends ---
+    audio.addEventListener('ended', () => {
+        currentTrackIndex = (currentTrackIndex + 1) % playlist.length;
+        loadTrack(currentTrackIndex);
+        playTrack();
+    });
+
+    // --- Draggable functionality (anywhere except controls) ---
     let isDragging = false;
     let offsetX = 0;
     let offsetY = 0;
