@@ -79,15 +79,15 @@
 
     let isExpanded = true; // default state
 
-    const updatePlayer = () => {
-      if (isExpanded) {
-        playerFrame.style.height = "80px";
-        playerToggle.textContent = "▲";
-      } else {
-        playerFrame.style.height = "30px";
-        playerToggle.textContent = "▼";
-      }
-    };
+   const updatePlayer = () => {
+  if (isExpanded) {
+    playerFrame.style.height = "80px";
+    playerToggle.textContent = "▼"; // Arrow DOWN when expanded
+  } else {
+    playerFrame.style.height = "30px";
+    playerToggle.textContent = "▲"; // Arrow UP when collapsed
+  }
+};
 
     playerToggle.addEventListener('click', () => {
       isExpanded = !isExpanded;
