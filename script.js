@@ -60,18 +60,19 @@
   };
 
   const createArtistElement = a => {
-    const link = document.createElement('a');
-    link.href = `/${a.link}/`; // single trailing slash
-    const img = document.createElement('img');
-    img.loading = 'lazy';
-    img.src = a.photo;
-    img.alt = a.name;
-    const name = document.createElement('h3');
-    name.textContent = a.name;
-    link.appendChild(img);
-    link.appendChild(name);
-    return link;
-  };
+  const link = document.createElement('a');
+  link.href = `/${a.link}`; // **ONLY leading slash**, no trailing slash
+  const img = document.createElement('img');
+  img.loading = 'lazy';
+  img.src = a.photo;
+  img.alt = a.name;
+  const name = document.createElement('h3');
+  name.textContent = a.name;
+  link.appendChild(img);
+  link.appendChild(name);
+  return link;
+};
+
 
   const createPressElement = p => {
     const card = document.createElement('div');
@@ -233,8 +234,9 @@
         if (newContent) {
           document.getElementById('page-content').replaceWith(newContent);
           document.body.dataset.artistName = doc.body.dataset.artistName || "";
-          let cleanUrl = url.pathname.replace(/index\.html$/, '/');
-          window.history.pushState({}, "", cleanUrl);
+          let cleanUrl = url.pathname.replace(/index\.html$/, ''); // remove trailing slash completely
+          window.history.pushState({}, "", cleanUrl || '/');
+
           initPage();
           window.scrollTo(0, scrollPositions[url.pathname] || 0);
         }
