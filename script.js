@@ -62,7 +62,6 @@
   const createArtistElement = a => {
     const link = document.createElement('a');
     link.href = `/${a.link}`;
-    link.setAttribute('data-artist', a.name); // Add data attribute for debugging
     const img = document.createElement('img');
     img.loading = 'lazy';
     img.src = a.photo;
@@ -188,74 +187,61 @@
   };
 
   // =================== AJAX NAVIGATION ===================
-const initNavigation = () => {
-  console.log("Initializing navigation...");
-  
-  // Use event delegation to catch clicks on dynamically created elements
-  document.addEventListener('click', async e => {
-    const link = e.target.closest('a');
-    
-    // Skip if not a link or external/mailto links
-    if (!link) return;
-    if (link.target === "_blank" || link.href.startsWith("mailto:") || link.href.startsWith("tel:")) return;
-    if (!link.href.includes(window.location.origin)) return;
-    
-    console.log("Clicked link:", link.href);
-    
-    e.preventDefault();
-    
-    const url = new URL(link.href);
-    console.log("Attempting to navigate to:", url.href);
-    
-    try {
-      // Add /index.html to directory paths
-      if (!url.pathname.includes('.') && !url.pathname.endsWith('/')) {
-        url.pathname += '/index.html';
-      }
+  const initNavigation = () => {
+    document.addEventListener('click', async e => {
+      const link = e.target.closest('a');
       
-      const response = await fetch(url.href);
-      console.log("Fetch response status:", response.status);
+      // Skip if not a link or external/mailto links
+      if (!link) return;
+      if (link.target === "_blank" || link.href.startsWith("mailto:") || link.href.startsWith("tel:")) return;
+      if (!link.href.includes(window.location.origin)) return;
       
-      if (!response.ok) {
-        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-      }
+      e.preventDefault();
       
-      const html = await response.text();
-      const parser = new DOMParser();
-      const doc = parser.parseFromString(html, 'text/html');
-      const newContent = doc.getElementById('page-content');
+      const url = new URL(link.href);
       
-      if (newContent) {
-        console.log("Successfully loaded content for:", url.pathname);
-        document.getElementById('page-content').replaceWith(newContent);
-        document.body.dataset.artistName = doc.body.dataset.artistName || "";
+      try {
+        // Add /index.html to directory paths
+        if (!url.pathname.includes('.') && !url.pathname.endsWith('/')) {
+          url.pathname += '/index.html';
+        }
         
-        // Update URL without index.html for clean URLs
-        const cleanPath = url.pathname.replace('/index.html', '');
-        window.history.pushState({}, "", cleanPath);
+        const response = await fetch(url.href);
         
-        initPage();
-        window.scrollTo(0, 0);
-      } else {
-        console.error("No page-content element found in response");
-        window.location.href = url.href; // Fallback
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+        }
+        
+        const html = await response.text();
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(html, 'text/html');
+        const newContent = doc.getElementById('page-content');
+        
+        if (newContent) {
+          document.getElementById('page-content').replaceWith(newContent);
+          document.body.dataset.artistName = doc.body.dataset.artistName || "";
+          
+          // Update URL without index.html for clean URLs
+          const cleanPath = url.pathname.replace('/index.html', '');
+          window.history.pushState({}, "", cleanPath);
+          
+          initPage();
+          window.scrollTo(0, 0);
+        } else {
+          window.location.href = url.href; // Fallback
+        }
+      } catch (error) {
+        window.location.href = url.href; // Fallback to regular navigation
       }
-    } catch (error) {
-      console.error("AJAX navigation failed:", error);
-      console.log("Falling back to regular navigation...");
-      window.location.href = url.href;
-    }
-  });
-  
-  window.addEventListener('popstate', () => {
-    console.log("Popstate detected, reloading page");
-    window.location.reload();
-  });
-};
+    });
+    
+    window.addEventListener('popstate', () => {
+      window.location.reload();
+    });
+  };
 
   // =================== INITIALIZE ===================
   document.addEventListener('DOMContentLoaded', () => {
-    console.log("DOM loaded, initializing...");
     initPage();
     initNavigation();
   });
