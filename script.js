@@ -139,29 +139,9 @@
     try { video.play(); } catch { /* autoplay blocked */ }
   };
 
-  // =================== PLAYER TOGGLE ===================
-  const initPlayerToggle = () => {
-    const playerToggle = document.getElementById('player-toggle');
-    const playerFrame = document.getElementById('player-frame');
-    let isExpanded = true;
-
-    const updatePlayer = () => {
-      playerFrame.style.height = isExpanded ? '80px' : '30px';
-      playerToggle.textContent = isExpanded ? '▲' : '▼';
-    };
-
-    playerToggle.addEventListener('click', () => {
-      isExpanded = !isExpanded;
-      updatePlayer();
-    });
-
-    updatePlayer();
-  };
-
   // =================== PAGE INIT ===================
   const initPage = () => {
     initHeroVideo();
-    initPlayerToggle();
 
     const artistName = document.body.dataset.artistName;
     if (artistName) {
@@ -170,65 +150,56 @@
       populateReleases('releases');
       populateArtists();
       populatePress();
+      if (typeof ShopifyBuy !== 'undefined') {
+        // re-init Shopify component
+        const shopifyScript = document.createElement('script');
+        shopifyScript.src = '/shopify.js';
+        document.body.appendChild(shopifyScript);
+      }
     }
   };
 
   document.addEventListener('DOMContentLoaded', initPage);
 
-  // =================== AJAX NAVIGATION ===================
+  // =================== AJAX NAVIGATION WITH FADE (PLAYER-PRESERVED) ===================
   const initAjaxNavigation = () => {
     const contentContainer = document.getElementById('page-content');
     if (!contentContainer) return;
 
-    const fadeDuration = 300;
-    const isInternalLink = link =>
-      link.hostname === window.location.hostname &&
-      !link.hasAttribute("target") &&
-      !link.href.includes("#");
+    const fadeDuration = 300; // ms
 
-    const fadeOut = el => new Promise(resolve => {
-      el.style.transition = `opacity ${fadeDuration}ms`;
-      el.style.opacity = 0;
-      setTimeout(resolve, fadeDuration);
-    });
-
-    const fadeIn = el => new Promise(resolve => {
-      el.style.transition = `opacity ${fadeDuration}ms`;
-      el.style.opacity = 1;
-      setTimeout(resolve, fadeDuration);
-    });
-
-    const loadPage = async (url) => {
-      try {
-        await fadeOut(contentContainer);
-        const res = await fetch(url);
-        const html = await res.text();
-        const doc = new DOMParser().parseFromString(html, "text/html");
-        const newContent = doc.querySelector('#page-content');
-        if (!newContent) throw new Error("No #page-content found");
-
-        [...doc.body.attributes].forEach(attr => document.body.setAttribute(attr.name, attr.value));
-        contentContainer.innerHTML = newContent.innerHTML;
-
-        window.history.pushState({}, "", url);
-        initPage();
-        await fadeIn(contentContainer);
-      } catch (err) {
-        console.error("Navigation error:", err);
-        window.location.href = url;
-      }
-    };
-
-    document.addEventListener('click', e => {
-      const link = e.target.closest("a");
-      if (!link || !isInternalLink(link)) return;
+    document.body.addEventListener('click', e => {
+      const link = e.target.closest('a');
+      if (!link || link.target === "_blank" || link.href.includes("#") || link.origin !== location.origin) return;
       e.preventDefault();
-      loadPage(link.href);
-    });
 
-    window.addEventListener('popstate', () => loadPage(window.location.href));
+      const url = link.href;
+
+      // Fade out
+      contentContainer.style.transition = `opacity ${fadeDuration}ms`;
+      contentContainer.style.opacity = 0;
+
+      setTimeout(() => {
+        fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(html, 'text/html');
+            const newContent = doc.getElementById('page-content');
+            if (!newContent) return;
+            contentContainer.innerHTML = newContent.innerHTML;
+
+            // Scroll to top
+            window.scrollTo(0,0);
+
+            // Re-run initPage
+            initPage();
+          });
+        contentContainer.style.opacity = 1;
+      }, fadeDuration);
+    });
   };
 
-  initAjaxNavigation();
+  document.addEventListener('DOMContentLoaded', initAjaxNavigation);
 
 })();
