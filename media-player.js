@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
         e.preventDefault();
         const clientX = e.clientX || e.touches[0].clientX;
         const clientY = e.clientY || e.touches[0].clientY;
-        
+          
         let newLeft = clientX - offsetX;
         let newTop = clientY - offsetY;
 
@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (newTop < 0) newTop = 0;
         if (newLeft + playerRect.width > window.innerWidth) newLeft = window.innerWidth - playerRect.width;
         if (newTop + playerRect.height > window.innerHeight) newTop = window.innerHeight - playerRect.height;
-        
+          
         player.style.left = `${newLeft}px`;
         player.style.top = `${newTop}px`;
     };
