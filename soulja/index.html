@@ -68,5 +68,32 @@
   <iframe src="/player.html" id="player-frame" scrolling="no"></iframe>
 
   <script src="/script.js"></script>
+  
+  <!-- Player Toggle Script -->
+  <script>
+    const playerToggle = document.getElementById('player-toggle');
+    const playerFrame = document.getElementById('player-frame');
+
+    let isExpanded = true; // player starts expanded
+
+    const updatePlayer = () => {
+      if(isExpanded){
+        playerFrame.style.height = "80px";
+        playerToggle.textContent = "▲";
+      } else {
+        playerFrame.style.height = "30px";
+        playerToggle.textContent = "▼";
+      }
+    };
+
+    playerToggle.addEventListener('click', () => {
+      isExpanded = !isExpanded;
+      updatePlayer();
+    });
+
+    // initial state
+    updatePlayer();
+  </script>
+
 </body>
 </html>
