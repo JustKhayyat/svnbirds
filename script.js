@@ -1,7 +1,6 @@
 /* ========== On Load / Main Functionality ========== */
 window.onload = () => {
   /* ========== Hero Video & Audio ========== */
-  // Autoplay fix for all browsers
   const video = document.querySelector(".hero-video");
   if (video) {
     video.muted = true;
@@ -14,12 +13,9 @@ window.onload = () => {
     }
   }
 
-  // Set up ambient and click sounds
+  // Click sound
   const clickAudio = new Audio('/sounds/click.mp3');
-
-  // Play click sound on any mouse click
   document.addEventListener('click', () => {
-    // Reset the audio to the beginning for each click
     clickAudio.currentTime = 0;
     clickAudio.play().catch(e => console.log("Click sound play failed:", e));
   });
@@ -76,257 +72,131 @@ window.onload = () => {
     { title: "SceneNoise – Dafencii & Soulja Unite for Godzilla x Kong", url: "https://scenenoise.com/News/Dafencii-Soulja-Unite-for-Godzilla-x-Kong-The-New-Empire-Anthem", source: "SceneNoise" }
   ];
 
-
   /* ========== Populate Main Page Sections ========== */
-  const populateReleases = () => {
-    const releasesGrid = document.getElementById('releases');
-    if (!releasesGrid) return;
-    allReleases.forEach(release => {
-      releasesGrid.appendChild(createReleaseElement(release));
-    });
-  };
+  function createReleaseElement(release) {
+    const link = document.createElement('a');
+    link.href = release.link;
+    link.setAttribute('data-title', release.title);
 
-  const populateArtists = () => {
-    const artistsGrid = document.getElementById('artist-grid');
-    if (!artistsGrid) return;
-    allArtists.forEach(artist => {
-      artistsGrid.appendChild(createArtistElement(artist));
-    });
-  };
+    const img = document.createElement('img');
+    img.loading = 'lazy';
+    img.src = release.cover;
+    img.alt = release.title;
 
-  const populatePress = () => {
-    const pressGrid = document.getElementById('press-grid');
-    if (!pressGrid) return;
-    const pressPerPage = 6;
-    let pressLoaded = 0;
+    link.appendChild(img);
+    return link;
+  }
 
-    const loadMorePress = () => {
-      if (pressLoaded < allPress.length) {
-        const nextBatch = allPress.slice(pressLoaded, pressLoaded + pressPerPage);
-        nextBatch.forEach(press => {
-          pressGrid.appendChild(createPressElement(press));
-        });
-        pressLoaded += pressPerPage;
+  function createArtistElement(artist) {
+    const link = document.createElement('a');
+    link.href = artist.link;
+
+    const img = document.createElement('img');
+    img.loading = 'lazy';
+    img.src = artist.photo;
+    img.alt = artist.name;
+
+    const name = document.createElement('h3');
+    name.textContent = artist.name;
+
+    link.appendChild(img);
+    link.appendChild(name);
+    return link;
+  }
+
+  function createPressElement(press) {
+    const card = document.createElement('div');
+    const link = document.createElement('a');
+    link.href = press.url;
+    link.target = "_blank";
+    link.rel = "noopener noreferrer";
+
+    const source = document.createElement('div');
+    source.className = 'press-source';
+    source.textContent = press.source;
+
+    const title = document.createElement('h3');
+    title.textContent = press.title;
+
+    link.appendChild(source);
+    link.appendChild(title);
+    card.appendChild(link);
+    return card;
+  }
+
+  function populateReleases() {
+    const grid = document.getElementById('releases');
+    if (!grid) return;
+    allReleases.forEach(r => grid.appendChild(createReleaseElement(r)));
+  }
+
+  function populateArtists() {
+    const grid = document.getElementById('artist-grid');
+    if (!grid) return;
+    allArtists.forEach(a => grid.appendChild(createArtistElement(a)));
+  }
+
+  function populatePress() {
+    const grid = document.getElementById('press-grid');
+    if (!grid) return;
+    let loaded = 0;
+    const perPage = 6;
+
+    function loadMore() {
+      if (loaded < allPress.length) {
+        const batch = allPress.slice(loaded, loaded + perPage);
+        batch.forEach(p => grid.appendChild(createPressElement(p)));
+        loaded += perPage;
       }
-    };
+    }
 
-    loadMorePress();
+    loadMore();
     window.addEventListener('scroll', () => {
-      const scrollPosition = window.innerHeight + window.scrollY;
-      const documentHeight = document.body.offsetHeight;
-      if (scrollPosition >= documentHeight - 500) {
-        loadMorePress();
+      if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 500) {
+        loadMore();
       }
     });
-  };
+  }
 
-  /* ========== Populate Artist Discography (New function for artist pages) ========== */
-  const populateArtistDiscography = () => {
-    const discographyGrid = document.getElementById('discography');
-    if (!discographyGrid) return;
-
-    // Get artist name from a unique element on the page, like a body class or ID
-    const artistName = document.body.dataset.artistName;
-
-    // Filter releases by the current artist -- MODIFIED LOGIC HERE
-    const artistReleases = allReleases.filter(release => 
-      release.artist && release.artist.split(',').map(name => name.trim()).includes(artistName)
+  function populateArtistDiscography() {
+    const grid = document.getElementById('discography');
+    if (!grid) return;
+    const name = document.body.dataset.artistName;
+    const releases = allReleases.filter(r =>
+      r.artist && r.artist.split(',').map(n => n.trim()).includes(name)
     );
+    releases.forEach(r => grid.appendChild(createReleaseElement(r)));
+  }
 
-    // Populate the discography grid with the filtered releases
-    artistReleases.forEach(release => {
-      discographyGrid.appendChild(createReleaseElement(release));
-    });
-  };
-
-  /* ========== Helper Functions to create HTML elements ========== */
-  const createReleaseElement = (release) => {
-    const releaseLink = document.createElement('a');
-    releaseLink.href = release.link;
-    releaseLink.setAttribute('data-title', release.title);
-    
-    const releaseImage = document.createElement('img');
-    releaseImage.loading = 'lazy'; 
-    releaseImage.src = release.cover;
-    releaseImage.alt = release.title;
-
-    releaseLink.appendChild(releaseImage);
-    return releaseLink;
-  };
-
-  const createArtistElement = (artist) => {
-    const artistLink = document.createElement('a');
-    artistLink.href = artist.link;
-    
-    const artistImage = document.createElement('img');
-    artistImage.loading = 'lazy';
-    artistImage.src = artist.photo;
-    artistImage.alt = artist.name;
-
-    const artistName = document.createElement('h3');
-    artistName.textContent = artist.name;
-
-    artistLink.appendChild(artistImage);
-    artistLink.appendChild(artistName);
-    return artistLink;
-  };
-
-  const createPressElement = (press) => {
-    const pressCard = document.createElement('div');
-    const pressLink = document.createElement('a');
-    
-    pressLink.href = press.url;
-    pressLink.target = '_blank';
-    pressLink.rel = 'noopener noreferrer';
-
-    const pressSource = document.createElement('div');
-    pressSource.className = 'press-source';
-    pressSource.textContent = press.source;
-
-    const pressTitle = document.createElement('h3');
-    pressTitle.textContent = press.title;
-
-    pressLink.appendChild(pressSource);
-    pressLink.appendChild(pressTitle);
-    pressCard.appendChild(pressLink);
-    return pressCard;
-  };
-
-  /* ========== Check for current page and populate accordingly ========== */
   if (document.getElementById('discography')) {
-    // This is an artist page
     populateArtistDiscography();
   } else {
-    // This is the main index page
     populateReleases();
     populateArtists();
     populatePress();
   }
 
-
-  /* ========== Hero Ripple and Tilt Effect (Main page only) ========== */
-  const hero = document.querySelector(".hero");
-  if (hero) {
-    const canvas = document.createElement("canvas");
-    canvas.style.position = "absolute";
-    canvas.style.top = 0;
-    canvas.style.left = 0;
-    canvas.style.width = "100%";
-    canvas.style.height = "100%";
-    canvas.style.pointerEvents = "none";
-    canvas.style.zIndex = 1;
-    hero.prepend(canvas);
-
-    const ctx = canvas.getContext("2d");
-    let ripples = [];
-
-    function resizeCanvas() {
-      canvas.width = hero.offsetWidth;
-      canvas.height = hero.offsetHeight;
-    }
-    window.addEventListener("resize", resizeCanvas);
-    resizeCanvas();
-
-    function animate() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ripples.forEach((r, i) => {
-        r.radius += r.speed;
-        r.alpha -= 0.01;
-        if (r.alpha > 0) {
-          ctx.beginPath();
-          ctx.arc(r.x, r.y, r.radius, 0, Math.PI * 2);
-          ctx.strokeStyle = `rgba(255,255,255,${r.alpha})`;
-          ctx.lineWidth = 2;
-          ctx.stroke();
-        }
-      });
-      ripples = ripples.filter(r => r.alpha > 0);
-      requestAnimationFrame(animate);
-    }
-    animate();
-
-    const handleInteraction = (e) => {
-      const rect = hero.getBoundingClientRect();
-      let clientX, clientY;
-
-      if (e.touches && e.touches.length > 0) {
-        clientX = e.touches[0].clientX;
-        clientY = e.touches[0].clientY;
-      } else {
-        clientX = e.clientX;
-        clientY = e.clientY;
-      }
-
-      ripples.push({
-        x: clientX - rect.left,
-        y: clientY - rect.top,
-        radius: 0,
-        speed: 1.5,
-        alpha: 0.4
-      });
-
-      // 3D Tilt Effect
-      const moveX = (clientX / window.innerWidth - 0.5) * 10;
-      const moveY = (clientY / window.innerHeight - 0.5) * 10;
-      const content = hero.querySelector(".hero-content");
-      if (content) {
-        content.style.transform = `perspective(800px) rotateX(${-moveY}deg) rotateY(${moveX}deg)`;
-      }
-    };
-
-    window.addEventListener("mousemove", handleInteraction);
-    hero.addEventListener("touchstart", handleInteraction);
-
-    hero.addEventListener("mouseleave", () => {
-      const content = hero.querySelector(".hero-content");
-      if (content) {
-        content.style.transform = "perspective(800px) rotateX(0deg) rotateY(0deg)";
-      }
-    });
-
-    hero.addEventListener("touchend", () => {
-      const content = hero.querySelector(".hero-content");
-      if (content) {
-        content.style.transform = "perspective(800px) rotateX(0deg) rotateY(0deg)";
-      }
-    });
-  }
-
-  /* ========== Desktop Mouse Drag to Scroll Releases (Main page only) ========== */
+  /* ========== Desktop Mouse Drag to Scroll Releases ========== */
   const releasesContainer = document.querySelector('.releases-container');
-  let isDragging = false;
-  let startX;
-  let scrollLeft;
-
   if (releasesContainer) {
-    releasesContainer.addEventListener('mousedown', (e) => {
+    let isDragging = false, startX, scrollLeft;
+    releasesContainer.addEventListener('mousedown', e => {
       isDragging = true;
-      releasesContainer.classList.add('active');
       startX = e.pageX - releasesContainer.offsetLeft;
       scrollLeft = releasesContainer.scrollLeft;
-      e.preventDefault(); 
+      e.preventDefault();
     });
-
-    releasesContainer.addEventListener('mouseleave', () => {
-      isDragging = false;
-      releasesContainer.classList.remove('active');
-    });
-
-    releasesContainer.addEventListener('mouseup', () => {
-      isDragging = false;
-      releasesContainer.classList.remove('active');
-    });
-
-    releasesContainer.addEventListener('mousemove', (e) => {
+    releasesContainer.addEventListener('mouseleave', () => isDragging = false);
+    releasesContainer.addEventListener('mouseup', () => isDragging = false);
+    releasesContainer.addEventListener('mousemove', e => {
       if (!isDragging) return;
       e.preventDefault();
       const x = e.pageX - releasesContainer.offsetLeft;
-      const walk = (x - startX) * 2;
-      releasesContainer.scrollLeft = scrollLeft - walk;
+      releasesContainer.scrollLeft = scrollLeft - (x - startX) * 2;
     });
   }
 
-    /* ========== AJAX Navigation to Keep Media Player Persistent ========== */
+  /* ========== AJAX Navigation to Keep Media Player Persistent ========== */
   function initAjaxNavigation() {
     const contentContainer = document.body;
 
@@ -338,61 +208,44 @@ window.onload = () => {
       );
     }
 
-    document.addEventListener("click", (e) => {
+    document.addEventListener("click", e => {
       const link = e.target.closest("a");
-      if (!link) return;
+      if (!link || !isInternalLink(link)) return;
 
-      if (isInternalLink(link)) {
-        e.preventDefault();
-        const url = link.getAttribute("href");
+      e.preventDefault();
+      const url = link.getAttribute("href");
 
-        fetch(url)
-          .then((res) => res.text())
-          .then((html) => {
-            const parser = new DOMParser();
-            const doc = parser.parseFromString(html, "text/html");
-
-            // Grab new body
-            const newBody = doc.body;
-            const playerFrame = document.getElementById("player-frame");
-
-            // Replace content but keep iframe alive
-            contentContainer.innerHTML = newBody.innerHTML;
-            if (playerFrame) {
-              document.body.appendChild(playerFrame);
-            }
-
-            // Update URL
-            window.history.pushState({}, "", url);
-
-            // Re-run script.js features
-            window.onload();
-          })
-          .catch((err) => console.error("Navigation error:", err));
-      }
-    });
-
-    window.addEventListener("popstate", () => {
-      fetch(window.location.href)
-        .then((res) => res.text())
-        .then((html) => {
-          const parser = new DOMParser();
-          const doc = parser.parseFromString(html, "text/html");
+      fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const doc = new DOMParser().parseFromString(html, "text/html");
           const newBody = doc.body;
           const playerFrame = document.getElementById("player-frame");
 
           contentContainer.innerHTML = newBody.innerHTML;
-          if (playerFrame) {
-            document.body.appendChild(playerFrame);
-          }
+          if (playerFrame) document.body.appendChild(playerFrame);
 
-          // Re-run script.js features
+          window.history.pushState({}, "", url);
+          window.onload();
+        })
+        .catch(err => console.error("Navigation error:", err));
+    });
+
+    window.addEventListener("popstate", () => {
+      fetch(window.location.href)
+        .then(res => res.text())
+        .then(html => {
+          const doc = new DOMParser().parseFromString(html, "text/html");
+          const newBody = doc.body;
+          const playerFrame = document.getElementById("player-frame");
+
+          contentContainer.innerHTML = newBody.innerHTML;
+          if (playerFrame) document.body.appendChild(playerFrame);
+
           window.onload();
         });
     });
   }
 
-  // Initialize
   initAjaxNavigation();
-
 };
