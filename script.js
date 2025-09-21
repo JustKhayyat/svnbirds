@@ -195,21 +195,23 @@ const initPage = () => {
   if (artistName && shopContainer) shopContainer.innerHTML = '';
 
   if (!artistName) {
-    // Home page
-    initHeroVideo();
-    populateReleases('releases');
-    populateArtists();
-    populatePress();
+  // Home page
+  initHeroVideo();
+  populateReleases('releases');
+  populateArtists();
+  populatePress();
 
-    // Initialize Shopify shop if available
-    if (window.ShopifyBuy && typeof initShopify === "function") {
-      initShopify();
-    }
-
-  } else {
-    // Artist page
-    populateArtistDiscography();
+  // Initialize Shopify shop on home page
+  const shopContainer = document.getElementById('collection-component-1758190269461');
+  if (shopContainer && window.ShopifyBuy && typeof initShopify === "function") {
+    initShopify();
   }
+
+} else {
+  // Artist page
+  populateArtistDiscography();
+}
+
 
   // Always init player toggle
   initPlayerToggle();
