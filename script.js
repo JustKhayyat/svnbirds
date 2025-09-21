@@ -178,18 +178,21 @@
 const initPage = () => {
   const artistName = document.body.dataset.artistName;
 
-  // Clear previous dynamic content if switching pages
+  // Grab all dynamic sections
   const releasesContainer = document.getElementById('releases');
   const artistGrid = document.getElementById('artist-grid');
   const pressGrid = document.getElementById('press-grid');
   const shopContainer = document.getElementById('collection-component-1758190269461');
   const discographyContainer = document.getElementById('discography');
 
+  // Clear previous content
   if (releasesContainer) releasesContainer.innerHTML = '';
   if (artistGrid) artistGrid.innerHTML = '';
   if (pressGrid) pressGrid.innerHTML = '';
   if (discographyContainer) discographyContainer.innerHTML = '';
-  if (shopContainer) shopContainer.innerHTML = '';
+
+  // Only clear shop if we're on an artist page
+  if (artistName && shopContainer) shopContainer.innerHTML = '';
 
   if (!artistName) {
     // Home page
@@ -197,16 +200,21 @@ const initPage = () => {
     populateReleases('releases');
     populateArtists();
     populatePress();
+
+    // Initialize Shopify shop if available
     if (window.ShopifyBuy && typeof initShopify === "function") {
       initShopify();
     }
+
   } else {
     // Artist page
     populateArtistDiscography();
   }
 
+  // Always init player toggle
   initPlayerToggle();
 };
+
 
 
   // =================== AJAX NAVIGATION ===================
