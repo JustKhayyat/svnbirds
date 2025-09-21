@@ -152,24 +152,24 @@
   };
 
   // =================== PLAYER TOGGLE ===================
-  let playerInitialized = false;
-  const initPlayerToggle = () => {
-    if (playerInitialized) return;
-    playerInitialized = true;
-    const playerToggle = document.getElementById('player-toggle');
-    const playerFrame = document.getElementById('player-frame');
-    if (!playerToggle || !playerFrame) return;
-    let isExpanded = true;
-    const updatePlayer = () => {
-      playerFrame.style.height = isExpanded ? "80px" : "30px";
-      playerToggle.textContent = isExpanded ? "▲" : "▼";
-    };
-    playerToggle.addEventListener('click', () => {
-      isExpanded = !isExpanded;
-      updatePlayer();
-    });
-    updatePlayer();
+let playerInitialized = false;
+const initPlayerToggle = () => {
+  if (playerInitialized) return;
+  playerInitialized = true;
+  const playerToggle = document.getElementById('player-toggle');
+  const playerFrame = document.getElementById('player-frame');
+  if (!playerToggle || !playerFrame) return;
+  let isExpanded = true;
+  const updatePlayer = () => {
+    playerFrame.style.height = isExpanded ? "80px" : "30px";
+    playerToggle.textContent = isExpanded ? "▼" : "▲";  // FIXED!
   };
+  playerToggle.addEventListener('click', () => {
+    isExpanded = !isExpanded;
+    updatePlayer();
+  });
+  updatePlayer();
+};
 
   // =================== PAGE INIT ===================
   const initPage = () => {
