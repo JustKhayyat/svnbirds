@@ -32,7 +32,7 @@
     { name: "Soulja", link: "soulja", photo: "/media/artists/artist-soulja.png" },
     { name: "Montiyago", link: "montiyago", photo: "/media/artists/artist-montiyago.png" },
     { name: "Khayyat", link: "khayyat", photo: "/media/artists/artist-khayyat.png" },
-    { name: "77", link: "77", photo: "/media/artists/artist-77.png" },
+    { name: "77", link: "seventyseven", photo: "/media/artists/artist-77.png" },
     { name: "Big Moe", link: "bigmoe", photo: "/media/artists/artist-bigmoe.png" }
   ];
 
