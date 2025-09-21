@@ -379,19 +379,20 @@ html, body {
   border: none;
   z-index: 9999;
   background: transparent;
+  transition: height 0.3s;
 }
 
 @media(max-width: 768px) {
   #player-frame {
-    height: 100px; /* easier to tap on mobile */
+    height: 110px; /* easier to tap on mobile */
   }
 }
 
 /* Add to your style.css */
 .player-toggle {
   position: fixed;
-  bottom: 80px; /* sits just above the player (player height is 80px) */
-  left: 20px;   /* left side of the screen */
+  bottom: 100px; /* 80px player + 20px gap for desktop */
+  left: 20px;
   z-index: 10000;
   width: 40px;
   height: 40px;
@@ -404,5 +405,16 @@ html, body {
   display: flex;
   align-items: center;
   justify-content: center;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+}
+
+@media(max-width: 768px) {
+  #player-frame {
+    height: 110px; /* taller player on mobile */
+  }
+
+  .player-toggle {
+    bottom: 130px; /* 110px player + 20px gap */
+  }
 }
 
