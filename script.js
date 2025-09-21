@@ -29,12 +29,12 @@
   ];
 
   const allArtists = [
-    { name: "Soulja", link: "soulja", photo: "/media/artists/artist-soulja.png" },
-    { name: "Montiyago", link: "montiyago", photo: "/media/artists/artist-montiyago.png" },
-    { name: "Khayyat", link: "khayyat", photo: "/media/artists/artist-khayyat.png" },
-    { name: "77", link: "seventyseven", photo: "/media/artists/artist-77.png" },
-    { name: "Big Moe", link: "bigmoe", photo: "/media/artists/artist-bigmoe.png" }
-  ];
+  { name: "Soulja", link: "soulja", photo: "/media/artists/artist-soulja.png?v=2" },
+  { name: "Montiyago", link: "montiyago", photo: "/media/artists/artist-montiyago.png?v=2" },
+  { name: "Khayyat", link: "khayyat", photo: "/media/artists/artist-khayyat.png?v=2" },
+  { name: "77", link: "seventyseven", photo: "/media/artists/artist-77.png?v=2" },
+  { name: "Big Moe", link: "bigmoe", photo: "/media/artists/artist-bigmoe.png?v=2" }
+];
 
   const allPress = [
     { title: "GRAMMYS – 5 Independent Record Labels Bringing The Sounds Of The Middle East & North Africa", url: "https://www.grammy.com/news/5-middle-east-north-africa-independent-record-labels-to-know-beirut-red-diamond", source: "GRAMMYS" },
