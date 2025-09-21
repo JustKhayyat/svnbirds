@@ -1,5 +1,3 @@
-/* ========== script.js (AJAX + Artist Page Fixed) ========== */
-
 (() => {
   // =================== DATA ===================
   const allReleases = [
@@ -141,31 +139,9 @@
     try { video.play(); } catch { /* autoplay blocked */ }
   };
 
-  // =================== DESKTOP DRAG SCROLL ===================
-  const initDragScroll = () => {
-    const releasesContainer = document.querySelector('.releases-container');
-    if (!releasesContainer) return;
-    let isDragging = false, startX, scrollLeft;
-    releasesContainer.addEventListener('mousedown', e => {
-      isDragging = true;
-      startX = e.pageX - releasesContainer.offsetLeft;
-      scrollLeft = releasesContainer.scrollLeft;
-      e.preventDefault();
-    });
-    releasesContainer.addEventListener('mouseleave', () => isDragging = false);
-    releasesContainer.addEventListener('mouseup', () => isDragging = false);
-    releasesContainer.addEventListener('mousemove', e => {
-      if (!isDragging) return;
-      e.preventDefault();
-      const x = e.pageX - releasesContainer.offsetLeft;
-      releasesContainer.scrollLeft = scrollLeft - (x - startX) * 2;
-    });
-  };
-
   // =================== PAGE INIT ===================
   const initPage = () => {
     initHeroVideo();
-    initDragScroll();
 
     const artistName = document.body.dataset.artistName;
     if (artistName) {
@@ -179,71 +155,67 @@
 
   document.addEventListener('DOMContentLoaded', initPage);
 
- // =================== AJAX NAVIGATION WITH FADE (PLAYER-PRESERVED) ===================
-const initAjaxNavigation = () => {
-  const contentContainer = document.getElementById('page-content');
-  if (!contentContainer) return;
+  // =================== AJAX NAVIGATION WITH FADE (PLAYER-PRESERVED) ===================
+  const initAjaxNavigation = () => {
+    const contentContainer = document.getElementById('page-content');
+    if (!contentContainer) return;
 
-  const fadeDuration = 300; // in ms
+    const fadeDuration = 300; // in ms
 
-  const isInternalLink = link =>
-    link.hostname === window.location.hostname &&
-    !link.hasAttribute("target") &&
-    !link.href.includes("#");
+    const isInternalLink = link =>
+      link.hostname === window.location.hostname &&
+      !link.hasAttribute("target") &&
+      !link.href.includes("#");
 
-  const fadeOut = el =>
-    new Promise(resolve => {
-      el.style.transition = `opacity ${fadeDuration}ms`;
-      el.style.opacity = 0;
-      setTimeout(resolve, fadeDuration);
+    const fadeOut = el =>
+      new Promise(resolve => {
+        el.style.transition = `opacity ${fadeDuration}ms`;
+        el.style.opacity = 0;
+        setTimeout(resolve, fadeDuration);
+      });
+
+    const fadeIn = el =>
+      new Promise(resolve => {
+        el.style.transition = `opacity ${fadeDuration}ms`;
+        el.style.opacity = 1;
+        setTimeout(resolve, fadeDuration);
+      });
+
+    const loadPage = async (url) => {
+      try {
+        await fadeOut(contentContainer);
+
+        const res = await fetch(url);
+        const html = await res.text();
+        const doc = new DOMParser().parseFromString(html, "text/html");
+        const newContent = doc.querySelector('#page-content');
+
+        if (!newContent) throw new Error("No #page-content found in response");
+
+        [...doc.body.attributes].forEach(attr => document.body.setAttribute(attr.name, attr.value));
+        contentContainer.innerHTML = newContent.innerHTML;
+
+        window.history.pushState({}, "", url);
+
+        initPage();
+        await fadeIn(contentContainer);
+      } catch (err) {
+        console.error("Navigation error:", err);
+        window.location.href = url;
+      }
+    };
+
+    document.addEventListener('click', e => {
+      const link = e.target.closest("a");
+      if (!link || !isInternalLink(link)) return;
+      e.preventDefault();
+      loadPage(link.href);
     });
 
-  const fadeIn = el =>
-    new Promise(resolve => {
-      el.style.transition = `opacity ${fadeDuration}ms`;
-      el.style.opacity = 1;
-      setTimeout(resolve, fadeDuration);
-    });
-
-  const loadPage = async (url) => {
-    try {
-      await fadeOut(contentContainer);
-
-      const res = await fetch(url);
-      const html = await res.text();
-      const doc = new DOMParser().parseFromString(html, "text/html");
-      const newContent = doc.querySelector('#page-content');
-
-      if (!newContent) throw new Error("No #page-content found in response");
-
-      // Update body attributes (like data-artist-name) without touching iframe
-      [...doc.body.attributes].forEach(attr => document.body.setAttribute(attr.name, attr.value));
-
-      // Replace only #page-content innerHTML
-      contentContainer.innerHTML = newContent.innerHTML;
-
-      window.history.pushState({}, "", url);
-
-      initPage(); // re-init scripts for new content
-      await fadeIn(contentContainer);
-    } catch (err) {
-      console.error("Navigation error:", err);
-      // fallback: full page reload
-      window.location.href = url;
-    }
+    window.addEventListener('popstate', () => loadPage(window.location.href));
   };
 
-  document.addEventListener('click', e => {
-    const link = e.target.closest("a");
-    if (!link || !isInternalLink(link)) return;
-    e.preventDefault();
-    loadPage(link.href);
-  });
-
-  window.addEventListener('popstate', () => loadPage(window.location.href));
-};
-
-// Initialize AJAX navigation
-initAjaxNavigation();
+  // Initialize AJAX navigation
+  initAjaxNavigation();
 
 })();
