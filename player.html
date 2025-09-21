@@ -3,12 +3,96 @@
 <head>
   <meta charset="UTF-8">
   <title>Media Player</title>
-<link rel="stylesheet" href="/player.css">
+  <link rel="stylesheet" href="/player.css">
   <style>
     /* Frame reset */
     body {
       margin: 0;
       background: transparent;
+      font-family: sans-serif;
+      -webkit-user-select: none;
+      user-select: none;
+      overflow: hidden;
+    }
+
+    /* Player container */
+    #media-player {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      background: rgba(0,0,0,0.85);
+      color: #fff;
+      padding: 4px 8px;
+      box-sizing: border-box;
+      touch-action: manipulation;
+    }
+
+    #player-content {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      gap: 10px;
+    }
+
+    /* Track info */
+    #track-info {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      font-size: 12px;
+      min-width: 0;
+    }
+
+    #track-name {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    #player-status {
+      font-size: 10px;
+      opacity: 0.7;
+    }
+
+    /* Player controls */
+    #player-controls {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .player-btn {
+      background: transparent;
+      border: none;
+      color: #fff;
+      cursor: pointer;
+      padding: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+    }
+
+    .player-btn svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    /* Responsive: make icons bigger on touch devices */
+    @media (hover: none) and (pointer: coarse) {
+      .player-btn {
+        width: 36px;
+        height: 36px;
+        padding: 6px;
+      }
     }
   </style>
 </head>
@@ -22,14 +106,14 @@
       </div>
       <div id="player-controls">
         <!-- Prev -->
-        <button id="prev-btn" class="player-btn">
+        <button id="prev-btn" class="player-btn" title="Previous">
           <svg fill="currentColor" viewBox="0 0 24 24">
             <path d="M15 18l-6-6 6-6v12zM6 6h2v12H6V6z"/>
           </svg>
         </button>
 
         <!-- Play / Pause -->
-        <button id="play-pause-btn" class="player-btn">
+        <button id="play-pause-btn" class="player-btn" title="Play / Pause">
           <svg class="play-icon" fill="currentColor" viewBox="0 0 24 24">
             <path d="M8 5v14l11-7z"/>
           </svg>
@@ -39,14 +123,14 @@
         </button>
 
         <!-- Next -->
-        <button id="next-btn" class="player-btn">
+        <button id="next-btn" class="player-btn" title="Next">
           <svg fill="currentColor" viewBox="0 0 24 24">
             <path d="M9 6l6 6-6 6V6zm9 0h-2v12h2V6z"/>
           </svg>
         </button>
 
         <!-- Mute / Unmute -->
-        <button id="mute-unmute-btn" class="player-btn">
+        <button id="mute-unmute-btn" class="player-btn" title="Mute / Unmute">
           <svg class="volume-up-icon" fill="currentColor" viewBox="0 0 24 24">
             <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.06c1.48-.74 2.5-2.26 2.5-4.03z"/>
           </svg>
