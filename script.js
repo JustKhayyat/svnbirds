@@ -204,7 +204,7 @@
     initPlayerToggle();
   };
 
- // =================== AJAX NAVIGATION ===================
+// =================== AJAX NAVIGATION ===================
 const initNavigation = () => {
   const scrollPositions = {};
 
@@ -217,11 +217,20 @@ const initNavigation = () => {
     scrollPositions[window.location.pathname] = window.scrollY;
 
     let url = link.href;
-    // Append index.html if the link ends with a slash
-    let urlToFetch = url.endsWith('/') ? url + 'index.html' : url;
+
+    // Ensure folder links always fetch index.html
+    if (url.endsWith('/')) {
+      url += 'index.html';
+    } else if (!url.match(/\.html$/)) {
+      // If the URL doesn't end with slash or .html, assume folder
+      url += '/index.html';
+    }
+
+    console.log("[AJAX NAV] Fetching:", url); // Debugging line
 
     try {
-      const res = await fetch(urlToFetch);
+      const res = await fetch(url);
+      if (!res.ok) throw new Error("Fetch failed with status " + res.status);
       const html = await res.text();
       const parser = new DOMParser();
       const doc = parser.parseFromString(html, 'text/html');
@@ -232,15 +241,15 @@ const initNavigation = () => {
         document.body.dataset.artistName = doc.body.dataset.artistName || "";
 
         // Update browser URL without showing index.html
-        const cleanUrl = urlToFetch.endsWith('index.html') ? urlToFetch.replace(/index\.html$/, '') : urlToFetch;
+        const cleanUrl = url.replace(/index\.html$/, '');
         window.history.pushState({}, "", cleanUrl);
 
         initPage();
         window.scrollTo(0, scrollPositions[new URL(url).pathname] || 0);
       }
     } catch (err) {
-      console.error("Navigation error:", err);
-      window.location.href = url;
+      console.error("[AJAX NAV] Error fetching", url, err);
+      window.location.href = url; // fallback to normal navigation
     }
   });
 
@@ -248,6 +257,7 @@ const initNavigation = () => {
     window.location.reload();
   });
 };
+
 
   // =================== INITIALIZE ===================
   document.addEventListener('DOMContentLoaded', () => {
