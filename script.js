@@ -139,109 +139,95 @@
     try { video.play(); } catch { /* autoplay blocked */ }
   };
 
+  // =================== PLAYER TOGGLE ===================
+  const initPlayerToggle = () => {
+    const playerToggle = document.getElementById('player-toggle');
+    const playerFrame = document.getElementById('player-frame');
+    if (!playerToggle || !playerFrame) return;
+
+    let isExpanded = true;
+    const updatePlayer = () => {
+      if (isExpanded) {
+        playerFrame.style.height = "80px";
+        playerToggle.textContent = "▲";
+      } else {
+        playerFrame.style.height = "30px";
+        playerToggle.textContent = "▼";
+      }
+    };
+
+    playerToggle.addEventListener('click', () => {
+      isExpanded = !isExpanded;
+      updatePlayer();
+    });
+
+    updatePlayer();
+  };
+
   // =================== PAGE INIT ===================
   const initPage = () => {
-    initHeroVideo();
-
     const artistName = document.body.dataset.artistName;
-    if (artistName) {
-      populateArtistDiscography();
-    } else {
+
+    if (!artistName) {
+      // Home page
+      initHeroVideo();
       populateReleases('releases');
       populateArtists();
       populatePress();
-    }
-  };
-
-  document.addEventListener('DOMContentLoaded', initPage);
-
-  // =================== PLAYER TOGGLE ===================
-  const playerToggle = document.getElementById('player-toggle');
-  const playerFrame = document.getElementById('player-frame');
-  let isExpanded = true;
-
-  const updatePlayer = () => {
-    if(isExpanded){
-      playerFrame.style.height = "80px";
-      playerToggle.textContent = "▲";
+      if (window.ShopifyBuy && typeof initShopify === "function") initShopify();
     } else {
-      playerFrame.style.height = "30px";
-      playerToggle.textContent = "▼";
+      // Artist page
+      populateArtistDiscography();
     }
+    initPlayerToggle();
   };
-
-  playerToggle.addEventListener('click', () => {
-    isExpanded = !isExpanded;
-    updatePlayer();
-  });
-
-  updatePlayer();
 
   // =================== AJAX NAVIGATION ===================
-  const ajaxLinks = document.querySelectorAll('a.nav-btn, a[href^="/"]:not([target="_blank"])');
+  const initNavigation = () => {
+    document.body.addEventListener('click', async e => {
+      const link = e.target.closest('a');
+      if (!link || link.target === "_blank" || link.href.startsWith("mailto:")) return;
+      if (!link.href.includes(window.location.origin)) return;
 
-  ajaxLinks.forEach(link => {
-    link.addEventListener('click', e => {
-      const href = link.getAttribute('href');
-      if (href.startsWith('http') || href.startsWith('#')) return;
       e.preventDefault();
+      const url = link.href;
 
-      fetch(href)
-        .then(r => r.text())
-        .then(htmlText => {
-          const parser = new DOMParser();
-          const doc = parser.parseFromString(htmlText, 'text/html');
-
-          // Replace page content
-          const newContent = doc.getElementById('page-content');
-          if (newContent) {
-            const oldContent = document.getElementById('page-content');
-            oldContent.replaceWith(newContent);
-          }
-
-          // Update body data-artist-name attribute
-          if (doc.body.hasAttribute('data-artist-name')) {
-            document.body.setAttribute('data-artist-name', doc.body.getAttribute('data-artist-name'));
-          } else {
-            document.body.removeAttribute('data-artist-name');
-          }
-
-          // Update title
-          document.title = doc.title;
-
-          // Re-init JS for the new page
-          initPage();
-
-          // Push new state
-          window.history.pushState({ url: href }, '', href);
-        })
-        .catch(err => console.error(err));
-    });
-  });
-
-  window.addEventListener('popstate', e => {
-    const href = e.state?.url || '/';
-    fetch(href)
-      .then(r => r.text())
-      .then(htmlText => {
+      try {
+        const res = await fetch(url);
+        const html = await res.text();
         const parser = new DOMParser();
-        const doc = parser.parseFromString(htmlText, 'text/html');
+        const doc = parser.parseFromString(html, 'text/html');
 
+        // Replace page content
         const newContent = doc.getElementById('page-content');
         if (newContent) {
-          const oldContent = document.getElementById('page-content');
-          oldContent.replaceWith(newContent);
-        }
+          document.getElementById('page-content').replaceWith(newContent);
 
-        if (doc.body.hasAttribute('data-artist-name')) {
-          document.body.setAttribute('data-artist-name', doc.body.getAttribute('data-artist-name'));
-        } else {
-          document.body.removeAttribute('data-artist-name');
-        }
+          // Update body data-artist-name
+          document.body.dataset.artistName = doc.body.dataset.artistName || "";
 
-        document.title = doc.title;
-        initPage();
-      });
+          // Update URL
+          window.history.pushState({}, "", url);
+
+          // Re-init page
+          initPage();
+        }
+      } catch (err) {
+        console.error("Navigation error:", err);
+        window.location.href = url;
+      }
+    });
+
+    window.addEventListener('popstate', () => {
+      // reload current location
+      window.location.reload();
+    });
+  };
+
+  // =================== INITIALIZE ===================
+  document.addEventListener('DOMContentLoaded', () => {
+    initPage();
+    initNavigation();
   });
 
 })();
