@@ -94,18 +94,21 @@
   const populateReleases = containerId => {
     const container = document.getElementById(containerId);
     if (!container) return;
+    container.innerHTML = '';
     allReleases.forEach(r => container.appendChild(createReleaseElement(r)));
   };
 
   const populateArtists = () => {
     const grid = document.getElementById('artist-grid');
     if (!grid) return;
+    grid.innerHTML = '';
     allArtists.forEach(a => grid.appendChild(createArtistElement(a)));
   };
 
   const populatePress = () => {
     const grid = document.getElementById('press-grid');
     if (!grid) return;
+    grid.innerHTML = '';
     let loaded = 0;
     const perPage = 6;
     const loadMore = () => {
@@ -123,6 +126,7 @@
   const populateArtistDiscography = () => {
     const container = document.getElementById('discography');
     if (!container) return;
+    container.innerHTML = '';
     const artistName = document.body.dataset.artistName;
     if (!artistName) return;
     const releases = allReleases.filter(r => r.artist.split(',').map(n => n.trim()).includes(artistName));
@@ -130,9 +134,11 @@
   };
 
   // =================== HERO VIDEO ===================
+  let heroVideoInitialized = false;
   const initHeroVideo = () => {
     const video = document.querySelector(".hero-video");
-    if (!video) return;
+    if (!video || heroVideoInitialized) return;
+    heroVideoInitialized = true;
     video.muted = true;
     video.loop = true;
     video.playsInline = true;
@@ -140,7 +146,11 @@
   };
 
   // =================== PLAYER TOGGLE ===================
+  let playerInitialized = false;
   const initPlayerToggle = () => {
+    if (playerInitialized) return;
+    playerInitialized = true;
+
     const playerToggle = document.getElementById('player-toggle');
     const playerFrame = document.getElementById('player-frame');
     if (!playerToggle || !playerFrame) return;
@@ -184,14 +194,19 @@
 
   // =================== AJAX NAVIGATION ===================
   const initNavigation = () => {
+    const scrollPositions = {};
+
     document.body.addEventListener('click', async e => {
       const link = e.target.closest('a');
       if (!link || link.target === "_blank" || link.href.startsWith("mailto:")) return;
       if (!link.href.includes(window.location.origin)) return;
 
       e.preventDefault();
-      const url = link.href;
 
+      // Save current scroll position
+      scrollPositions[window.location.pathname] = window.scrollY;
+
+      const url = link.href;
       try {
         const res = await fetch(url);
         const html = await res.text();
@@ -202,8 +217,6 @@
         const newContent = doc.getElementById('page-content');
         if (newContent) {
           document.getElementById('page-content').replaceWith(newContent);
-
-          // Update body data-artist-name
           document.body.dataset.artistName = doc.body.dataset.artistName || "";
 
           // Update URL
@@ -211,6 +224,9 @@
 
           // Re-init page
           initPage();
+
+          // Restore scroll if previously visited
+          window.scrollTo(0, scrollPositions[new URL(url).pathname] || 0);
         }
       } catch (err) {
         console.error("Navigation error:", err);
@@ -219,7 +235,6 @@
     });
 
     window.addEventListener('popstate', () => {
-      // reload current location
       window.location.reload();
     });
   };
