@@ -422,24 +422,44 @@ html, body {
   background: rgba(255, 255, 255, 0.2);
 }
 
-/* When player is collapsed */
-#player-frame[style*="height: 30px"] ~ .player-toggle,
+/* ========== Player State Classes ========== */
+/* Target expanded state */
+#player-frame.expanded {
+  /* Special styles when expanded */
+}
+
+/* Target collapsed state */  
+#player-frame.collapsed {
+  /* Special styles when collapsed */
+}
+
+/* Target toggle when player is expanded */
+#player-frame.expanded ~ .player-toggle {
+  bottom: 80px;
+}
+
+/* Target toggle when player is collapsed */
 #player-frame.collapsed ~ .player-toggle {
-  bottom: 30px; /* Directly above the 30px player */
+  bottom: 30px;
+}
+
+/* When player is collapsed (backup selector) */
+#player-frame[style*="height: 30px"] ~ .player-toggle {
+  bottom: 30px;
 }
 
 @media(max-width: 768px) {
-  #player-frame {
-    height: 110px; /* taller player on mobile */
-  }
-
-  .player-toggle {
-    bottom: 110px; /* Above mobile player height */
-    width: 40px;
-    height: 20px;
-    font-size: 14px;
+  /* Target toggle when player is expanded on mobile */
+  #player-frame.expanded ~ .player-toggle {
+    bottom: 110px;
   }
   
+  /* Target toggle when player is collapsed on mobile */
+  #player-frame.collapsed ~ .player-toggle {
+    bottom: 30px;
+  }
+  
+  /* Mobile backup selector */
   #player-frame[style*="height: 110px"] ~ .player-toggle {
     bottom: 110px;
   }
@@ -447,4 +467,4 @@ html, body {
   #player-frame[style*="height: 30px"] ~ .player-toggle {
     bottom: 30px;
   }
-} 
+}
