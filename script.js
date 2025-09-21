@@ -29,11 +29,11 @@
   ];
 
   const allArtists = [
-    { name: "Soulja", link: "/soulja/", photo: "/media/artists/artist-soulja.png" },
-    { name: "Montiyago", link: "/montiyago/", photo: "/media/artists/artist-montiyago.png" },
-    { name: "Khayyat", link: "/khayyat/", photo: "/media/artists/artist-khayyat.png" },
-    { name: "77", link: "/77/", photo: "/media/artists/artist-77.png" },
-    { name: "Big Moe", link: "/bigmoe/", photo: "/media/artists/artist-bigmoe.png" }
+    { name: "Soulja", link: "soulja", photo: "/media/artists/artist-soulja.png" },
+    { name: "Montiyago", link: "montiyago", photo: "/media/artists/artist-montiyago.png" },
+    { name: "Khayyat", link: "khayyat", photo: "/media/artists/artist-khayyat.png" },
+    { name: "77", link: "77", photo: "/media/artists/artist-77.png" },
+    { name: "Big Moe", link: "bigmoe", photo: "/media/artists/artist-bigmoe.png" }
   ];
 
   const allPress = [
@@ -61,7 +61,7 @@
 
   const createArtistElement = a => {
     const link = document.createElement('a');
-    link.href = a.link;
+    link.href = `/${a.link}/`; // ensure single trailing slash
     const img = document.createElement('img');
     img.loading = 'lazy';
     img.src = a.photo;
@@ -135,10 +135,10 @@
   // =================== POPULATE SHOP ===================
   const populateShop = () => {
     const shopContainer = document.getElementById('collection-component-1758190269461');
-    if (!shopContainer) return; // only initialize if container exists (home page)
-    shopContainer.innerHTML = ''; // optional: clear previous content
+    if (!shopContainer) return; 
+    shopContainer.innerHTML = ''; 
     if (window.ShopifyBuy && typeof initShopify === "function") {
-      initShopify(); // re-render products
+      initShopify(); 
     }
   };
 
@@ -151,7 +151,7 @@
     video.muted = true;
     video.loop = true;
     video.playsInline = true;
-    try { video.play(); } catch { /* autoplay blocked */ }
+    try { video.play(); } catch { }
   };
 
   // =================== PLAYER TOGGLE ===================
@@ -159,9 +159,11 @@
   const initPlayerToggle = () => {
     if (playerInitialized) return;
     playerInitialized = true;
+
     const playerToggle = document.getElementById('player-toggle');
     const playerFrame = document.getElementById('player-frame');
     if (!playerToggle || !playerFrame) return;
+
     let isExpanded = true;
     const updatePlayer = () => {
       if (isExpanded) {
@@ -172,52 +174,59 @@
         playerToggle.textContent = "▼";
       }
     };
+
     playerToggle.addEventListener('click', () => {
       isExpanded = !isExpanded;
       updatePlayer();
     });
+
     updatePlayer();
   };
 
   // =================== PAGE INIT ===================
   const initPage = () => {
     const artistName = document.body.dataset.artistName;
+
     if (!artistName) {
-      // Home page
       initHeroVideo();
       populateReleases('releases');
       populateArtists();
       populatePress();
-      populateShop(); // ONLY on home page
+      populateShop();
     } else {
-      // Artist page
       populateArtistDiscography();
     }
+
     initPlayerToggle();
   };
 
   // =================== AJAX NAVIGATION ===================
   const initNavigation = () => {
     const scrollPositions = {};
+
+    const normalizePath = path => path.replace(/\/+$/, '').replace(/\/+/g, '/');
+
     document.body.addEventListener('click', async e => {
       const link = e.target.closest('a');
       if (!link || link.target === "_blank" || link.href.startsWith("mailto:")) return;
       if (!link.href.includes(window.location.origin)) return;
+
       e.preventDefault();
       scrollPositions[window.location.pathname] = window.scrollY;
+
       let url = new URL(link.href, window.location.origin);
-      // Force numeric or folder links to fetch index.html
-      if (!url.pathname.endsWith('.html')) {
-        if (!url.pathname.endsWith('/')) url.pathname += '/';
-        url.pathname += 'index.html';
-      }
-      console.log("[AJAX NAV] Fetching:", url.href);
+
+      // force numeric or folder links to fetch index.html
+      url.pathname = normalizePath(url.pathname);
+      if (!url.pathname.endsWith('.html')) url.pathname += '/index.html';
+
       try {
         const res = await fetch(url.href);
         if (!res.ok) throw new Error("Fetch failed with status " + res.status);
         const html = await res.text();
         const parser = new DOMParser();
         const doc = parser.parseFromString(html, 'text/html');
+
         const newContent = doc.getElementById('page-content');
         if (newContent) {
           document.getElementById('page-content').replaceWith(newContent);
@@ -225,16 +234,15 @@
           let cleanUrl = url.pathname.replace(/index\.html$/, '/');
           window.history.pushState({}, "", cleanUrl);
           initPage();
-          window.scrollTo(0, scrollPositions[new URL(url.href).pathname] || 0);
+          window.scrollTo(0, scrollPositions[url.pathname] || 0);
         }
       } catch (err) {
         console.error("[AJAX NAV] Error fetching", url.href, err);
-        window.location.href = url.href; // fallback
+        window.location.href = url.href;
       }
     });
-    window.addEventListener('popstate', () => {
-      window.location.reload();
-    });
+
+    window.addEventListener('popstate', () => window.location.reload());
   };
 
   // =================== INITIALIZE ===================
@@ -242,4 +250,5 @@
     initPage();
     initNavigation();
   });
+
 })();
