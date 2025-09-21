@@ -29,11 +29,11 @@
   ];
 
   const allArtists = [
-    { name: "Soulja", link: "soulja/", photo: "/media/artists/artist-soulja.png" },
-    { name: "Montiyago", link: "montiyago/", photo: "/media/artists/artist-montiyago.png" },
-    { name: "Khayyat", link: "khayyat/", photo: "/media/artists/artist-khayyat.png" },
-    { name: "77", link: "77/", photo: "/media/artists/artist-77.png" },
-    { name: "Big Moe", link: "bigmoe/", photo: "/media/artists/artist-bigmoe.png" }
+    { name: "Soulja", link: "/soulja/", photo: "/media/artists/artist-soulja.png" },
+    { name: "Montiyago", link: "/montiyago/", photo: "/media/artists/artist-montiyago.png" },
+    { name: "Khayyat", link: "/khayyat/", photo: "/media/artists/artist-khayyat.png" },
+    { name: "77", link: "/77/", photo: "/media/artists/artist-77.png" },
+    { name: "Big Moe", link: "/bigmoe/", photo: "/media/artists/artist-bigmoe.png" }
   ];
 
   const allPress = [
@@ -136,9 +136,7 @@
   const populateShop = () => {
     const shopContainer = document.getElementById('collection-component-1758190269461');
     if (!shopContainer) return; // only initialize if container exists (home page)
-
     shopContainer.innerHTML = ''; // optional: clear previous content
-
     if (window.ShopifyBuy && typeof initShopify === "function") {
       initShopify(); // re-render products
     }
@@ -161,11 +159,9 @@
   const initPlayerToggle = () => {
     if (playerInitialized) return;
     playerInitialized = true;
-
     const playerToggle = document.getElementById('player-toggle');
     const playerFrame = document.getElementById('player-frame');
     if (!playerToggle || !playerFrame) return;
-
     let isExpanded = true;
     const updatePlayer = () => {
       if (isExpanded) {
@@ -176,19 +172,16 @@
         playerToggle.textContent = "▼";
       }
     };
-
     playerToggle.addEventListener('click', () => {
       isExpanded = !isExpanded;
       updatePlayer();
     });
-
     updatePlayer();
   };
 
   // =================== PAGE INIT ===================
   const initPage = () => {
     const artistName = document.body.dataset.artistName;
-
     if (!artistName) {
       // Home page
       initHeroVideo();
@@ -200,68 +193,53 @@
       // Artist page
       populateArtistDiscography();
     }
-
     initPlayerToggle();
   };
 
-// =================== AJAX NAVIGATION ===================
-const initNavigation = () => {
-  const scrollPositions = {};
-
-  document.body.addEventListener('click', async e => {
-    const link = e.target.closest('a');
-    if (!link || link.target === "_blank" || link.href.startsWith("mailto:")) return;
-    if (!link.href.includes(window.location.origin)) return;
-
-    e.preventDefault();
-    scrollPositions[window.location.pathname] = window.scrollY;
-
-    let url = new URL(link.href, window.location.origin);
-
-    // Force numeric or any folder links to fetch index.html
-    if (!url.pathname.endsWith('.html')) {
-      if (!url.pathname.endsWith('/')) url.pathname += '/';
-      url.pathname += 'index.html';
-    }
-
-    console.log("[AJAX NAV] Fetching:", url.href);
-
-    try {
-      const res = await fetch(url.href);
-      if (!res.ok) throw new Error("Fetch failed with status " + res.status);
-      const html = await res.text();
-      const parser = new DOMParser();
-      const doc = parser.parseFromString(html, 'text/html');
-
-      const newContent = doc.getElementById('page-content');
-      if (newContent) {
-        document.getElementById('page-content').replaceWith(newContent);
-        document.body.dataset.artistName = doc.body.dataset.artistName || "";
-
-        // Update browser URL without showing index.html
-        let cleanUrl = url.pathname.replace(/index\.html$/, '/');
-        window.history.pushState({}, "", cleanUrl);
-
-        initPage();
-        window.scrollTo(0, scrollPositions[new URL(url.href).pathname] || 0);
+  // =================== AJAX NAVIGATION ===================
+  const initNavigation = () => {
+    const scrollPositions = {};
+    document.body.addEventListener('click', async e => {
+      const link = e.target.closest('a');
+      if (!link || link.target === "_blank" || link.href.startsWith("mailto:")) return;
+      if (!link.href.includes(window.location.origin)) return;
+      e.preventDefault();
+      scrollPositions[window.location.pathname] = window.scrollY;
+      let url = new URL(link.href, window.location.origin);
+      // Force numeric or folder links to fetch index.html
+      if (!url.pathname.endsWith('.html')) {
+        if (!url.pathname.endsWith('/')) url.pathname += '/';
+        url.pathname += 'index.html';
       }
-    } catch (err) {
-      console.error("[AJAX NAV] Error fetching", url.href, err);
-      window.location.href = url.href; // fallback
-    }
-  });
-
-  window.addEventListener('popstate', () => {
-    window.location.reload();
-  });
-};
-
-
+      console.log("[AJAX NAV] Fetching:", url.href);
+      try {
+        const res = await fetch(url.href);
+        if (!res.ok) throw new Error("Fetch failed with status " + res.status);
+        const html = await res.text();
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(html, 'text/html');
+        const newContent = doc.getElementById('page-content');
+        if (newContent) {
+          document.getElementById('page-content').replaceWith(newContent);
+          document.body.dataset.artistName = doc.body.dataset.artistName || "";
+          let cleanUrl = url.pathname.replace(/index\.html$/, '/');
+          window.history.pushState({}, "", cleanUrl);
+          initPage();
+          window.scrollTo(0, scrollPositions[new URL(url.href).pathname] || 0);
+        }
+      } catch (err) {
+        console.error("[AJAX NAV] Error fetching", url.href, err);
+        window.location.href = url.href; // fallback
+      }
+    });
+    window.addEventListener('popstate', () => {
+      window.location.reload();
+    });
+  };
 
   // =================== INITIALIZE ===================
   document.addEventListener('DOMContentLoaded', () => {
     initPage();
     initNavigation();
   });
-
 })();
