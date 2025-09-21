@@ -381,7 +381,7 @@ html, body {
 /* ========== Draggable Media Player Styles ========== */
 #media-player {
   position: fixed;
-  bottom: 20px;
+  top: 20px;     /* replace bottom with top */
   left: 20px;
   width: 250px;
   background: rgba(18, 18, 18, 0.9);
