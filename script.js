@@ -325,4 +325,74 @@ window.onload = () => {
       releasesContainer.scrollLeft = scrollLeft - walk;
     });
   }
+
+    /* ========== AJAX Navigation to Keep Media Player Persistent ========== */
+  function initAjaxNavigation() {
+    const contentContainer = document.body;
+
+    function isInternalLink(link) {
+      return (
+        link.hostname === window.location.hostname &&
+        !link.hasAttribute("target") &&
+        !link.href.includes("#")
+      );
+    }
+
+    document.addEventListener("click", (e) => {
+      const link = e.target.closest("a");
+      if (!link) return;
+
+      if (isInternalLink(link)) {
+        e.preventDefault();
+        const url = link.getAttribute("href");
+
+        fetch(url)
+          .then((res) => res.text())
+          .then((html) => {
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(html, "text/html");
+
+            // Grab new body
+            const newBody = doc.body;
+            const playerFrame = document.getElementById("player-frame");
+
+            // Replace content but keep iframe alive
+            contentContainer.innerHTML = newBody.innerHTML;
+            if (playerFrame) {
+              document.body.appendChild(playerFrame);
+            }
+
+            // Update URL
+            window.history.pushState({}, "", url);
+
+            // Re-run script.js features
+            window.onload();
+          })
+          .catch((err) => console.error("Navigation error:", err));
+      }
+    });
+
+    window.addEventListener("popstate", () => {
+      fetch(window.location.href)
+        .then((res) => res.text())
+        .then((html) => {
+          const parser = new DOMParser();
+          const doc = parser.parseFromString(html, "text/html");
+          const newBody = doc.body;
+          const playerFrame = document.getElementById("player-frame");
+
+          contentContainer.innerHTML = newBody.innerHTML;
+          if (playerFrame) {
+            document.body.appendChild(playerFrame);
+          }
+
+          // Re-run script.js features
+          window.onload();
+        });
+    });
+  }
+
+  // Initialize
+  initAjaxNavigation();
+
 };
