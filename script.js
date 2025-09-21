@@ -161,16 +161,18 @@ const initPlayerToggle = () => {
   if (!playerToggle || !playerFrame) return;
   let isExpanded = true;
   const updatePlayer = () => {
-    playerFrame.style.height = isExpanded ? "80px" : "30px";
-    playerToggle.textContent = isExpanded ? "▼" : "▲";  // FIXED!
-  };
-  playerToggle.addEventListener('click', () => {
-    isExpanded = !isExpanded;
-    updatePlayer();
-  });
-  updatePlayer();
+  if (isExpanded) {
+    playerFrame.style.height = "80px";
+    playerToggle.textContent = "▼";
+    playerFrame.classList.remove('collapsed');
+    playerFrame.classList.add('expanded');
+  } else {
+    playerFrame.style.height = "30px";
+    playerToggle.textContent = "▲";
+    playerFrame.classList.remove('expanded');
+    playerFrame.classList.add('collapsed');
+  }
 };
-
   // =================== PAGE INIT ===================
   const initPage = () => {
     const artistName = document.body.dataset.artistName;
