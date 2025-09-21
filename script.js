@@ -61,7 +61,7 @@
 
   const createArtistElement = a => {
     const link = document.createElement('a');
-    link.href = `/${a.link}`; // leading slash only
+    link.href = `/${a.link}`;
     const img = document.createElement('img');
     img.loading = 'lazy';
     img.src = a.photo;
@@ -189,29 +189,16 @@
   // =================== AJAX NAVIGATION ===================
   const initNavigation = () => {
     const scrollPositions = {};
-    const normalizePath = path => path.replace(/\/+/g, '/').replace(/\/+$/, ''); // remove double/trailing slashes
+    
     document.body.addEventListener('click', async e => {
       const link = e.target.closest('a');
       if (!link || link.target === "_blank" || link.href.startsWith("mailto:")) return;
       if (!link.href.includes(window.location.origin)) return;
+      
       e.preventDefault();
       scrollPositions[window.location.pathname] = window.scrollY;
-      let url = new URL(link.href, window.location.origin);
-      url.pathname = normalizePath(url.pathname);
-
-      // FIXED NAVIGATION LOGIC: Only add '/index.html' for root or paths without file extensions
-      // CORRECTED NAVIGATION LOGIC: Handle both root and directory paths
-const pathSegments = url.pathname.split('/').filter(segment => segment);
-const lastSegment = pathSegments[pathSegments.length - 1];
-
-if (url.pathname === '/') {
-    // Root path - go to index.html
-    url.pathname = '/index.html';
-} else if (!lastSegment.includes('.')) {
-    // This is a directory path like /seventyseven - navigate to /seventyseven/index.html
-    url.pathname = url.pathname.endsWith('/') ? url.pathname + 'index.html' : url.pathname + '/index.html';
-}
-
+      const url = new URL(link.href);
+      
       try {
         const res = await fetch(url.href);
         if (!res.ok) throw new Error("Fetch failed with status " + res.status);
@@ -219,19 +206,21 @@ if (url.pathname === '/') {
         const parser = new DOMParser();
         const doc = parser.parseFromString(html, 'text/html');
         const newContent = doc.getElementById('page-content');
+        
         if (newContent) {
           document.getElementById('page-content').replaceWith(newContent);
           document.body.dataset.artistName = doc.body.dataset.artistName || "";
-          let cleanUrl = url.pathname.replace(/index\.html$/, '').replace(/\/+$/, '');
-          window.history.pushState({}, "", cleanUrl || '/');
+          window.history.pushState({}, "", url.pathname);
           initPage();
           window.scrollTo(0, scrollPositions[url.pathname] || 0);
         }
       } catch (err) {
         console.error("[AJAX NAV] Error fetching", url.href, err);
+        // Fallback to regular navigation if AJAX fails
         window.location.href = url.href;
       }
     });
+    
     window.addEventListener('popstate', () => window.location.reload());
   };
 
