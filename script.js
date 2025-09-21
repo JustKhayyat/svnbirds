@@ -138,16 +138,13 @@
     const shopContainer = document.getElementById('collection-component-1758190269461');
     if (!shopContainer) return;
 
-    const init = () => {
-      if (window.ShopifyBuy && typeof initShopify === "function") {
-        shopContainer.innerHTML = '';
-        initShopify();
-      } else {
-        setTimeout(init, 100);
-      }
-    };
+    // Clear previous content
+    shopContainer.innerHTML = '';
 
-    init();
+    // Initialize Shopify if available
+    if (window.ShopifyBuy && typeof initShopify === "function") {
+      initShopify();
+    }
   };
 
   // =================== HERO VIDEO ===================
@@ -174,13 +171,8 @@
 
     let isExpanded = true;
     const updatePlayer = () => {
-      if (isExpanded) {
-        playerFrame.style.height = "80px";
-        playerToggle.textContent = "▲";
-      } else {
-        playerFrame.style.height = "30px";
-        playerToggle.textContent = "▼";
-      }
+      playerFrame.style.height = isExpanded ? "80px" : "30px";
+      playerToggle.textContent = isExpanded ? "▲" : "▼";
     };
 
     playerToggle.addEventListener('click', () => {
@@ -201,12 +193,12 @@
       populateReleases('releases');
       populateArtists();
       populatePress();
+      populateShop(); // only on home
     } else {
       // Artist page
       populateArtistDiscography();
     }
 
-    populateShop();
     initPlayerToggle();
   };
 
@@ -220,7 +212,6 @@
       if (!link.href.includes(window.location.origin)) return;
 
       e.preventDefault();
-
       scrollPositions[window.location.pathname] = window.scrollY;
 
       const url = link.href;
@@ -234,8 +225,12 @@
         if (newContent) {
           document.getElementById('page-content').replaceWith(newContent);
           document.body.dataset.artistName = doc.body.dataset.artistName || "";
+
           window.history.pushState({}, "", url);
+
+          // re-init page after DOM replacement
           initPage();
+
           window.scrollTo(0, scrollPositions[new URL(url).pathname] || 0);
         }
       } catch (err) {
@@ -244,9 +239,8 @@
       }
     });
 
-    window.addEventListener('popstate', e => {
-      // Re-init page without full reload
-      initPage();
+    window.addEventListener('popstate', () => {
+      window.location.reload();
     });
   };
 
