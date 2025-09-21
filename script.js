@@ -133,102 +133,11 @@
   };
 
   // =================== SHOPIFY AJAX HANDLING ===================
-  let shopifyLoading = false;
-
-  const populateShop = () => {
-    if (shopifyLoading) return;
-    
-    const shopContainer = document.getElementById('collection-component-1758190269461');
-    if (!shopContainer) return;
-    
-    // Clear and re-create the shop container
-    shopContainer.innerHTML = '';
-    const newShopDiv = document.createElement('div');
-    newShopDiv.id = 'collection-component-1758190269461';
-    shopContainer.appendChild(newShopDiv);
-    
-    // Remove any existing Shopify script
-    const existingScript = document.querySelector('script[src*="buy-button-storefront.min.js"]');
-    if (existingScript) {
-      existingScript.remove();
-    }
-    
-    shopifyLoading = true;
-    
-    // Load Shopify script
-    const script = document.createElement('script');
-    script.src = 'https://sdks.shopifycdn.com/buy-button/latest/buy-button-storefront.min.js';
-    script.async = true;
-    script.onload = () => {
-      shopifyLoading = false;
-      
-      // Re-initialize Shopify
-      if (window.ShopifyBuy && window.ShopifyBuy.UI) {
-        const client = ShopifyBuy.buildClient({
-          domain: 'ijuc61-hr.myshopify.com',
-          storefrontAccessToken: '12566d7e5f9880e9f42ae93bdd94ca29',
-        });
-        
-        ShopifyBuy.UI.onReady(client).then(function(ui) {
-          ui.createComponent('collection', {
-            id: '298945052732',
-            node: document.getElementById('collection-component-1758190269461'),
-            moneyFormat: 'LE%20%7B%7Bamount%7D%7D',
-            options: {
-              "product": {
-                "styles": {
-                  "product": {
-                    "@media (min-width: 601px)": {
-                      "max-width": "calc(25% - 20px)",
-                      "margin-left": "20px",
-                      "margin-bottom": "50px",
-                      "width": "calc(25% - 20px)"
-                    }
-                  },
-                  "title": {
-                    "font-family": "Montserrat, sans-serif",
-                    "font-weight": "normal",
-                    "font-size": "17px",
-                    "color": "#f0f0f0"
-                  },
-                  "button": {
-                    "font-family": "Montserrat, sans-serif",
-                    "font-size": "13px",
-                    "padding-top": "14.5px",
-                    "padding-bottom": "14.5px",
-                    "color": "#f0f0f0",
-                    ":hover": {
-                      "color": "#f0f0f0",
-                      "background-color": "#4c4c4c"
-                    },
-                    "background-color": "#545454",
-                    ":focus": {
-                      "background-color": "#4c4c4c"
-                    },
-                    "border-radius": "9px",
-                    "padding-left": "14px",
-                    "padding-right": "14px"
-                  },
-                  // ... include the rest of your Shopify options here
-                },
-                "buttonDestination": "modal",
-                "contents": {
-                  "options": false
-                },
-                "text": {
-                  "button": "View product"
-                }
-              }
-              // ... rest of your Shopify configuration
-            }
-          });
-        });
-      }
-    };
-    
-    document.head.appendChild(script);
-  };
-
+  // =================== SIMPLE SHOPIFY HANDLING ===================
+const populateShop = () => {
+  // Nothing needed here! shopify.js handles everything
+  // This function just maintains consistency with other populate functions
+};
   // =================== HERO VIDEO ===================
   let heroVideoInitialized = false;
   const initHeroVideo = () => {
