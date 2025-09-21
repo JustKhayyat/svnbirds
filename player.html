@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <!-- Media Player -->
+  <div id="media-player">
+    <div id="player-content">
+      <div id="track-info">
+        <span id="player-status">Paused</span>
+        <span id="track-name">Ambience By Khayyat</span>
+      </div>
+      <div id="player-controls">
+        <!-- Prev -->
+        <button id="prev-btn" class="player-btn">
+          <svg fill="currentColor" viewBox="0 0 24 24">
+            <path d="M15 18l-6-6 6-6v12zM6 6h2v12H6V6z"/>
+          </svg>
+        </button>
+
+        <!-- Play / Pause -->
+        <button id="play-pause-btn" class="player-btn">
+          <svg class="play-icon" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M8 5v14l11-7z"/>
+          </svg>
+          <svg class="pause-icon hidden" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
+          </svg>
+        </button>
+
+        <!-- Next -->
+        <button id="next-btn" class="player-btn">
+          <svg fill="currentColor" viewBox="0 0 24 24">
+            <path d="M9 6l6 6-6 6V6zm9 0h-2v12h2V6z"/>
+          </svg>
+        </button>
+
+        <!-- Mute / Unmute -->
+        <button id="mute-unmute-btn" class="player-btn">
+          <svg class="volume-up-icon" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.06c1.48-.74 2.5-2.26 2.5-4.03z"/>
+          </svg>
+          <svg class="volume-mute-icon hidden" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v8.06c1.48-.74 2.5-2.26 2.5-4.03z" opacity="0.3"/>
+            <path d="M3 9v6h4l5 5V4L7 9H3zm13.59 3l2.12-2.12-1.41-1.41L15.17 10l-2.12-2.12-1.41 1.41L13.76 12l-2.12 2.12 1.41 1.41L15.17 14l2.12 2.12 1.41-1.41L16.59 12z"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script src="/media-player.js"></script>
+</body>
+</html>
