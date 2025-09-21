@@ -134,19 +134,21 @@
   };
 
   // =================== POPULATE SHOP ===================
-const populateShop = () => {
-  const shopContainer = document.getElementById('collection-component-1758190269461');
-  if (!shopContainer) return;
+  const populateShop = () => {
+    const shopContainer = document.getElementById('collection-component-1758190269461');
+    if (!shopContainer) return;
 
-  // Clear previous content
-  shopContainer.innerHTML = '';
+    const init = () => {
+      if (window.ShopifyBuy && typeof initShopify === "function") {
+        shopContainer.innerHTML = '';
+        initShopify();
+      } else {
+        setTimeout(init, 100);
+      }
+    };
 
-  // Initialize Shopify if available
-  if (window.ShopifyBuy && typeof initShopify === "function") {
-    initShopify();
-  }
-};
-
+    init();
+  };
 
   // =================== HERO VIDEO ===================
   let heroVideoInitialized = false;
@@ -189,28 +191,24 @@ const populateShop = () => {
     updatePlayer();
   };
 
- // =================== PAGE INIT ===================
-const initPage = () => {
-  const artistName = document.body.dataset.artistName;
+  // =================== PAGE INIT ===================
+  const initPage = () => {
+    const artistName = document.body.dataset.artistName;
 
-  if (!artistName) {
-    // Home page
-    initHeroVideo();
-    populateReleases('releases');
-    populateArtists();
-    populatePress();
-  } else {
-    // Artist page
-    populateArtistDiscography();
-  }
+    if (!artistName) {
+      // Home page
+      initHeroVideo();
+      populateReleases('releases');
+      populateArtists();
+      populatePress();
+    } else {
+      // Artist page
+      populateArtistDiscography();
+    }
 
-  // Always try to populate shop if container exists
-  populateShop();
-
-  // Always init player toggle
-  initPlayerToggle();
-};
-
+    populateShop();
+    initPlayerToggle();
+  };
 
   // =================== AJAX NAVIGATION ===================
   const initNavigation = () => {
@@ -223,7 +221,6 @@ const initPage = () => {
 
       e.preventDefault();
 
-      // Save current scroll position
       scrollPositions[window.location.pathname] = window.scrollY;
 
       const url = link.href;
@@ -233,19 +230,12 @@ const initPage = () => {
         const parser = new DOMParser();
         const doc = parser.parseFromString(html, 'text/html');
 
-        // Replace page content
         const newContent = doc.getElementById('page-content');
         if (newContent) {
           document.getElementById('page-content').replaceWith(newContent);
           document.body.dataset.artistName = doc.body.dataset.artistName || "";
-
-          // Update URL
           window.history.pushState({}, "", url);
-
-          // Re-init page
           initPage();
-
-          // Restore scroll if previously visited
           window.scrollTo(0, scrollPositions[new URL(url).pathname] || 0);
         }
       } catch (err) {
@@ -254,8 +244,9 @@ const initPage = () => {
       }
     });
 
-    window.addEventListener('popstate', () => {
-      window.location.reload();
+    window.addEventListener('popstate', e => {
+      // Re-init page without full reload
+      initPage();
     });
   };
 
