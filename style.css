@@ -382,12 +382,6 @@ html, body {
   transition: height 0.3s;
 }
 
-@media(max-width: 768px) {
-  #player-frame {
-    height: 110px; /* easier to tap on mobile */
-  }
-}
-
 /* Add to your style.css */
 .player-toggle {
   position: fixed;
