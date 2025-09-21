@@ -60,19 +60,18 @@
   };
 
   const createArtistElement = a => {
-  const link = document.createElement('a');
-  link.href = `/${a.link}`; // **ONLY leading slash**, no trailing slash
-  const img = document.createElement('img');
-  img.loading = 'lazy';
-  img.src = a.photo;
-  img.alt = a.name;
-  const name = document.createElement('h3');
-  name.textContent = a.name;
-  link.appendChild(img);
-  link.appendChild(name);
-  return link;
-};
-
+    const link = document.createElement('a');
+    link.href = `/${a.link}`; // leading slash only
+    const img = document.createElement('img');
+    img.loading = 'lazy';
+    img.src = a.photo;
+    img.alt = a.name;
+    const name = document.createElement('h3');
+    name.textContent = a.name;
+    link.appendChild(img);
+    link.appendChild(name);
+    return link;
+  };
 
   const createPressElement = p => {
     const card = document.createElement('div');
@@ -101,7 +100,7 @@
 
   const populateArtists = () => {
     const grid = document.getElementById('artist-grid');
-    if (!    grid) return;
+    if (!grid) return;
     grid.innerHTML = '';
     allArtists.forEach(a => grid.appendChild(createArtistElement(a)));
   };
@@ -133,14 +132,11 @@
     releases.forEach(r => container.appendChild(createReleaseElement(r)));
   };
 
-  // =================== POPULATE SHOP ===================
   const populateShop = () => {
     const shopContainer = document.getElementById('collection-component-1758190269461');
     if (!shopContainer) return;
     shopContainer.innerHTML = '';
-    if (window.ShopifyBuy && typeof initShopify === "function") {
-      initShopify();
-    }
+    if (window.ShopifyBuy && typeof initShopify === "function") initShopify();
   };
 
   // =================== HERO VIDEO ===================
@@ -152,7 +148,7 @@
     video.muted = true;
     video.loop = true;
     video.playsInline = true;
-    try { video.play(); } catch { }
+    try { video.play(); } catch {}
   };
 
   // =================== PLAYER TOGGLE ===================
@@ -160,83 +156,61 @@
   const initPlayerToggle = () => {
     if (playerInitialized) return;
     playerInitialized = true;
-
     const playerToggle = document.getElementById('player-toggle');
     const playerFrame = document.getElementById('player-frame');
     if (!playerToggle || !playerFrame) return;
-
     let isExpanded = true;
     const updatePlayer = () => {
-      if (isExpanded) {
-        playerFrame.style.height = "80px";
-        playerToggle.textContent = "▲";
-      } else {
-        playerFrame.style.height = "30px";
-        playerToggle.textContent = "▼";
-      }
+      playerFrame.style.height = isExpanded ? "80px" : "30px";
+      playerToggle.textContent = isExpanded ? "▲" : "▼";
     };
-
     playerToggle.addEventListener('click', () => {
       isExpanded = !isExpanded;
       updatePlayer();
     });
-
     updatePlayer();
   };
 
   // =================== PAGE INIT ===================
   const initPage = () => {
     const artistName = document.body.dataset.artistName;
-
     if (!artistName) {
-      // Home page
       initHeroVideo();
       populateReleases('releases');
       populateArtists();
       populatePress();
       populateShop();
     } else {
-      // Artist page
       populateArtistDiscography();
     }
-
     initPlayerToggle();
   };
 
   // =================== AJAX NAVIGATION ===================
   const initNavigation = () => {
     const scrollPositions = {};
-
-    const normalizePath = path => path.replace(/\/+$/, '').replace(/\/+/g, '/');
-
+    const normalizePath = path => path.replace(/\/+/g, '/').replace(/\/+$/, ''); // remove double/trailing slashes
     document.body.addEventListener('click', async e => {
       const link = e.target.closest('a');
       if (!link || link.target === "_blank" || link.href.startsWith("mailto:")) return;
       if (!link.href.includes(window.location.origin)) return;
-
       e.preventDefault();
       scrollPositions[window.location.pathname] = window.scrollY;
-
       let url = new URL(link.href, window.location.origin);
-
-      // Normalize and force folder links to fetch index.html
       url.pathname = normalizePath(url.pathname);
       if (!url.pathname.endsWith('.html')) url.pathname += '/index.html';
-
       try {
         const res = await fetch(url.href);
         if (!res.ok) throw new Error("Fetch failed with status " + res.status);
         const html = await res.text();
         const parser = new DOMParser();
         const doc = parser.parseFromString(html, 'text/html');
-
         const newContent = doc.getElementById('page-content');
         if (newContent) {
           document.getElementById('page-content').replaceWith(newContent);
           document.body.dataset.artistName = doc.body.dataset.artistName || "";
-          let cleanUrl = url.pathname.replace(/index\.html$/, ''); // remove trailing slash completely
+          let cleanUrl = url.pathname.replace(/index\.html$/, '').replace(/\/+$/, '');
           window.history.pushState({}, "", cleanUrl || '/');
-
           initPage();
           window.scrollTo(0, scrollPositions[url.pathname] || 0);
         }
@@ -245,7 +219,6 @@
         window.location.href = url.href;
       }
     });
-
     window.addEventListener('popstate', () => window.location.reload());
   };
 
