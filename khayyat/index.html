@@ -9,51 +9,66 @@
 </head>
 <body data-artist-name="Khayyat">
 
-  <a href="/" class="nav-btn">Home</a>
-  
-  <section class="hero" id="hero">
-    <div class="hero-content">
-      <img src="/media/artists/artist-khayyat.png" alt="Khayyat" class="hero-logo">
-    </div>
-  </section>
+  <!-- WRAP EVERYTHING EXCEPT PLAYER -->
+  <div id="page-content">
 
-  <div class="artist-container">
-    <div class="artist-bio-section">
-      <p class="artist-bio">Khayyat is your favorite artists’ favorite artist. The Palestinian producer has worked with pretty much everyone you know in the WANA music scene - Soulja, Dafencii, Fodi, Walgz, Freek, as well as Canadian acts like Prometheus the Titan, French artist Olsem and New Jersey artist, Cliff. Finishing the year strong with a placement on Hulu’s ‘Ramy' with Dafencii 'كنق الحلبة' and on Netflix's 'Clickbait’ with Mvrs ‘Disstance’.</p>
-    </div>
-    <div class="artist-socials-section">
-      <div class="social-links">
-        <a href="https://www.instagram.com/justkhayyat/" target="_blank" rel="noopener noreferrer">
-          <img src="/media/icons/instagram-icon.svg" alt="Instagram" class="social-icon">
-        </a>
-        <a href="https://www.tiktok.com/@justkhayyat" target="_blank" rel="noopener noreferrer">
-          <img src="/media/icons/tiktok-icon.svg" alt="TikTok" class="social-icon">
-        </a>
-        <a href="https://youtube.com/@justkhayyat?si=fG4ySrNiRVxHyuVI" target="_blank" rel="noopener noreferrer">
-          <img src="/media/icons/youtube-icon.svg" alt="YouTube" class="social-icon">
-        </a>
-        <a href="https://open.spotify.com/artist/0ZymXKuHy9Sqg2X5IEwLut" target="_blank" rel="noopener noreferrer">
-          <img src="/media/icons/spotify-icon.svg" alt="Spotify" class="social-icon">
-        </a>
-        <a href="https://music.apple.com/artist/khayyat/1506357526" target="_blank" rel="noopener noreferrer">
-          <img src="/media/icons/applemusic-icon.svg" alt="Apple Music" class="social-icon">
-        </a>
+    <a href="/" class="nav-btn">Home</a>
+    
+    <section class="hero" id="hero">
+      <div class="hero-content">
+        <img src="/media/artists/artist-khayyat.png" alt="Khayyat" class="hero-logo">
       </div>
-      <a href="/media/epks/khayyat-epk.pdf" class="epk-download-btn" download>Download EPK</a>
+    </section>
+
+    <div class="artist-container">
+      <div class="artist-bio-section">
+        <p class="artist-bio">
+          Khayyat is your favorite artists’ favorite artist. The Palestinian producer has worked with pretty much everyone you know in the WANA music scene - Soulja, Dafencii, Fodi, Walgz, Freek, as well as Canadian acts like Prometheus the Titan, French artist Olsem and New Jersey artist, Cliff. Finishing the year strong with a placement on Hulu’s ‘Ramy' with Dafencii 'كنق الحلبة' and on Netflix's 'Clickbait’ with Mvrs ‘Disstance’.
+        </p>
+      </div>
+      <div class="artist-socials-section">
+        <div class="social-links">
+          <a href="https://www.instagram.com/justkhayyat/" target="_blank" rel="noopener noreferrer">
+            <img src="/media/icons/instagram-icon.svg" alt="Instagram" class="social-icon">
+          </a>
+          <a href="https://www.tiktok.com/@justkhayyat" target="_blank" rel="noopener noreferrer">
+            <img src="/media/icons/tiktok-icon.svg" alt="TikTok" class="social-icon">
+          </a>
+          <a href="https://youtube.com/@justkhayyat?si=fG4ySrNiRVxHyuVI" target="_blank" rel="noopener noreferrer">
+            <img src="/media/icons/youtube-icon.svg" alt="YouTube" class="social-icon">
+          </a>
+          <a href="https://open.spotify.com/artist/0ZymXKuHy9Sqg2X5IEwLut" target="_blank" rel="noopener noreferrer">
+            <img src="/media/icons/spotify-icon.svg" alt="Spotify" class="social-icon">
+          </a>
+          <a href="https://music.apple.com/artist/khayyat/1506357526" target="_blank" rel="noopener noreferrer">
+            <img src="/media/icons/applemusic-icon.svg" alt="Apple Music" class="social-icon">
+          </a>
+        </div>
+        <a href="/media/epks/khayyat-epk.pdf" class="epk-download-btn" download>Download EPK</a>
+      </div>
     </div>
-  </div>
 
-  <h2 class="section-title">Discography</h2>
-  <div class="releases-container">
-    <div class="scroll-container" id="discography"></div>
-  </div>
+    <h2 class="section-title">Discography</h2>
+    <div class="releases-container">
+      <div class="scroll-container" id="discography"></div>
+    </div>
 
-  <div class="contact-section">
-    <h2>Contact</h2>
-    <p><a href="mailto:booking@svnbirds.com">booking@svnbirds.com</a></p>
-    <p><a href="https://www.instagram.com/svnbirdspro/" target="_blank">@svnbirdspro</a></p>
-  </div>
+    <div class="contact-section">
+      <h2>Contact</h2>
+      <p><a href="mailto:booking@svnbirds.com">booking@svnbirds.com</a></p>
+      <p><a href="https://www.instagram.com/svnbirdspro/" target="_blank">@svnbirdspro</a></p>
+    </div>
 
+  </div>
+  <!-- END #page-content WRAP -->
+
+  <!-- Player Toggle Button -->
+  <button id="player-toggle" class="player-toggle">▲</button>
+
+  <!-- Persistent Media Player -->
+  <iframe src="/player.html" id="player-frame" scrolling="no"></iframe>
+
+  <!-- Script -->
   <script src="/script.js"></script>
 </body>
 </html>
