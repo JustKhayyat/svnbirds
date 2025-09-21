@@ -56,30 +56,43 @@
     <p><a href="https://www.instagram.com/svnbirdspro/" target="_blank">@svnbirdspro</a></p>
   </div>
 
-  <div class="media-player" id="media-player">
-      <div class="player-header" id="player-handle">
-          <span class="player-title">Now Playing</span>
-          <span class="track-name" id="track-name">Ambient Loop</span>
-          <div class="player-icon-container">
-              </div>
-      </div>
-      <div class="player-controls">
-          <button class="control-btn" id="prev-btn">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="19 20 9 12 19 4 19 20"></polygon><line x1="5" y1="19" x2="5" y2="5"></line></svg>
-          </button>
-          <button class="control-btn" id="play-pause-btn">
-              <svg class="play-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
-              <svg class="pause-icon hidden" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>
-          </button>
-          <button class="control-btn" id="next-btn">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 4 15 12 5 20 5 4"></polygon><line x1="19" y1="5" x2="19" y2="19"></line></svg>
-          </button>
-          <button class="control-btn" id="mute-unmute-btn">
-              <svg class="volume-up-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
-              <svg class="volume-mute-icon hidden" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line></svg>
-          </button>
-      </div>
+<div id="media-player">
+  <div id="player-handle"></div>
+  <div id="player-content">
+    <div id="track-info">
+      <span id="track-name"></span>
+    </div>
+    <div id="player-controls">
+      <button id="prev-btn" class="player-btn">
+        <svg fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" fill-rule="evenodd"></path>
+        </svg>
+      </button>
+      <button id="play-pause-btn" class="player-btn">
+        <svg class="play-icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12.875 10.334l-5.657-3.264A1 1 0 006 7.999v6.526a1 1 0 001.218.84l5.657-3.264a1 1 0 000-1.688z" clip-rule="evenodd" fill-rule="evenodd"></path>
+        </svg>
+        <svg class="pause-icon hidden" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+          <path d="M6 5.5A.5.5 0 016.5 5h3a.5.5 0 01.5.5v9a.5.5 0 01-.5.5h-3a.5.5 0 01-.5-.5v-9zm8-1a.5.5 0 00-.5.5v9a.5.5 0 00.5.5h3a.5.5 0 00.5-.5v-9a.5.5 0 00-.5-.5h-3z" clip-rule="evenodd" fill-rule="evenodd"></path>
+        </svg>
+      </button>
+      <button id="next-btn" class="player-btn">
+        <svg fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+          <path d="M7.293 14.707a1 1 0 010-1.414L10.586 10l-3.293-3.293a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" fill-rule="evenodd"></path>
+        </svg>
+      </button>
+      <button id="mute-unmute-btn" class="player-btn">
+        <svg class="volume-up-icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+          <path d="M10 3.293V2.5a.5.5 0 00-.854-.354L5.293 5.293A.5.5 0 015 5.5v9a.5.5 0 01.293.454l3.853 3.144A.5.5 0 0010 17.5V16.707a.5.5 0 00.854.354l3.853-3.144A.5.5 0 0015 13.5v-7a.5.5 0 00-.147-.354l-3.853-3.144zM11 5.5v9l3-2.439V7.939L11 5.5zm-1 9.57v-9.14L6.207 9.5z"></path>
+        </svg>
+        <svg class="volume-mute-icon hidden" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12.875 10.334l-5.657-3.264A1 1 0 006 7.999v6.526a1 1 0 001.218.84l5.657-3.264a1 1 0 000-1.688z" clip-rule="evenodd" fill-rule="evenodd"></path>
+          <path fill-rule="evenodd" d="M16 10a6 6 0 11-12 0 6 6 0 0112 0zm-1.414-.707a1 1 0 00-1.414-1.414L10 8.586l-1.172-1.172a1 1 0 00-1.414 1.414L8.586 10l-1.172 1.172a1 1 0 001.414 1.414L10 11.414l1.172 1.172a1 1 0 001.414-1.414L11.414 10l1.172-1.172z" clip-rule="evenodd"></path>
+        </svg>
+      </button>
+    </div>
   </div>
+</div>
 
   <script src="https://cdn.jsdelivr.net/npm/tsparticles@2/tsparticles.bundle.min.js"></script>
   <script src="script.js"></script>
