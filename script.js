@@ -1,26 +1,7 @@
-/* ========== On Load / Main Functionality ========== */
-window.onload = () => {
-  /* ========== Hero Video & Audio ========== */
-  const video = document.querySelector(".hero-video");
-  if (video) {
-    video.muted = true;
-    video.loop = true;
-    video.playsinline = true;
-    try {
-      video.play();
-    } catch (error) {
-      console.log("Autoplay was prevented by the browser. Error:", error);
-    }
-  }
+/* ========== script.js (Optimized) ========== */
 
-  // Click sound
-  const clickAudio = new Audio('/sounds/click.mp3');
-  document.addEventListener('click', () => {
-    clickAudio.currentTime = 0;
-    clickAudio.play().catch(e => console.log("Click sound play failed:", e));
-  });
-
-  /* ========== Data for all releases and artists ========== */
+(() => {
+  // =================== DATA ===================
   const allReleases = [
     { title: "PRICE", link: "https://music.empi.re/price", cover: "/covers/price.jpg", artist: "Montiyago" },
     { title: "HALA", link: "https://music.empi.re/hala", cover: "/covers/hala.jpg", artist: "Khayyat, Ntitled" },
@@ -64,121 +45,106 @@ window.onload = () => {
     { title: "SceneNoise – Artist Spotlight: Soulja, Sudan's Suave Rap Star", url: "https://scenenoise.com/Features/Artist-Spotlight-Soulja-Sudan-s-Suave-Rap-Superstar", source: "SceneNoise" },
     { title: "CairoScene – Labels & Collectives Taking Over XP Nite", url: "https://cairoscene.com/Noise/The-Labels-Collectives-Taking-Over-XP-Nite-in-Riyadh-Dec-7th-9th", source: "CairoScene" },
     { title: "MDLBEAST – Labels at XP Nite in Riyadh", url: "https://mdlbeast.com/xp-feed/music-industry/the-labels-collectives-taking-over-xp-nite-in-riyadh-dec-7th-9th", source: "MDLBEAST" },
-    { title: "YUNG – Fresh Sounds from Sudan: 10 Releases", url: "https://thisisyungmea.com/fresh-sounds-from-sudan-10-new-releases-you-need-to-hear/", source: "YUNG" },
-    { title: "OkayAfrica – Rise of Sudanese Rap", url: "https://www.okayafrica.com/sudanese-rap-racism-music-industry/", source: "OkayAfrica" },
-    { title: "SceneNoise – Montiyago Drops 'Kalam Kteer'", url: "https://m.scenenoise.com/New-Music/Sudanese-Rapper-Montiyago-Releases-Debut-Single-Kalam-Ktee", source: "SceneNoise" },
-    { title: "MILLE WORLD – Introducing Rapper Montiyago", url: "https://www.milleworld.com/introducing-genre-bending-sudanese-rapper-montiyago/", source: "MILLE WORLD" },
-    { title: "SceneNoise – Arab Songs on Ramy S3", url: "https://scenenoise.com/Features/Here-are-All-the-Arab-Songs-You-Can-Hear-on-Season-Three-of-Ramy", source: "SceneNoise" },
-    { title: "SceneNoise – Dafencii & Soulja Unite for Godzilla x Kong", url: "https://scenenoise.com/News/Dafencii-Soulja-Unite-for-Godzilla-x-Kong-The-New-Empire-Anthem", source: "SceneNoise" }
+    { title: "YUNG – Fresh Sounds from Sudan: 10 Releases", url: "https://thisisyungmea.com/fresh-sounds-from-sudan-10-new-releases-you-need-to-hear/", source: "YUNG" }
   ];
 
-  /* ========== Populate Main Page Sections ========== */
-  function createReleaseElement(release) {
-    const link = document.createElement('a');
-    link.href = release.link;
-    link.setAttribute('data-title', release.title);
-
+  // =================== ELEMENT CREATORS ===================
+  const createReleaseElement = r => {
+    const a = document.createElement('a');
+    a.href = r.link;
+    a.setAttribute('data-title', r.title);
     const img = document.createElement('img');
     img.loading = 'lazy';
-    img.src = release.cover;
-    img.alt = release.title;
+    img.src = r.cover;
+    img.alt = r.title;
+    a.appendChild(img);
+    return a;
+  };
 
-    link.appendChild(img);
-    return link;
-  }
-
-  function createArtistElement(artist) {
+  const createArtistElement = a => {
     const link = document.createElement('a');
-    link.href = artist.link;
-
+    link.href = a.link;
     const img = document.createElement('img');
     img.loading = 'lazy';
-    img.src = artist.photo;
-    img.alt = artist.name;
-
+    img.src = a.photo;
+    img.alt = a.name;
     const name = document.createElement('h3');
-    name.textContent = artist.name;
-
+    name.textContent = a.name;
     link.appendChild(img);
     link.appendChild(name);
     return link;
-  }
+  };
 
-  function createPressElement(press) {
+  const createPressElement = p => {
     const card = document.createElement('div');
     const link = document.createElement('a');
-    link.href = press.url;
+    link.href = p.url;
     link.target = "_blank";
     link.rel = "noopener noreferrer";
-
     const source = document.createElement('div');
     source.className = 'press-source';
-    source.textContent = press.source;
-
+    source.textContent = p.source;
     const title = document.createElement('h3');
-    title.textContent = press.title;
-
+    title.textContent = p.title;
     link.appendChild(source);
     link.appendChild(title);
     card.appendChild(link);
     return card;
-  }
+  };
 
-  function populateReleases() {
-    const grid = document.getElementById('releases');
-    if (!grid) return;
-    allReleases.forEach(r => grid.appendChild(createReleaseElement(r)));
-  }
+  // =================== POPULATE SECTIONS ===================
+  const populateReleases = containerId => {
+    const container = document.getElementById(containerId);
+    if (!container) return;
+    allReleases.forEach(r => container.appendChild(createReleaseElement(r)));
+  };
 
-  function populateArtists() {
+  const populateArtists = () => {
     const grid = document.getElementById('artist-grid');
     if (!grid) return;
     allArtists.forEach(a => grid.appendChild(createArtistElement(a)));
-  }
+  };
 
-  function populatePress() {
+  const populatePress = () => {
     const grid = document.getElementById('press-grid');
     if (!grid) return;
     let loaded = 0;
     const perPage = 6;
-
-    function loadMore() {
-      if (loaded < allPress.length) {
-        const batch = allPress.slice(loaded, loaded + perPage);
-        batch.forEach(p => grid.appendChild(createPressElement(p)));
-        loaded += perPage;
-      }
-    }
-
+    const loadMore = () => {
+      if (loaded >= allPress.length) return;
+      const batch = allPress.slice(loaded, loaded + perPage);
+      batch.forEach(p => grid.appendChild(createPressElement(p)));
+      loaded += perPage;
+    };
     loadMore();
     window.addEventListener('scroll', () => {
-      if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 500) {
-        loadMore();
-      }
+      if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 500) loadMore();
     });
-  }
+  };
 
-  function populateArtistDiscography() {
-    const grid = document.getElementById('discography');
-    if (!grid) return;
-    const name = document.body.dataset.artistName;
-    const releases = allReleases.filter(r =>
-      r.artist && r.artist.split(',').map(n => n.trim()).includes(name)
-    );
-    releases.forEach(r => grid.appendChild(createReleaseElement(r)));
-  }
+  const populateArtistDiscography = () => {
+    const container = document.getElementById('discography');
+    if (!container) return;
+    const artistName = document.body.dataset.artistName;
+    if (!artistName) return;
+    const releases = allReleases.filter(r => r.artist.split(',').map(n => n.trim()).includes(artistName));
+    releases.forEach(r => container.appendChild(createReleaseElement(r)));
+  };
 
-  if (document.getElementById('discography')) {
-    populateArtistDiscography();
-  } else {
-    populateReleases();
-    populateArtists();
-    populatePress();
-  }
+  // =================== HERO VIDEO ===================
+  const initHeroVideo = () => {
+    const video = document.querySelector(".hero-video");
+    if (!video) return;
+    video.muted = true;
+    video.loop = true;
+    video.playsInline = true;
+    try { video.play(); } catch { /* autoplay blocked */ }
+  };
 
-  /* ========== Desktop Mouse Drag to Scroll Releases ========== */
-  const releasesContainer = document.querySelector('.releases-container');
-  if (releasesContainer) {
+  // =================== DESKTOP DRAG SCROLL ===================
+  const initDragScroll = () => {
+    const releasesContainer = document.querySelector('.releases-container');
+    if (!releasesContainer) return;
     let isDragging = false, startX, scrollLeft;
     releasesContainer.addEventListener('mousedown', e => {
       isDragging = true;
@@ -194,58 +160,100 @@ window.onload = () => {
       const x = e.pageX - releasesContainer.offsetLeft;
       releasesContainer.scrollLeft = scrollLeft - (x - startX) * 2;
     });
-  }
+  };
 
-  /* ========== AJAX Navigation to Keep Media Player Persistent ========== */
-  function initAjaxNavigation() {
-    const contentContainer = document.body;
-
-    function isInternalLink(link) {
-      return (
-        link.hostname === window.location.hostname &&
-        !link.hasAttribute("target") &&
-        !link.href.includes("#")
-      );
+  // =================== PAGE INIT ===================
+  const initPage = () => {
+    initHeroVideo();
+    initDragScroll();
+    if (document.getElementById('discography')) {
+      populateArtistDiscography();
+    } else {
+      populateReleases('releases');
+      populateArtists();
+      populatePress();
     }
+  };
 
-    document.addEventListener("click", e => {
-      const link = e.target.closest("a");
-      if (!link || !isInternalLink(link)) return;
+  document.addEventListener('DOMContentLoaded', initPage);
 
-      e.preventDefault();
-      const url = link.getAttribute("href");
+  // =================== AJAX NAVIGATION WITH FADE ===================
+const initAjaxNavigation = () => {
+  const contentContainer = document.body;
+  const fadeDuration = 300; // in ms
 
-      fetch(url)
-        .then(res => res.text())
-        .then(html => {
-          const doc = new DOMParser().parseFromString(html, "text/html");
-          const newBody = doc.body;
-          const playerFrame = document.getElementById("player-frame");
+  const isInternalLink = link => link.hostname === window.location.hostname && !link.hasAttribute("target") && !link.href.includes("#");
 
-          contentContainer.innerHTML = newBody.innerHTML;
-          if (playerFrame) document.body.appendChild(playerFrame);
-
-          window.history.pushState({}, "", url);
-          window.onload();
-        })
-        .catch(err => console.error("Navigation error:", err));
+  const fadeOut = el => {
+    return new Promise(resolve => {
+      el.style.transition = `opacity ${fadeDuration}ms`;
+      el.style.opacity = 0;
+      setTimeout(resolve, fadeDuration);
     });
+  };
 
-    window.addEventListener("popstate", () => {
-      fetch(window.location.href)
-        .then(res => res.text())
-        .then(html => {
-          const doc = new DOMParser().parseFromString(html, "text/html");
-          const newBody = doc.body;
-          const playerFrame = document.getElementById("player-frame");
-
-          contentContainer.innerHTML = newBody.innerHTML;
-          if (playerFrame) document.body.appendChild(playerFrame);
-
-          window.onload();
-        });
+  const fadeIn = el => {
+    return new Promise(resolve => {
+      el.style.transition = `opacity ${fadeDuration}ms`;
+      el.style.opacity = 1;
+      setTimeout(resolve, fadeDuration);
     });
-  }
+  };
 
-  initAjaxNavigation();
+  document.addEventListener('click', async e => {
+    const link = e.target.closest("a");
+    if (!link || !isInternalLink(link)) return;
+    e.preventDefault();
+    const url = link.href;
+
+    try {
+      await fadeOut(contentContainer);
+
+      const res = await fetch(url);
+      const html = await res.text();
+      const doc = new DOMParser().parseFromString(html, "text/html");
+      const newBody = doc.body;
+      const playerFrame = document.getElementById("player-frame");
+
+      // Preserve body attributes
+      [...newBody.attributes].forEach(attr => contentContainer.setAttribute(attr.name, attr.value));
+
+      // Replace inner HTML without removing player iframe
+      contentContainer.innerHTML = newBody.innerHTML;
+      if (playerFrame) contentContainer.appendChild(playerFrame);
+
+      window.history.pushState({}, "", url);
+      initPage();
+
+      await fadeIn(contentContainer);
+    } catch (err) {
+      console.error("Navigation error:", err);
+    }
+  });
+
+  window.addEventListener('popstate', async () => {
+    try {
+      await fadeOut(contentContainer);
+
+      const res = await fetch(window.location.href);
+      const html = await res.text();
+      const doc = new DOMParser().parseFromString(html, "text/html");
+      const newBody = doc.body;
+      const playerFrame = document.getElementById("player-frame");
+
+      [...newBody.attributes].forEach(attr => contentContainer.setAttribute(attr.name, attr.value));
+      contentContainer.innerHTML = newBody.innerHTML;
+      if (playerFrame) contentContainer.appendChild(playerFrame);
+
+      initPage();
+
+      await fadeIn(contentContainer);
+    } catch (err) {
+      console.error("Navigation error:", err);
+    }
+  });
 };
+
+initAjaxNavigation();
+
+})();
