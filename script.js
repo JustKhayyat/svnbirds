@@ -46,7 +46,7 @@
     { title: "YUNG – Fresh Sounds from Sudan: 10 Releases", url: "https://thisisyungmea.com/fresh-sounds-from-sudan-10-new-releases-you-need-to-hear/", source: "YUNG" }
   ];
 
-  // =================== ELEMENT CREATORS ===================
+   // =================== ELEMENT CREATORS ===================
   const createReleaseElement = r => {
     const a = document.createElement('a');
     a.href = r.link;
@@ -132,11 +132,101 @@
     releases.forEach(r => container.appendChild(createReleaseElement(r)));
   };
 
+  // =================== SHOPIFY AJAX HANDLING ===================
+  let shopifyLoading = false;
+
   const populateShop = () => {
+    if (shopifyLoading) return;
+    
     const shopContainer = document.getElementById('collection-component-1758190269461');
     if (!shopContainer) return;
+    
+    // Clear and re-create the shop container
     shopContainer.innerHTML = '';
-    if (window.ShopifyBuy && typeof initShopify === "function") initShopify();
+    const newShopDiv = document.createElement('div');
+    newShopDiv.id = 'collection-component-1758190269461';
+    shopContainer.appendChild(newShopDiv);
+    
+    // Remove any existing Shopify script
+    const existingScript = document.querySelector('script[src*="buy-button-storefront.min.js"]');
+    if (existingScript) {
+      existingScript.remove();
+    }
+    
+    shopifyLoading = true;
+    
+    // Load Shopify script
+    const script = document.createElement('script');
+    script.src = 'https://sdks.shopifycdn.com/buy-button/latest/buy-button-storefront.min.js';
+    script.async = true;
+    script.onload = () => {
+      shopifyLoading = false;
+      
+      // Re-initialize Shopify
+      if (window.ShopifyBuy && window.ShopifyBuy.UI) {
+        const client = ShopifyBuy.buildClient({
+          domain: 'ijuc61-hr.myshopify.com',
+          storefrontAccessToken: '12566d7e5f9880e9f42ae93bdd94ca29',
+        });
+        
+        ShopifyBuy.UI.onReady(client).then(function(ui) {
+          ui.createComponent('collection', {
+            id: '298945052732',
+            node: document.getElementById('collection-component-1758190269461'),
+            moneyFormat: 'LE%20%7B%7Bamount%7D%7D',
+            options: {
+              "product": {
+                "styles": {
+                  "product": {
+                    "@media (min-width: 601px)": {
+                      "max-width": "calc(25% - 20px)",
+                      "margin-left": "20px",
+                      "margin-bottom": "50px",
+                      "width": "calc(25% - 20px)"
+                    }
+                  },
+                  "title": {
+                    "font-family": "Montserrat, sans-serif",
+                    "font-weight": "normal",
+                    "font-size": "17px",
+                    "color": "#f0f0f0"
+                  },
+                  "button": {
+                    "font-family": "Montserrat, sans-serif",
+                    "font-size": "13px",
+                    "padding-top": "14.5px",
+                    "padding-bottom": "14.5px",
+                    "color": "#f0f0f0",
+                    ":hover": {
+                      "color": "#f0f0f0",
+                      "background-color": "#4c4c4c"
+                    },
+                    "background-color": "#545454",
+                    ":focus": {
+                      "background-color": "#4c4c4c"
+                    },
+                    "border-radius": "9px",
+                    "padding-left": "14px",
+                    "padding-right": "14px"
+                  },
+                  // ... include the rest of your Shopify options here
+                },
+                "buttonDestination": "modal",
+                "contents": {
+                  "options": false
+                },
+                "text": {
+                  "button": "View product"
+                }
+              }
+              // ... rest of your Shopify configuration
+            }
+          });
+        });
+      }
+    };
+    
+    document.head.appendChild(script);
   };
 
   // =================== HERO VIDEO ===================
@@ -151,37 +241,38 @@
     try { video.play(); } catch {}
   };
 
- // =================== PLAYER TOGGLE ===================
-let playerInitialized = false;
-const initPlayerToggle = () => {
-  if (playerInitialized) return;
-  playerInitialized = true;
-  const playerToggle = document.getElementById('player-toggle');
-  const playerFrame = document.getElementById('player-frame');
-  if (!playerToggle || !playerFrame) return;
-  let isExpanded = true;
-  const updatePlayer = () => {
-    if (isExpanded) {
-      playerFrame.style.height = "80px";
-      playerToggle.textContent = "▼";
-      playerFrame.classList.remove('collapsed');
-      playerFrame.classList.add('expanded');
-    } else {
-      playerFrame.style.height = "30px";
-      playerToggle.textContent = "▲";
-      playerFrame.classList.remove('expanded');
-      playerFrame.classList.add('collapsed');
-    }
+  // =================== PLAYER TOGGLE ===================
+  let playerInitialized = false;
+  const initPlayerToggle = () => {
+    if (playerInitialized) return;
+    playerInitialized = true;
+    const playerToggle = document.getElementById('player-toggle');
+    const playerFrame = document.getElementById('player-frame');
+    if (!playerToggle || !playerFrame) return;
+    let isExpanded = true;
+    const updatePlayer = () => {
+      if (isExpanded) {
+        playerFrame.style.height = "80px";
+        playerToggle.textContent = "▼";
+        playerFrame.classList.remove('collapsed');
+        playerFrame.classList.add('expanded');
+      } else {
+        playerFrame.style.height = "30px";
+        playerToggle.textContent = "▲";
+        playerFrame.classList.remove('expanded');
+        playerFrame.classList.add('collapsed');
+      }
+    };
+
+    playerToggle.addEventListener('click', () => {
+      isExpanded = !isExpanded;
+      updatePlayer();
+    });
+
+    updatePlayer(); // Initialize
   };
 
-  playerToggle.addEventListener('click', () => {
-    isExpanded = !isExpanded;
-    updatePlayer();
-  });
-
-  updatePlayer(); // Initialize
-};
-// =================== PAGE INIT ===================
+  // =================== PAGE INIT ===================
   const initPage = () => {
     const artistName = document.body.dataset.artistName;
     if (!artistName) {
@@ -189,7 +280,12 @@ const initPlayerToggle = () => {
       populateReleases('releases');
       populateArtists();
       populatePress();
-      populateShop();
+      
+      // Delay shop population to ensure DOM is ready
+      setTimeout(() => {
+        populateShop();
+      }, 100);
+      
     } else {
       populateArtistDiscography();
     }
