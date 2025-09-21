@@ -62,6 +62,7 @@
   const createArtistElement = a => {
     const link = document.createElement('a');
     link.href = `/${a.link}`;
+    link.setAttribute('data-artist', a.name); // Add data attribute for debugging
     const img = document.createElement('img');
     img.loading = 'lazy';
     img.src = a.photo;
@@ -188,44 +189,63 @@
 
   // =================== AJAX NAVIGATION ===================
   const initNavigation = () => {
-    const scrollPositions = {};
+    console.log("Initializing navigation...");
     
     document.body.addEventListener('click', async e => {
       const link = e.target.closest('a');
-      if (!link || link.target === "_blank" || link.href.startsWith("mailto:")) return;
+      
+      // Skip if not a link or external/mailto links
+      if (!link) return;
+      if (link.target === "_blank" || link.href.startsWith("mailto:") || link.href.startsWith("tel:")) return;
       if (!link.href.includes(window.location.origin)) return;
       
+      console.log("Clicked link:", link.href, "Artist:", link.closest('[data-artist]'));
+      
       e.preventDefault();
-      scrollPositions[window.location.pathname] = window.scrollY;
+      
       const url = new URL(link.href);
+      console.log("Attempting to navigate to:", url.href);
       
       try {
-        const res = await fetch(url.href);
-        if (!res.ok) throw new Error("Fetch failed with status " + res.status);
-        const html = await res.text();
+        const response = await fetch(url.href);
+        console.log("Fetch response status:", response.status);
+        
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+        }
+        
+        const html = await response.text();
         const parser = new DOMParser();
         const doc = parser.parseFromString(html, 'text/html');
         const newContent = doc.getElementById('page-content');
         
         if (newContent) {
+          console.log("Successfully loaded content for:", url.pathname);
           document.getElementById('page-content').replaceWith(newContent);
           document.body.dataset.artistName = doc.body.dataset.artistName || "";
           window.history.pushState({}, "", url.pathname);
           initPage();
-          window.scrollTo(0, scrollPositions[url.pathname] || 0);
+          window.scrollTo(0, 0);
+        } else {
+          console.error("No page-content element found in response");
+          window.location.href = url.href; // Fallback
         }
-      } catch (err) {
-        console.error("[AJAX NAV] Error fetching", url.href, err);
-        // Fallback to regular navigation if AJAX fails
+      } catch (error) {
+        console.error("AJAX navigation failed:", error);
+        console.log("Falling back to regular navigation...");
         window.location.href = url.href;
       }
     });
     
-    window.addEventListener('popstate', () => window.location.reload());
+    window.addEventListener('popstate', () => {
+      console.log("Popstate detected, reloading page");
+      window.location.reload();
+    });
   };
 
   // =================== INITIALIZE ===================
   document.addEventListener('DOMContentLoaded', () => {
+    console.log("DOM loaded, initializing...");
     initPage();
     initNavigation();
   });
