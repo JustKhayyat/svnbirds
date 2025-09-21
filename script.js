@@ -151,7 +151,7 @@
     try { video.play(); } catch {}
   };
 
-  // =================== PLAYER TOGGLE ===================
+ // =================== PLAYER TOGGLE ===================
 let playerInitialized = false;
 const initPlayerToggle = () => {
   if (playerInitialized) return;
@@ -161,19 +161,27 @@ const initPlayerToggle = () => {
   if (!playerToggle || !playerFrame) return;
   let isExpanded = true;
   const updatePlayer = () => {
-  if (isExpanded) {
-    playerFrame.style.height = "80px";
-    playerToggle.textContent = "▼";
-    playerFrame.classList.remove('collapsed');
-    playerFrame.classList.add('expanded');
-  } else {
-    playerFrame.style.height = "30px";
-    playerToggle.textContent = "▲";
-    playerFrame.classList.remove('expanded');
-    playerFrame.classList.add('collapsed');
-  }
+    if (isExpanded) {
+      playerFrame.style.height = "80px";
+      playerToggle.textContent = "▼";
+      playerFrame.classList.remove('collapsed');
+      playerFrame.classList.add('expanded');
+    } else {
+      playerFrame.style.height = "30px";
+      playerToggle.textContent = "▲";
+      playerFrame.classList.remove('expanded');
+      playerFrame.classList.add('collapsed');
+    }
+  };
+
+  playerToggle.addEventListener('click', () => {
+    isExpanded = !isExpanded;
+    updatePlayer();
+  });
+
+  updatePlayer(); // Initialize
 };
-  // =================== PAGE INIT ===================
+// =================== PAGE INIT ===================
   const initPage = () => {
     const artistName = document.body.dataset.artistName;
     if (!artistName) {
