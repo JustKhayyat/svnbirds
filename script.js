@@ -5,7 +5,7 @@
     { title: "HALA", link: "https://music.empi.re/hala", cover: "/covers/hala.jpg", artist: "Khayyat, Ntitled" },
     { title: "KSHFF", link: "https://music.empi.re/kshff", cover: "/covers/kshff.jpg", artist: "Montiyago, Khayyat" },
     { title: "Mozart", link: "https://music.empi.re/mozart", cover: "/covers/mozart.jpg", artist: "Montiyago" },
-    { title: "Shark", link: "https://music.empi.re/shark", cover: "/covers/montiyago-shark.jpeg", artist: "Montiyago, Big Moe" },
+    { title: "Shark", link: "https://music.empi.re/montiyago-shark", cover: "/covers/montiyago-shark.jpeg", artist: "Montiyago, Big Moe" },
     { title: "2020 Freestyle", link: "https://www.youtube.com/watch?v=Q4_NPZJoKzU", cover: "/covers/2020-freestyle.jpg", artist: "Soulja, Khayyat" },
     { title: "Donia", link: "https://music.empi.re/donia", cover: "/covers/soulja-donia.jpg", artist: "Soulja" },
     { title: "Argeen", link: "https://music.empi.re/argeen", cover: "/covers/argeen.jpg", artist: "Soulja, 77" },
@@ -108,7 +108,6 @@
   const populatePress = () => {
     const grid = document.getElementById('press-grid');
     if (!grid) return;
-    grid.innerHTML = '';
     let loaded = 0;
     const perPage = 6;
     const loadMore = () => {
@@ -136,14 +135,12 @@
   // =================== POPULATE SHOP ===================
   const populateShop = () => {
     const shopContainer = document.getElementById('collection-component-1758190269461');
-    if (!shopContainer) return;
+    if (!shopContainer) return; // only initialize if container exists (home page)
 
-    // Clear previous content
-    shopContainer.innerHTML = '';
+    shopContainer.innerHTML = ''; // optional: clear previous content
 
-    // Initialize Shopify if available
     if (window.ShopifyBuy && typeof initShopify === "function") {
-      initShopify();
+      initShopify(); // re-render products
     }
   };
 
@@ -171,8 +168,13 @@
 
     let isExpanded = true;
     const updatePlayer = () => {
-      playerFrame.style.height = isExpanded ? "80px" : "30px";
-      playerToggle.textContent = isExpanded ? "▲" : "▼";
+      if (isExpanded) {
+        playerFrame.style.height = "80px";
+        playerToggle.textContent = "▲";
+      } else {
+        playerFrame.style.height = "30px";
+        playerToggle.textContent = "▼";
+      }
     };
 
     playerToggle.addEventListener('click', () => {
@@ -193,7 +195,7 @@
       populateReleases('releases');
       populateArtists();
       populatePress();
-      populateShop(); // only on home
+      populateShop(); // ONLY on home page
     } else {
       // Artist page
       populateArtistDiscography();
@@ -227,10 +229,7 @@
           document.body.dataset.artistName = doc.body.dataset.artistName || "";
 
           window.history.pushState({}, "", url);
-
-          // re-init page after DOM replacement
           initPage();
-
           window.scrollTo(0, scrollPositions[new URL(url).pathname] || 0);
         }
       } catch (err) {
