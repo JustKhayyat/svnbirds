@@ -350,3 +350,10 @@ window.shopifyInitialized = true;
   }
 })();
 /*]]>*/
+
+// Add this at the very bottom of shopify.js
+document.addEventListener('DOMContentLoaded', function() {
+  if (!window.shopifyInitialized) {
+    ShopifyBuyInit(); // Manually trigger initialization
+  }
+});
