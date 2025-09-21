@@ -1,4 +1,4 @@
-/* ========== script.js (Optimized) ========== */
+/* ========== script.js (AJAX + Artist Page Fixed) ========== */
 
 (() => {
   // =================== DATA ===================
@@ -166,7 +166,9 @@
   const initPage = () => {
     initHeroVideo();
     initDragScroll();
-    if (document.getElementById('discography')) {
+
+    const artistName = document.body.dataset.artistName;
+    if (artistName) {
       populateArtistDiscography();
     } else {
       populateReleases('releases');
@@ -178,82 +180,64 @@
   document.addEventListener('DOMContentLoaded', initPage);
 
   // =================== AJAX NAVIGATION WITH FADE ===================
-const initAjaxNavigation = () => {
-  const contentContainer = document.body;
-  const fadeDuration = 300; // in ms
+  const initAjaxNavigation = () => {
+    const contentContainer = document.body;
+    const fadeDuration = 300; // ms
 
-  const isInternalLink = link => link.hostname === window.location.hostname && !link.hasAttribute("target") && !link.href.includes("#");
+    const isInternalLink = link => link.hostname === window.location.hostname && !link.hasAttribute("target") && !link.href.includes("#");
 
-  const fadeOut = el => {
-    return new Promise(resolve => {
+    const fadeOut = el => new Promise(resolve => {
       el.style.transition = `opacity ${fadeDuration}ms`;
       el.style.opacity = 0;
       setTimeout(resolve, fadeDuration);
     });
-  };
 
-  const fadeIn = el => {
-    return new Promise(resolve => {
+    const fadeIn = el => new Promise(resolve => {
       el.style.transition = `opacity ${fadeDuration}ms`;
       el.style.opacity = 1;
       setTimeout(resolve, fadeDuration);
     });
+
+    const navigateTo = async url => {
+      try {
+        await fadeOut(contentContainer);
+
+        const res = await fetch(url);
+        const html = await res.text();
+        const doc = new DOMParser().parseFromString(html, "text/html");
+        const newBody = doc.body;
+        const playerFrame = document.getElementById("player-frame");
+
+        // Preserve body attributes
+        [...newBody.attributes].forEach(attr => contentContainer.setAttribute(attr.name, attr.value));
+
+        // Replace innerHTML without removing player
+        contentContainer.innerHTML = newBody.innerHTML;
+        if (playerFrame) contentContainer.appendChild(playerFrame);
+
+        // Re-set dataset for artist pages
+        if (newBody.dataset.artistName) document.body.dataset.artistName = newBody.dataset.artistName;
+
+        initPage();
+        await fadeIn(contentContainer);
+        window.history.pushState({}, "", url);
+      } catch (err) {
+        console.error("Navigation error:", err);
+      }
+    };
+
+    document.addEventListener('click', e => {
+      const link = e.target.closest("a");
+      if (!link || !isInternalLink(link)) return;
+      e.preventDefault();
+      navigateTo(link.href);
+    });
+
+    window.addEventListener('popstate', () => {
+      navigateTo(window.location.href);
+    });
   };
 
-  document.addEventListener('click', async e => {
-    const link = e.target.closest("a");
-    if (!link || !isInternalLink(link)) return;
-    e.preventDefault();
-    const url = link.href;
-
-    try {
-      await fadeOut(contentContainer);
-
-      const res = await fetch(url);
-      const html = await res.text();
-      const doc = new DOMParser().parseFromString(html, "text/html");
-      const newBody = doc.body;
-      const playerFrame = document.getElementById("player-frame");
-
-      // Preserve body attributes
-      [...newBody.attributes].forEach(attr => contentContainer.setAttribute(attr.name, attr.value));
-
-      // Replace inner HTML without removing player iframe
-      contentContainer.innerHTML = newBody.innerHTML;
-      if (playerFrame) contentContainer.appendChild(playerFrame);
-
-      window.history.pushState({}, "", url);
-      initPage();
-
-      await fadeIn(contentContainer);
-    } catch (err) {
-      console.error("Navigation error:", err);
-    }
-  });
-
-  window.addEventListener('popstate', async () => {
-    try {
-      await fadeOut(contentContainer);
-
-      const res = await fetch(window.location.href);
-      const html = await res.text();
-      const doc = new DOMParser().parseFromString(html, "text/html");
-      const newBody = doc.body;
-      const playerFrame = document.getElementById("player-frame");
-
-      [...newBody.attributes].forEach(attr => contentContainer.setAttribute(attr.name, attr.value));
-      contentContainer.innerHTML = newBody.innerHTML;
-      if (playerFrame) contentContainer.appendChild(playerFrame);
-
-      initPage();
-
-      await fadeIn(contentContainer);
-    } catch (err) {
-      console.error("Navigation error:", err);
-    }
-  });
-};
-
-initAjaxNavigation();
+  initAjaxNavigation();
 
 })();
