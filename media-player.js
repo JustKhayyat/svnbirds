@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const pauseIcon = playPauseBtn.querySelector('.pause-icon');
     const volumeUpIcon = muteUnmuteBtn.querySelector('.volume-up-icon');
     const volumeMuteIcon = muteUnmuteBtn.querySelector('.volume-mute-icon');
+    const trackNameElement = document.getElementById('track-name'); // New element to display track name
 
     // Make the player draggable on both desktop and mobile
     let isDragging = false;
@@ -63,20 +64,25 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('touchend', stopDrag);
 
     // Audio Control
-    const ambientAudio = new Audio('sounds/ambient-loop.mp3');
+    const ambientAudio = new Audio();
     ambientAudio.loop = true;
     ambientAudio.volume = 0.05;
 
     // A simple playlist for 'skip' functionality
     const playlist = [
-        'sounds/ambient-loop.mp3',
-        // Add more tracks here
+        { src: 'sounds/ambient-loop.mp3', name: 'Ambience By Khayyat' },
+        { src: 'sounds/future.mp3', name: 'Future By Khayyat' },
+        { src: 'sounds/thoughts.mp3', name: 'Thoughts By Khayyat' },
+        { src: 'sounds/night.mp3', name: 'Night By Khayyat' },
+        { src: 'sounds/replicant.mp3', name: 'Replicant By Khayyat' },
+        { src: 'sounds/starry.mp3', name: 'Starry By Khayyat' },
     ];
     let currentTrackIndex = 0;
 
     const loadTrack = (index) => {
-        ambientAudio.src = playlist[index];
+        ambientAudio.src = playlist[index].src;
         ambientAudio.load();
+        trackNameElement.textContent = playlist[index].name; // Update the display name
     };
 
     const playAudio = () => {
@@ -125,4 +131,7 @@ document.addEventListener('DOMContentLoaded', () => {
         loadTrack(currentTrackIndex);
         playAudio();
     });
+
+    // Initial load
+    loadTrack(currentTrackIndex);
 });
