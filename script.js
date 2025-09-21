@@ -179,65 +179,71 @@
 
   document.addEventListener('DOMContentLoaded', initPage);
 
-  // =================== AJAX NAVIGATION WITH FADE ===================
-  const initAjaxNavigation = () => {
-    const contentContainer = document.body;
-    const fadeDuration = 300; // ms
+ // =================== AJAX NAVIGATION WITH FADE (PLAYER-PRESERVED) ===================
+const initAjaxNavigation = () => {
+  const contentContainer = document.getElementById('page-content');
+  if (!contentContainer) return;
 
-    const isInternalLink = link => link.hostname === window.location.hostname && !link.hasAttribute("target") && !link.href.includes("#");
+  const fadeDuration = 300; // in ms
 
-    const fadeOut = el => new Promise(resolve => {
+  const isInternalLink = link =>
+    link.hostname === window.location.hostname &&
+    !link.hasAttribute("target") &&
+    !link.href.includes("#");
+
+  const fadeOut = el =>
+    new Promise(resolve => {
       el.style.transition = `opacity ${fadeDuration}ms`;
       el.style.opacity = 0;
       setTimeout(resolve, fadeDuration);
     });
 
-    const fadeIn = el => new Promise(resolve => {
+  const fadeIn = el =>
+    new Promise(resolve => {
       el.style.transition = `opacity ${fadeDuration}ms`;
       el.style.opacity = 1;
       setTimeout(resolve, fadeDuration);
     });
 
-    const navigateTo = async url => {
-      try {
-        await fadeOut(contentContainer);
+  const loadPage = async (url) => {
+    try {
+      await fadeOut(contentContainer);
 
-        const res = await fetch(url);
-        const html = await res.text();
-        const doc = new DOMParser().parseFromString(html, "text/html");
-        const newBody = doc.body;
-        const playerFrame = document.getElementById("player-frame");
+      const res = await fetch(url);
+      const html = await res.text();
+      const doc = new DOMParser().parseFromString(html, "text/html");
+      const newContent = doc.querySelector('#page-content');
 
-        // Preserve body attributes
-        [...newBody.attributes].forEach(attr => contentContainer.setAttribute(attr.name, attr.value));
+      if (!newContent) throw new Error("No #page-content found in response");
 
-        // Replace innerHTML without removing player
-        contentContainer.innerHTML = newBody.innerHTML;
-        if (playerFrame) contentContainer.appendChild(playerFrame);
+      // Update body attributes (like data-artist-name) without touching iframe
+      [...doc.body.attributes].forEach(attr => document.body.setAttribute(attr.name, attr.value));
 
-        // Re-set dataset for artist pages
-        if (newBody.dataset.artistName) document.body.dataset.artistName = newBody.dataset.artistName;
+      // Replace only #page-content innerHTML
+      contentContainer.innerHTML = newContent.innerHTML;
 
-        initPage();
-        await fadeIn(contentContainer);
-        window.history.pushState({}, "", url);
-      } catch (err) {
-        console.error("Navigation error:", err);
-      }
-    };
+      window.history.pushState({}, "", url);
 
-    document.addEventListener('click', e => {
-      const link = e.target.closest("a");
-      if (!link || !isInternalLink(link)) return;
-      e.preventDefault();
-      navigateTo(link.href);
-    });
-
-    window.addEventListener('popstate', () => {
-      navigateTo(window.location.href);
-    });
+      initPage(); // re-init scripts for new content
+      await fadeIn(contentContainer);
+    } catch (err) {
+      console.error("Navigation error:", err);
+      // fallback: full page reload
+      window.location.href = url;
+    }
   };
 
-  initAjaxNavigation();
+  document.addEventListener('click', e => {
+    const link = e.target.closest("a");
+    if (!link || !isInternalLink(link)) return;
+    e.preventDefault();
+    loadPage(link.href);
+  });
+
+  window.addEventListener('popstate', () => loadPage(window.location.href));
+};
+
+// Initialize AJAX navigation
+initAjaxNavigation();
 
 })();
