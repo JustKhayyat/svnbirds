@@ -23,7 +23,7 @@
     <div class="artist-container">
       <div class="artist-bio-section">
         <p class="artist-bio">
-          Montiyago is a genre-bending Sudanese artist whose eclectic style ranges from boom-bap to trap and 2-step, maintaining unpredictability while always staying true to his lyrical voice. He broke onto the regional scene with his debut EP Doppler (2023), and has since released standout tracks such as “Bader Khol3a,” “Klashat,” “Ducati,” and “London,” many of which have earned millions of streams. Backed by the independent ecosystem SVNBIRDS, Montiyago’s growth is rooted in versatility, authenticity, and a commitment to sonic exploration. As his audience expands across Egypt, Sudan, and the wider Arab world, Montiyago is widely considered one of the most promising voices shaping the future of Arabic hip hop.
+          Montiyago is a genre-bending Sudanese artist whose eclectic style ranges from boom-bap to trap and 2-step, maintaining unpredictability while always staying true to his lyrical voice. He broke onto the regional scene with his debut EP Doppler (2023), and has since released standout tracks such as "Bader Khol3a," "Klashat," "Ducati," and "London," many of which have earned millions of streams. Backed by the independent ecosystem SVNBIRDS, Montiyago's growth is rooted in versatility, authenticity, and a commitment to sonic exploration. As his audience expands across Egypt, Sudan, and the wider Arab world, Montiyago is widely considered one of the most promising voices shaping the future of Arabic hip hop.
         </p>
       </div>
       <div class="artist-socials-section">
@@ -63,12 +63,36 @@
   <!-- END #page-content WRAP -->
 
   <!-- Player Toggle Button -->
-  <button id="player-toggle" class="player-toggle">▲</button>
+  <button id="player-toggle" class="player-toggle" style="left:10px;">▲</button>
 
   <!-- Persistent Media Player -->
   <iframe src="/player.html" id="player-frame" scrolling="no"></iframe>
 
   <!-- Script -->
   <script src="/script.js"></script>
+
+  <script>
+    const playerToggle = document.getElementById('player-toggle');
+    const playerFrame = document.getElementById('player-frame');
+    let isExpanded = true; // player starts expanded
+
+    const updatePlayer = () => {
+      if(isExpanded){
+        playerFrame.style.height = "80px";
+        playerToggle.textContent = "▼"; // Arrow DOWN when expanded
+      } else {
+        playerFrame.style.height = "30px";
+        playerToggle.textContent = "▲"; // Arrow UP when collapsed
+      }
+    };
+
+    playerToggle.addEventListener('click', () => {
+      isExpanded = !isExpanded;
+      updatePlayer();
+    });
+
+    updatePlayer(); // initialize
+  </script>
+
 </body>
 </html>
