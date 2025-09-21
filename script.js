@@ -216,20 +216,18 @@ const initNavigation = () => {
     e.preventDefault();
     scrollPositions[window.location.pathname] = window.scrollY;
 
-    let url = link.href;
+    let url = new URL(link.href, window.location.origin);
 
-    // Ensure folder links always fetch index.html
-    if (url.endsWith('/')) {
-      url += 'index.html';
-    } else if (!url.match(/\.html$/)) {
-      // If the URL doesn't end with slash or .html, assume folder
-      url += '/index.html';
+    // Force numeric or any folder links to fetch index.html
+    if (!url.pathname.endsWith('.html')) {
+      if (!url.pathname.endsWith('/')) url.pathname += '/';
+      url.pathname += 'index.html';
     }
 
-    console.log("[AJAX NAV] Fetching:", url); // Debugging line
+    console.log("[AJAX NAV] Fetching:", url.href);
 
     try {
-      const res = await fetch(url);
+      const res = await fetch(url.href);
       if (!res.ok) throw new Error("Fetch failed with status " + res.status);
       const html = await res.text();
       const parser = new DOMParser();
@@ -241,15 +239,15 @@ const initNavigation = () => {
         document.body.dataset.artistName = doc.body.dataset.artistName || "";
 
         // Update browser URL without showing index.html
-        const cleanUrl = url.replace(/index\.html$/, '');
+        let cleanUrl = url.pathname.replace(/index\.html$/, '/');
         window.history.pushState({}, "", cleanUrl);
 
         initPage();
-        window.scrollTo(0, scrollPositions[new URL(url).pathname] || 0);
+        window.scrollTo(0, scrollPositions[new URL(url.href).pathname] || 0);
       }
     } catch (err) {
-      console.error("[AJAX NAV] Error fetching", url, err);
-      window.location.href = url; // fallback to normal navigation
+      console.error("[AJAX NAV] Error fetching", url.href, err);
+      window.location.href = url.href; // fallback
     }
   });
 
@@ -257,6 +255,7 @@ const initNavigation = () => {
     window.location.reload();
   });
 };
+
 
 
   // =================== INITIALIZE ===================
