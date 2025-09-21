@@ -133,6 +133,21 @@
     releases.forEach(r => container.appendChild(createReleaseElement(r)));
   };
 
+  // =================== POPULATE SHOP ===================
+const populateShop = () => {
+  const shopContainer = document.getElementById('collection-component-1758190269461');
+  if (!shopContainer) return;
+
+  // Clear previous content
+  shopContainer.innerHTML = '';
+
+  // Initialize Shopify if available
+  if (window.ShopifyBuy && typeof initShopify === "function") {
+    initShopify();
+  }
+};
+
+
   // =================== HERO VIDEO ===================
   let heroVideoInitialized = false;
   const initHeroVideo = () => {
@@ -178,46 +193,21 @@
 const initPage = () => {
   const artistName = document.body.dataset.artistName;
 
-  // Grab all dynamic sections
-  const releasesContainer = document.getElementById('releases');
-  const artistGrid = document.getElementById('artist-grid');
-  const pressGrid = document.getElementById('press-grid');
-  const shopContainer = document.getElementById('collection-component-1758190269461');
-  const discographyContainer = document.getElementById('discography');
-
-  // Clear previous content
-  if (releasesContainer) releasesContainer.innerHTML = '';
-  if (artistGrid) artistGrid.innerHTML = '';
-  if (pressGrid) pressGrid.innerHTML = '';
-  if (discographyContainer) discographyContainer.innerHTML = '';
-
-  // Only clear shop if we're on an artist page
-  if (artistName && shopContainer) shopContainer.innerHTML = '';
-
   if (!artistName) {
-  // Home page
-  initHeroVideo();
-  populateReleases('releases');
-  populateArtists();
-  populatePress();
-
-  // Initialize Shopify shop on home page
-  const shopContainer = document.getElementById('collection-component-1758190269461');
-  if (shopContainer && window.ShopifyBuy && typeof initShopify === "function") {
-    initShopify();
+    // Home page
+    initHeroVideo();
+    populateReleases('releases');
+    populateArtists();
+    populatePress();
+    populateShop(); // cleaner
+  } else {
+    // Artist page
+    populateArtistDiscography();
   }
-
-} else {
-  // Artist page
-  populateArtistDiscography();
-}
-
 
   // Always init player toggle
   initPlayerToggle();
 };
-
-
 
   // =================== AJAX NAVIGATION ===================
   const initNavigation = () => {
