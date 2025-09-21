@@ -198,7 +198,14 @@
       scrollPositions[window.location.pathname] = window.scrollY;
       let url = new URL(link.href, window.location.origin);
       url.pathname = normalizePath(url.pathname);
-      if (!url.pathname.endsWith('.html')) url.pathname += '/index.html';
+
+      // FIXED NAVIGATION LOGIC: Only add '/index.html' for root or paths without file extensions
+      const pathSegments = url.pathname.split('/').filter(segment => segment);
+      const lastSegment = pathSegments[pathSegments.length - 1];
+      if (url.pathname === '/' || !lastSegment.includes('.')) {
+          url.pathname += '/index.html';
+      }
+
       try {
         const res = await fetch(url.href);
         if (!res.ok) throw new Error("Fetch failed with status " + res.status);
