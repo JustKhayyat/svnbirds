@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const trackNameElement = document.getElementById('track-name');
     const audio = new Audio(); // Create a new audio element
 
-    // The playlist you provided
+    // Playlist
     const playlist = [
         { src: 'sounds/ambient-loop.mp3', name: 'Ambience By Khayyat' },
         { src: 'sounds/future.mp3', name: 'Future By Khayyat' },
@@ -19,32 +19,47 @@ document.addEventListener('DOMContentLoaded', () => {
     ];
     let currentTrackIndex = 0;
 
-    // Function to load and play a track
+    // --- Helpers ---
     const loadTrack = (index) => {
         const track = playlist[index];
         audio.src = track.src;
         audio.load();
         trackNameElement.textContent = track.name;
+    };
+
+    const playTrack = () => {
         audio.play().catch(e => {
-          // autoplay may be blocked; that's fine — user can press play
-          // console.log('Play prevented:', e);
+            // autoplay may be blocked; user must press play
         });
         playPauseBtn.classList.add('playing');
         if (playPauseBtn.querySelector('.play-icon')) playPauseBtn.querySelector('.play-icon').classList.add('hidden');
         if (playPauseBtn.querySelector('.pause-icon')) playPauseBtn.querySelector('.pause-icon').classList.remove('hidden');
     };
 
-    // Initial load of the first track
-    loadTrack(currentTrackIndex);
+    const pauseTrack = () => {
+        audio.pause();
+        playPauseBtn.classList.remove('playing');
+        if (playPauseBtn.querySelector('.play-icon')) playPauseBtn.querySelector('.play-icon').classList.remove('hidden');
+        if (playPauseBtn.querySelector('.pause-icon')) playPauseBtn.querySelector('.pause-icon').classList.add('hidden');
+    };
 
-    // Draggable functionality (anywhere on the player EXCEPT controls)
+    // Initial load of the first track, but keep paused
+    loadTrack(currentTrackIndex);
+    pauseTrack();
+
+    // --- Draggable functionality (anywhere on the player EXCEPT controls) ---
     let isDragging = false;
     let offsetX = 0;
     let offsetY = 0;
 
     const isInteractiveTarget = (target) => {
-      // don't start drag if clicking controls or interactive elements inside player
-      return target.closest && (target.closest('#player-controls') || target.closest('button') || target.closest('a') || target.closest('input') || target.closest('label'));
+        return target.closest && (
+            target.closest('#player-controls') ||
+            target.closest('button') ||
+            target.closest('a') ||
+            target.closest('input') ||
+            target.closest('label')
+        );
     };
 
     if (player) {
@@ -61,7 +76,6 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!isDragging) return;
             let newX = e.clientX - offsetX;
             let newY = e.clientY - offsetY;
-            // clamp to viewport so player can't be dragged completely off-screen
             newX = Math.max(0, Math.min(newX, window.innerWidth - player.offsetWidth));
             newY = Math.max(0, Math.min(newY, window.innerHeight - player.offsetHeight));
             player.style.left = `${newX}px`;
@@ -75,7 +89,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         player.addEventListener('touchstart', (e) => {
             const touch = e.touches[0];
-            // guard for interactive touches
             const target = document.elementFromPoint(touch.clientX, touch.clientY);
             if (isInteractiveTarget(target)) return;
             isDragging = true;
@@ -102,26 +115,17 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Play/Pause button logic
+    // --- Button logic ---
     if (playPauseBtn) {
         playPauseBtn.addEventListener('click', () => {
             if (audio.paused) {
-                audio.play().catch(e => {
-                  // blocked, user must interact
-                });
-                playPauseBtn.classList.add('playing');
-                if (playPauseBtn.querySelector('.play-icon')) playPauseBtn.querySelector('.play-icon').classList.add('hidden');
-                if (playPauseBtn.querySelector('.pause-icon')) playPauseBtn.querySelector('.pause-icon').classList.remove('hidden');
+                playTrack();
             } else {
-                audio.pause();
-                playPauseBtn.classList.remove('playing');
-                if (playPauseBtn.querySelector('.play-icon')) playPauseBtn.querySelector('.play-icon').classList.remove('hidden');
-                if (playPauseBtn.querySelector('.pause-icon')) playPauseBtn.querySelector('.pause-icon').classList.add('hidden');
+                pauseTrack();
             }
         });
     }
 
-    // Mute/Unmute button logic
     if (muteUnmuteBtn) {
         muteUnmuteBtn.addEventListener('click', () => {
             audio.muted = !audio.muted;
@@ -141,19 +145,19 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Previous button logic
     if (prevBtn) {
         prevBtn.addEventListener('click', () => {
             currentTrackIndex = (currentTrackIndex - 1 + playlist.length) % playlist.length;
             loadTrack(currentTrackIndex);
+            playTrack();
         });
     }
 
-    // Next button logic
     if (nextBtn) {
         nextBtn.addEventListener('click', () => {
             currentTrackIndex = (currentTrackIndex + 1) % playlist.length;
             loadTrack(currentTrackIndex);
+            playTrack();
         });
     }
 });
