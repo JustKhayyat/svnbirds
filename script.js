@@ -15,27 +15,7 @@ window.onload = () => {
   }
 
   // Set up ambient and click sounds
-  const ambientAudio = new Audio('/sounds/ambient-loop.mp3');
   const clickAudio = new Audio('/sounds/click.mp3');
-
-  // Ambient sound setup to bypass browser autoplay restrictions
-  ambientAudio.loop = true;
-  ambientAudio.volume = 0.05; // Adjusted to a lower volume
-  ambientAudio.preload = 'auto'; // Add preload for faster load
-
-  function playAmbientAudio() {
-    ambientAudio.play().then(() => {
-      // Audio is playing, remove the one-time event listener
-      document.body.removeEventListener('mousedown', playAmbientAudio);
-      document.body.removeEventListener('touchstart', playAmbientAudio);
-    }).catch(error => {
-      console.log("Audio autoplay was prevented. Error:", error);
-    });
-  }
-
-  // Start the ambient sound on the first user interaction
-  document.body.addEventListener('mousedown', playAmbientAudio, { once: true });
-  document.body.addEventListener('touchstart', playAmbientAudio, { once: true });
 
   // Play click sound on any mouse click
   document.addEventListener('click', () => {
