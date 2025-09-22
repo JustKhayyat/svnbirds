@@ -18,7 +18,7 @@
     { title: "Messi", link: "https://music.empi.re/messi", cover: "/covers/messi.jpg", artist: "Soulja, Khayyat" },
     { title: "Tshreen", link: "https://music.empi.re/Tshreen", cover: "/covers/tshreen.jpg", artist: "Soulja" },
     { title: "Decor", link: "https://music.empi.re/decor", cover: "/covers/decor.jpg", artist: "Montiyago, 77" },
-    { title: "Dejavu Soulja", link: "https://music.empi.re/dejavu-soulja.jpg", cover: "/covers/dejavu-soulja.jpg", artist: "Soulja, Khayyat" },
+    { title: "Dejavu", link: "https://youtube.com/playlist?list=PLh6q1kfCoMKOwhm0iEwCdVOlnqHmlc8wQ&si=2xC1bMDVJULFnGPs", cover: "/covers/dejavu-soulja.jpg", artist: "Soulja, Khayyat" },
     { title: "Bader Khol3a", link: "https://music.empi.re/baderkhol3a", cover: "/covers/bader-khol3a.jpg", artist: "Montiyago" },
     { title: "Boba", link: "https://music.empi.re/boba", cover: "/covers/boba.jpg", artist: "Soulja, Khayyat" },
     { title: "Lk Lk", link: "https://music.empi.re/LkLk", cover: "/covers/lk-lk.jpg", artist: "Ntitled, Khayyat" },
