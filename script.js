@@ -1,3 +1,5 @@
+// =================== SCRIPT.JS ===================
+
 (() => {
   // =================== DATA ===================
   const allReleases = [
@@ -46,7 +48,7 @@
     { title: "YUNG – Fresh Sounds from Sudan: 10 Releases", url: "https://thisisyungmea.com/fresh-sounds-from-sudan-10-new-releases-you-need-to-hear/", source: "YUNG" }
   ];
 
-   // =================== ELEMENT CREATORS ===================
+  // =================== ELEMENT CREATORS ===================
   const createReleaseElement = r => {
     const a = document.createElement('a');
     a.href = r.link;
@@ -134,9 +136,7 @@
 
   // =================== SHOPIFY AJAX HANDLING ===================
   const populateShop = () => {
-    // Check if the initializeShopifyBuyButton function exists and the shop container is present
     if (typeof window.initializeShopifyBuyButton === 'function') {
-      // Call the global function defined in shopify.js
       window.initializeShopifyBuyButton();
     }
   };
@@ -186,15 +186,13 @@
 
   // =================== PAGE INIT ===================
   const initPage = () => {
-    // Reset hero video and player toggle state if we're reloading content
     heroVideoInitialized = false;
-    playerInitialized = false; // Player might need re-attaching if it was part of page-content (though yours is not)
+    playerInitialized = false; 
 
-    // Clear any previous Shopify loaded flags from shop elements
     const oldShopNodes = document.querySelectorAll('[data-shopify-loaded="true"]');
     oldShopNodes.forEach(node => {
       node.removeAttribute('data-shopify-loaded');
-      node.innerHTML = ''; // Clear existing Shopify content to ensure a fresh render
+      node.innerHTML = '';
     });
 
     const artistName = document.body.dataset.artistName;
@@ -203,10 +201,7 @@
       populateReleases('releases');
       populateArtists();
       populatePress();
-      
-      // Call populateShop directly here after content is added to DOM
       populateShop(); 
-      
     } else {
       populateArtistDiscography();
     }
@@ -218,7 +213,6 @@
     document.addEventListener('click', async e => {
       const link = e.target.closest('a');
       
-      // Skip if not a link or external/mailto links
       if (!link) return;
       if (link.target === "_blank" || link.href.startsWith("mailto:") || link.href.startsWith("tel:")) return;
       if (!link.href.includes(window.location.origin)) return;
@@ -228,7 +222,6 @@
       const url = new URL(link.href);
       
       try {
-        // Add /index.html to directory paths
         if (!url.pathname.includes('.') && !url.pathname.endsWith('/')) {
           url.pathname += '/index.html';
         }
@@ -245,32 +238,24 @@
         const newContent = doc.getElementById('page-content');
         
         if (newContent) {
-          // Replace the old content with the new content
           document.getElementById('page-content').replaceWith(newContent);
           document.body.dataset.artistName = doc.body.dataset.artistName || "";
           
-          // Update URL without index.html for clean URLs
           const cleanPath = url.pathname.replace('/index.html', '');
           window.history.pushState({}, "", cleanPath);
           
-          // IMPORTANT: Re-run all initializations for the new content
           initPage();
           
           window.scrollTo(0, 0);
         } else {
-          // If #page-content not found in fetched HTML, fallback to full navigation
           window.location.href = url.href; 
         }
       } catch (error) {
         console.error("AJAX navigation error:", error);
-        // Fallback to regular navigation on error
         window.location.href = url.href; 
       }
     });
     
-    // For popstate (browser back/forward), we still do a full reload for simplicity,
-    // as re-initializing complex scripts like Shopify can be tricky after a full page replace.
-    // If you want to optimize this further, you'd need more sophisticated state management.
     window.addEventListener('popstate', () => {
       window.location.reload();
     });
@@ -281,5 +266,4 @@
     initPage();
     initNavigation();
   });
-
 })();
