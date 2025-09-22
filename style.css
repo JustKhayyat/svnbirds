@@ -302,6 +302,23 @@ html, body {
   max-width: clamp(250px, 40vw, 500px);
 }
 
+body[data-artist-name] .hero {
+  padding: 0;
+}
+
+body[data-artist-name] .hero-content {
+  position: absolute;
+  inset: 0;
+}
+
+body[data-artist-name] .hero-logo {
+  width: 100%;
+  max-width: none;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
 .artist-container {
   max-width: 800px;
   margin: 0 auto;
