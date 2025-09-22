@@ -363,9 +363,39 @@ html, body {
   color: #000;
 }
 
+.artist-spotify {
+  max-width: 800px;
+  margin: 80px auto 0;
+  padding: 0 20px;
+  text-align: center;
+}
+
+.artist-spotify .section-title {
+  margin: 0 0 24px;
+  max-width: none;
+  font-size: 2.2rem;
+}
+
+.artist-spotify iframe {
+  width: 100%;
+  height: 352px;
+  border: none;
+  border-radius: 16px;
+}
+
 @media(max-width: 768px) {
   .artist-hero-image {
     max-width: 250px;
+  }
+  .artist-spotify {
+    margin-top: 60px;
+  }
+  .artist-spotify .section-title {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+  }
+  .artist-spotify iframe {
+    height: 320px;
   }
 }
 
