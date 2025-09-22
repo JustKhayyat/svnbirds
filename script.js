@@ -240,10 +240,37 @@
         if (newContent) {
           document.getElementById('page-content').replaceWith(newContent);
           document.body.dataset.artistName = doc.body.dataset.artistName || "";
-          
+          document.title = doc.title || document.title;
+
+          if (doc.head) {
+            const newMetaTags = doc.head.querySelectorAll('meta[name], meta[property]');
+            const processedSelectors = new Set();
+
+            newMetaTags.forEach(meta => {
+              const name = meta.getAttribute('name');
+              const property = meta.getAttribute('property');
+              let selector = null;
+
+              if (name) selector = `meta[name="${name}"]`;
+              else if (property) selector = `meta[property="${property}"]`;
+
+              if (!selector || processedSelectors.has(selector)) return;
+
+              const existing = document.head.querySelector(selector);
+              if (existing) {
+                const content = meta.getAttribute('content');
+                if (content !== null) existing.setAttribute('content', content);
+              } else {
+                document.head.appendChild(meta.cloneNode(true));
+              }
+
+              processedSelectors.add(selector);
+            });
+          }
+
           const cleanPath = url.pathname.replace('/index.html', '');
           window.history.pushState({}, "", cleanPath);
-          
+
           initPage();
           
           window.scrollTo(0, 0);
