@@ -327,10 +327,8 @@ html, body {
   justify-content: center;
   gap: 20px;
   margin-top: 20px;
-  flex-wrap: wrap;
 }
 
-/* This is the fix for the blue underlines */
 .social-links a {
   text-decoration: none;
 }
