@@ -311,6 +311,12 @@ body[data-artist-name] .hero-content {
   inset: 0;
 }
 
+body[data-artist-name] .hero-image {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
 body[data-artist-name] .hero-logo {
   width: 100%;
   max-width: none;
@@ -321,9 +327,11 @@ body[data-artist-name] .hero-logo {
 
 @media (max-width: 768px) {
   body[data-artist-name] .hero {
+    display: block;
     min-height: 0;
     height: auto;
-    aspect-ratio: 16 / 9;
+    aspect-ratio: auto;
+    overflow: visible;
   }
 
   body[data-artist-name] .hero-content {
@@ -333,16 +341,20 @@ body[data-artist-name] .hero-logo {
     bottom: auto;
     left: auto;
     width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    height: auto;
+    display: block;
+  }
+
+  body[data-artist-name] .hero-image {
+    width: 100%;
+    height: auto;
   }
 
   body[data-artist-name] .hero-logo {
     width: 100%;
     height: auto;
     object-fit: contain;
+    display: block;
   }
 }
 
