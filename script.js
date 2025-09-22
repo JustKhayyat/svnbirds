@@ -29,12 +29,12 @@
   ];
 
   const allArtists = [
-  { name: "Soulja", link: "soulja", photo: "/media/artists/artist-soulja.png?v=2" },
-  { name: "Montiyago", link: "montiyago", photo: "/media/artists/artist-montiyago.png?v=2" },
-  { name: "Khayyat", link: "khayyat", photo: "/media/artists/artist-khayyat.png?v=2" },
-  { name: "77", link: "seventyseven", photo: "/media/artists/artist-77.png?v=2" },
-  { name: "Big Moe", link: "bigmoe", photo: "/media/artists/artist-bigmoe.png?v=2" }
-];
+    { name: "Soulja", link: "soulja", photo: "/media/artists/artist-soulja.png?v=2" },
+    { name: "Montiyago", link: "montiyago", photo: "/media/artists/artist-montiyago.png?v=2" },
+    { name: "Khayyat", link: "khayyat", photo: "/media/artists/artist-khayyat.png?v=2" },
+    { name: "77", link: "seventyseven", photo: "/media/artists/artist-77.png?v=2" },
+    { name: "Big Moe", link: "bigmoe", photo: "/media/artists/artist-bigmoe.png?v=2" }
+  ];
 
   const allPress = [
     { title: "GRAMMYS – 5 Independent Record Labels Bringing The Sounds Of The Middle East & North Africa", url: "https://www.grammy.com/news/5-middle-east-north-africa-independent-record-labels-to-know-beirut-red-diamond", source: "GRAMMYS" },
@@ -133,11 +133,14 @@
   };
 
   // =================== SHOPIFY AJAX HANDLING ===================
-  // =================== SIMPLE SHOPIFY HANDLING ===================
-const populateShop = () => {
-  // Nothing needed here! shopify.js handles everything
-  // This function just maintains consistency with other populate functions
-};
+  const populateShop = () => {
+    // Check if the initializeShopifyBuyButton function exists and the shop container is present
+    if (typeof window.initializeShopifyBuyButton === 'function') {
+      // Call the global function defined in shopify.js
+      window.initializeShopifyBuyButton();
+    }
+  };
+
   // =================== HERO VIDEO ===================
   let heroVideoInitialized = false;
   const initHeroVideo = () => {
@@ -147,7 +150,7 @@ const populateShop = () => {
     video.muted = true;
     video.loop = true;
     video.playsInline = true;
-    try { video.play(); } catch {}
+    try { video.play(); } catch (e) { /* Autoplay might be blocked */ }
   };
 
   // =================== PLAYER TOGGLE ===================
@@ -183,6 +186,17 @@ const populateShop = () => {
 
   // =================== PAGE INIT ===================
   const initPage = () => {
+    // Reset hero video and player toggle state if we're reloading content
+    heroVideoInitialized = false;
+    playerInitialized = false; // Player might need re-attaching if it was part of page-content (though yours is not)
+
+    // Clear any previous Shopify loaded flags from shop elements
+    const oldShopNodes = document.querySelectorAll('[data-shopify-loaded="true"]');
+    oldShopNodes.forEach(node => {
+      node.removeAttribute('data-shopify-loaded');
+      node.innerHTML = ''; // Clear existing Shopify content to ensure a fresh render
+    });
+
     const artistName = document.body.dataset.artistName;
     if (!artistName) {
       initHeroVideo();
@@ -190,10 +204,8 @@ const populateShop = () => {
       populateArtists();
       populatePress();
       
-      // Delay shop population to ensure DOM is ready
-      setTimeout(() => {
-        populateShop();
-      }, 100);
+      // Call populateShop directly here after content is added to DOM
+      populateShop(); 
       
     } else {
       populateArtistDiscography();
@@ -233,6 +245,7 @@ const populateShop = () => {
         const newContent = doc.getElementById('page-content');
         
         if (newContent) {
+          // Replace the old content with the new content
           document.getElementById('page-content').replaceWith(newContent);
           document.body.dataset.artistName = doc.body.dataset.artistName || "";
           
@@ -240,16 +253,24 @@ const populateShop = () => {
           const cleanPath = url.pathname.replace('/index.html', '');
           window.history.pushState({}, "", cleanPath);
           
+          // IMPORTANT: Re-run all initializations for the new content
           initPage();
+          
           window.scrollTo(0, 0);
         } else {
-          window.location.href = url.href; // Fallback
+          // If #page-content not found in fetched HTML, fallback to full navigation
+          window.location.href = url.href; 
         }
       } catch (error) {
-        window.location.href = url.href; // Fallback to regular navigation
+        console.error("AJAX navigation error:", error);
+        // Fallback to regular navigation on error
+        window.location.href = url.href; 
       }
     });
     
+    // For popstate (browser back/forward), we still do a full reload for simplicity,
+    // as re-initializing complex scripts like Shopify can be tricky after a full page replace.
+    // If you want to optimize this further, you'd need more sophisticated state management.
     window.addEventListener('popstate', () => {
       window.location.reload();
     });
