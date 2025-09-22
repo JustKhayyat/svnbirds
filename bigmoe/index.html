@@ -65,28 +65,5 @@
   <!-- Script -->
   <script src="/script.js"></script>
 
-  <script>
-    const playerToggle = document.getElementById('player-toggle');
-    const playerFrame = document.getElementById('player-frame');
-    let isExpanded = true; // player starts expanded
-
-    const updatePlayer = () => {
-      if(isExpanded){
-        playerFrame.style.height = "80px";
-        playerToggle.textContent = "▼"; // Arrow DOWN when expanded
-      } else {
-        playerFrame.style.height = "30px";
-        playerToggle.textContent = "▲"; // Arrow UP when collapsed
-      }
-    };
-
-    playerToggle.addEventListener('click', () => {
-      isExpanded = !isExpanded;
-      updatePlayer();
-    });
-
-    updatePlayer(); // initialize
-  </script>
-
 </body>
 </html>
