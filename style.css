@@ -311,6 +311,12 @@ body[data-artist-name] .hero-content {
   inset: 0;
 }
 
+body[data-artist-name] .hero-image {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
 body[data-artist-name] .hero-logo {
   width: 100%;
   max-width: none;
@@ -337,6 +343,10 @@ body[data-artist-name] .hero-logo {
     display: flex;
     align-items: center;
     justify-content: center;
+  }
+
+  body[data-artist-name] .hero-image {
+    height: 100%;
   }
 
   body[data-artist-name] .hero-logo {
