@@ -383,6 +383,10 @@ html, body {
   border-radius: 16px;
 }
 
+.artist-spotify + .section-title {
+  margin: 32px auto 56px;
+}
+
 @media(max-width: 768px) {
   .artist-hero-image {
     max-width: 250px;
@@ -396,6 +400,9 @@ html, body {
   }
   .artist-spotify iframe {
     height: 320px;
+  }
+  .artist-spotify + .section-title {
+    margin: 28px auto 36px;
   }
 }
 
