@@ -239,7 +239,12 @@
         
         if (newContent) {
           document.getElementById('page-content').replaceWith(newContent);
-          document.body.dataset.artistName = doc.body.dataset.artistName || "";
+          const newArtistName = doc.body.dataset.artistName;
+          if (newArtistName) {
+            document.body.dataset.artistName = newArtistName;
+          } else {
+            delete document.body.dataset.artistName;
+          }
           document.title = doc.title || document.title;
 
           if (doc.head) {
