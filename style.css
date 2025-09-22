@@ -474,7 +474,7 @@ footer {
     background-color: #1a1a1a;
     color: #f0f0f0;
     padding: 40px 20px;
-    font-family: 'Montserrat', sans-serif;
+    font-family: 'Grift', sans-serif;
     text-align: center;
     border-top: 1px solid #333;
 }
@@ -482,7 +482,7 @@ footer {
 .footer-content {
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
+    justify-content: center;
     align-items: center;
     gap: 30px;
     margin-bottom: 30px;
@@ -544,7 +544,7 @@ footer {
 /* For larger screens (tablets and desktops) */
 @media (min-width: 768px) {
     .footer-content {
-        flex-direction: row;
+        flex-direction: column;
     }
     .footer-section {
         flex: 1;
