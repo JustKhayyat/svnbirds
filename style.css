@@ -330,6 +330,11 @@ html, body {
   flex-wrap: wrap;
 }
 
+/* This is the fix for the blue underlines */
+.social-links a {
+  text-decoration: none;
+}
+
 .social-icon {
   width: 32px;
   height: 32px;
