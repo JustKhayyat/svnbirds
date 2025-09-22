@@ -8,11 +8,8 @@ window.initializeShopifyBuyButton = function() {
   if (shopComponentNode && !shopComponentNode.dataset.shopifyLoaded) {
     shopComponentNode.dataset.shopifyLoaded = true; // Mark this element as loaded
 
-    // Load Shopify script
-    var script = document.createElement('script');
-    script.src = 'https://sdks.shopifycdn.com/buy-button/latest/buy-button-storefront.min.js';
-    script.async = true;
-    script.onload = function() {
+    // This function will create and render the Shopify component
+    const createShopifyComponent = function() {
       var client = ShopifyBuy.buildClient({
         domain: 'ijuc61-hr.myshopify.com',
         storefrontAccessToken: '12566d7e5f9880e9f42ae93bdd94ca29',
@@ -21,7 +18,7 @@ window.initializeShopifyBuyButton = function() {
       ShopifyBuy.UI.onReady(client).then(function(ui) {
         ui.createComponent('collection', {
           id: '298945052732',
-          node: shopComponentNode, // Use the reference to the node
+          node: shopComponentNode,
           moneyFormat: 'LE%20%7B%7Bamount%7D%7D',
           options: {
             "product": {
@@ -337,16 +334,19 @@ window.initializeShopifyBuyButton = function() {
           }
         }); // close createComponent
       }); // close then
-    }; // close script.onload
+    };
 
-    // Only append the script if it hasn't been appended before
-    // (This prevents multiple <script> tags for the Buy Button SDK)
+    // Check if the script is already loaded
     if (!document.querySelector('script[src="https://sdks.shopifycdn.com/buy-button/latest/buy-button-storefront.min.js"]')) {
+      // If not, append the script and call the component creator on load
+      var script = document.createElement('script');
+      script.src = 'https://sdks.shopifycdn.com/buy-button/latest/buy-button-storefront.min.js';
+      script.async = true;
+      script.onload = createShopifyComponent;
       document.head.appendChild(script);
     } else {
-        // If the script is already loaded, and we are trying to re-initialize for a new container,
-        // we might need to manually trigger the onload callback if ShopifyBuy is already available.
-        // This is a bit advanced; for now, relying on the client/UI being ready is usually sufficient.
+      // If the script is already loaded, just call the component creator directly
+      createShopifyComponent();
     }
   }
 };
