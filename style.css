@@ -68,7 +68,8 @@ html, body {
   perspective: 800px;
 }
 
-.video-container {
+/* Replace video-container with image-container */
+.image-container {
   position: absolute;
   top: 0;
   left: 0;
@@ -79,16 +80,19 @@ html, body {
   z-index: 0;
 }
 
-.hero-video {
+.hero-bg {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
+/* keep optional canvas layer if you use effects */
 #hero-canvas {
   position: absolute;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   pointer-events: none;
   z-index: 1;
 }
@@ -125,6 +129,7 @@ html, body {
   from { opacity: 0; transform: translateY(30px); }
   to { opacity: 1; transform: translateY(0); }
 }
+
 @keyframes fadeIn {
   from { opacity: 0; }
   to { opacity: 1; }
