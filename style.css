@@ -264,6 +264,20 @@ html, body {
   border-radius: 16px;
 }
 
+/* ========== Clients ========== */
+.clients-section {
+  background-color: #111111;
+  text-align: center;
+  padding: 80px 16px;
+}
+
+.clients-image {
+  max-width: 1200px;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
 /* ========== Section Titles ========== */
 .section-title {
   text-align: center;
