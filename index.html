@@ -16,27 +16,21 @@
   <link rel="icon" href="favicon.png" type="image/png"/>
   <link rel="stylesheet" href="style.css">
 
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-D9H159KTJ7"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-D9H159KTJ7');
-</script>
-  
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-D9H159KTJ7"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-D9H159KTJ7');
+  </script>
 </head>
 
 <body>
-
   <div id="page-content">
 
     <section class="hero" id="hero">
-      <div class="video-container">
-        <video loop playsinline autoplay muted class="hero-video" poster="media/moving-light-streaks-poster.jpg">
-          <source src="media/moving-light-streaks.mp4" type="video/mp4">
-          Your browser does not support the video tag.
-        </video>
+      <div class="hero-image-container">
+        <img src="media/moving-light-streaks-poster.jpg" alt="SVNBIRDS Hero Background" class="hero-image">
       </div>
       <div class="hero-content">
         <h1 class="hero-title">SVNBIRDS</h1>
@@ -63,6 +57,7 @@
     </div>
 
   </div>
+
   <button id="player-toggle" class="player-toggle" style="left:10px;">▼</button>
   <iframe src="/player.html" id="player-frame" scrolling="no"></iframe>
 
