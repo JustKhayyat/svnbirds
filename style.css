@@ -682,3 +682,67 @@ footer {
     z-index: 10;      /* Ensure it stays above the background */
     filter: drop-shadow(0 0 15px rgba(0,0,0,0.5)); /* Optional shadow to help it stand out */
 }
+
+/* =================== PRO UPDATES =================== */
+
+/* 1. TOP LOADING BAR (YouTube Style) */
+#loading-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 0%;
+  height: 3px;
+  background: #ffffff; /* Change to your brand color if needed */
+  z-index: 9999;
+  transition: width 0.4s ease, opacity 0.4s ease;
+  pointer-events: none;
+}
+
+/* 2. ACTIVE NAVIGATION HIGHLIGHTING */
+.active-page {
+  opacity: 1 !important;
+  color: #fff !important;
+  border-bottom: 2px solid #fff;
+}
+
+/* 3. SMOOTH IMAGE FADE-IN */
+img {
+  opacity: 0;
+  transition: opacity 0.6s ease-in-out;
+}
+
+/* Ensure logos and critical UI don't fade out */
+.nav-logo img, .player-toggle, #player-frame img {
+  opacity: 1 !important;
+}
+
+/* 4. PLAYER & SCROLL LOCK UI */
+#player-frame {
+  transition: height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+  background: rgba(0, 0, 0, 0.9);
+  backdrop-filter: blur(10px);
+}
+
+#player-toggle {
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+/* 5. EPK BUTTON STATES */
+.epk-download-btn {
+  transition: all 0.3s ease;
+}
+
+/* Disable clicking while the JS is checking the file */
+.epk-download-btn[style*="cursor: wait"] {
+  pointer-events: none;
+  filter: grayscale(1);
+}
+
+/* 6. RESPONSIVE UTILITY */
+@media (max-width: 768px) {
+  #player-frame.expanded {
+    height: 120px; /* Slightly taller for mobile controls */
+  }
+}
