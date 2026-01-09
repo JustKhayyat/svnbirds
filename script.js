@@ -211,6 +211,28 @@
     } else {
       populateArtistDiscography();
     }
+    
+   
+    document.querySelectorAll('.epk-download-btn').forEach(btn => {
+      btn.addEventListener('click', async (e) => {
+        
+        if (btn.href.toLowerCase().endsWith('.pdf')) {
+          e.preventDefault();
+          try {
+            const response = await fetch(btn.href, { method: 'HEAD' });
+            if (response.ok) {
+              window.open(btn.href, '_blank');
+            } else {
+              alert("This EPK is currently being updated. Please contact booking@svnbirds.com for the latest version.");
+            }
+          } catch (err) {
+            alert("This EPK is currently being updated. Please contact booking@svnbirds.com.");
+          }
+        }
+      });
+    });
+
+
     initPlayerToggle();
   };
 
