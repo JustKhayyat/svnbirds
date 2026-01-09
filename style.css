@@ -671,3 +671,14 @@ footer {
         flex: 1;
     }
 }
+
+/* Styling for the new hero logo */
+.main-hero-logo {
+    max-width: 500px; /* Adjust this to change the logo size */
+    width: 90%;       /* Responsive width for mobile */
+    height: auto;
+    display: block;
+    margin: 0 auto;   /* Center horizontally */
+    z-index: 10;      /* Ensure it stays above the background */
+    filter: drop-shadow(0 0 15px rgba(0,0,0,0.5)); /* Optional shadow to help it stand out */
+}
