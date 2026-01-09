@@ -3,6 +3,7 @@
 (() => {
   // =================== DATA ===================
   const allReleases = [
+    { title: "MORPHINE", link: "https://music.empi.re/morphine", cover: "/covers/morphine.jpg", artist: "Montiyago" },
     { title: "PRICE", link: "https://music.empi.re/price", cover: "/covers/price.jpg", artist: "Montiyago, Big Moe" },
     { title: "HALA", link: "https://music.empi.re/hala", cover: "/covers/hala.jpg", artist: "Khayyat, Ntitled" },
     { title: "KSHFF", link: "https://music.empi.re/kshff", cover: "/covers/kshff.jpg", artist: "Montiyago, Khayyat" },
