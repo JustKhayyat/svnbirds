@@ -167,6 +167,7 @@
     const playerToggle = document.getElementById('player-toggle');
     const playerFrame = document.getElementById('player-frame');
     if (!playerToggle || !playerFrame) return;
+    
     let isExpanded = true;
     const updatePlayer = () => {
       if (isExpanded) {
@@ -187,6 +188,14 @@
       updatePlayer();
     });
 
+    // PRO IMPROVEMENT: Lock scroll when interacting with player
+    playerFrame.addEventListener('mouseenter', () => {
+      document.body.style.overflow = 'hidden';
+    });
+    playerFrame.addEventListener('mouseleave', () => {
+      document.body.style.overflow = '';
+    });
+
     updatePlayer(); // Initialize
   };
 
@@ -195,6 +204,7 @@
     heroVideoInitialized = false;
     playerInitialized = false; 
 
+    // Reset Shopify nodes to prevent duplicate buttons on AJAX navigation
     const oldShopNodes = document.querySelectorAll('[data-shopify-loaded="true"]');
     oldShopNodes.forEach(node => {
       node.removeAttribute('data-shopify-loaded');
@@ -211,26 +221,44 @@
     } else {
       populateArtistDiscography();
     }
+
+    // --- PRO IMPROVEMENT: ACTIVE NAV STYLING ---
+    const currentPath = window.location.pathname;
+    document.querySelectorAll('.nav-btn, .artist-grid a, .nav-links a').forEach(link => {
+      const linkPath = new URL(link.href, window.location.origin).pathname;
+      if (linkPath === currentPath) {
+        link.classList.add('active-page');
+      } else {
+        link.classList.remove('active-page');
+      }
+    });
+
+    // --- PRO IMPROVEMENT: IMAGE FADE-IN ---
+    document.querySelectorAll('img').forEach(img => {
+      if (img.complete) {
+        img.style.opacity = '1';
+      } else {
+        img.style.opacity = '0';
+        img.style.transition = 'opacity 0.5s ease-in-out';
+        img.addEventListener('load', () => img.style.opacity = '1');
+      }
+    });
     
-    // --- EPK SAFETY CHECK WITH VISUAL FEEDBACK ---
+    // --- PRO FIX: EPK SAFETY CHECK ---
     document.querySelectorAll('.epk-download-btn').forEach(btn => {
       btn.addEventListener('click', async (e) => {
         if (btn.href.toLowerCase().endsWith('.pdf')) {
-          // 1. Tell the browser/AJAX script to STOP immediately
           e.preventDefault();
-          e.stopImmediatePropagation(); 
+          e.stopImmediatePropagation();
           
           btn.style.cursor = 'wait';
           btn.style.opacity = '0.5';
 
           try {
             const response = await fetch(btn.href, { method: 'HEAD' });
-            
             if (response.ok) {
-              // Only open if the server says 200 OK
               window.open(btn.href, '_blank');
             } else {
-              // If 404, show alert and DO NOTHING ELSE
               alert("This EPK is currently being updated. Please contact booking@svnbirds.com for the latest version.");
             }
           } catch (err) {
@@ -248,6 +276,20 @@
 
   // =================== AJAX NAVIGATION ===================
   const initNavigation = () => {
+    // PRO IMPROVEMENT: PRELOADING
+    document.addEventListener('mouseover', e => {
+      const link = e.target.closest('a');
+      if (link && 
+          link.href.includes(window.location.origin) && 
+          !link.target && 
+          !link.href.includes('#') &&
+          !link.href.toLowerCase().endsWith('.pdf') &&
+          !link.href.toLowerCase().match(/\.(jpg|jpeg|png|gif|mp4|webm)$/)) {
+        
+        fetch(link.href, { priority: 'low' });
+      }
+    });
+
     document.addEventListener('click', async e => {
       const link = e.target.closest('a');
       
@@ -277,12 +319,14 @@
         
         if (newContent) {
           document.getElementById('page-content').replaceWith(newContent);
+          
           const newArtistName = doc.body.dataset.artistName;
           if (newArtistName) {
             document.body.dataset.artistName = newArtistName;
           } else {
             delete document.body.dataset.artistName;
           }
+
           document.title = doc.title || document.title;
 
           if (doc.head) {
@@ -309,13 +353,20 @@
 
               processedSelectors.add(selector);
             });
+
+            let canonical = document.querySelector('link[rel="canonical"]');
+            if (!canonical) {
+              canonical = document.createElement('link');
+              canonical.setAttribute('rel', 'canonical');
+              document.head.appendChild(canonical);
+            }
+            canonical.setAttribute('href', window.location.href);
           }
 
           const cleanPath = url.pathname.replace('/index.html', '');
           window.history.pushState({}, "", cleanPath);
 
           initPage();
-          
           window.scrollTo(0, 0);
         } else {
           window.location.href = url.href; 
@@ -330,7 +381,7 @@
       window.location.reload();
     });
   };
-
+  
   // =================== INITIALIZE ===================
   document.addEventListener('DOMContentLoaded', () => {
     initPage();
@@ -339,4 +390,5 @@
 })();
 
 // Automatically update the copyright year
-document.getElementById('current-year').textContent = new Date().getFullYear();
+const yearEl = document.getElementById('current-year');
+if(yearEl) yearEl.textContent = new Date().getFullYear();
