@@ -276,7 +276,10 @@
 
   // =================== AJAX NAVIGATION ===================
   const initNavigation = () => {
+    const loader = document.getElementById('loading-bar');
+
     // PRO IMPROVEMENT: PRELOADING
+    // When a user hovers over a link, start fetching it in the background
     document.addEventListener('mouseover', e => {
       const link = e.target.closest('a');
       if (link && 
@@ -299,6 +302,12 @@
       
       e.preventDefault();
       
+      // Start Loading Bar
+      if (loader) {
+        loader.style.opacity = '1';
+        loader.style.width = '30%';
+      }
+      
       const url = new URL(link.href);
       
       try {
@@ -307,6 +316,8 @@
         }
         
         const response = await fetch(url.href);
+        
+        if (loader) loader.style.width = '70%'; // Update progress
         
         if (!response.ok) {
           throw new Error(`HTTP ${response.status}: ${response.statusText}`);
@@ -318,8 +329,10 @@
         const newContent = doc.getElementById('page-content');
         
         if (newContent) {
+          // Update the content
           document.getElementById('page-content').replaceWith(newContent);
           
+          // Update Artist Data Attribute for dynamic styling
           const newArtistName = doc.body.dataset.artistName;
           if (newArtistName) {
             document.body.dataset.artistName = newArtistName;
@@ -327,8 +340,10 @@
             delete document.body.dataset.artistName;
           }
 
+          // Update SEO: Title
           document.title = doc.title || document.title;
 
+          // Update SEO: Meta Tags & Canonical
           if (doc.head) {
             const newMetaTags = doc.head.querySelectorAll('meta[name], meta[property]');
             const processedSelectors = new Set();
@@ -354,6 +369,7 @@
               processedSelectors.add(selector);
             });
 
+            // Update Canonical URL
             let canonical = document.querySelector('link[rel="canonical"]');
             if (!canonical) {
               canonical = document.createElement('link');
@@ -363,11 +379,23 @@
             canonical.setAttribute('href', window.location.href);
           }
 
+          // Update History
           const cleanPath = url.pathname.replace('/index.html', '');
           window.history.pushState({}, "", cleanPath);
 
+          // Re-initialize all page logic (EPK check, image fades, etc.)
           initPage();
+          
           window.scrollTo(0, 0);
+
+          // Finish Loading Bar
+          if (loader) {
+            loader.style.width = '100%';
+            setTimeout(() => {
+              loader.style.opacity = '0';
+              setTimeout(() => { loader.style.width = '0%'; }, 400);
+            }, 200);
+          }
         } else {
           window.location.href = url.href; 
         }
@@ -381,7 +409,7 @@
       window.location.reload();
     });
   };
-  
+ 
   // =================== INITIALIZE ===================
   document.addEventListener('DOMContentLoaded', () => {
     initPage();
