@@ -56,6 +56,8 @@
   const createReleaseElement = r => {
     const a = document.createElement('a');
     a.href = r.link;
+    a.target = "_blank";
+    a.rel = "noopener noreferrer";
     a.setAttribute('data-title', r.title);
     const img = document.createElement('img');
     img.loading = 'lazy';
