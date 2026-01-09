@@ -216,25 +216,26 @@
     document.querySelectorAll('.epk-download-btn').forEach(btn => {
       btn.addEventListener('click', async (e) => {
         if (btn.href.toLowerCase().endsWith('.pdf')) {
+          // 1. Tell the browser/AJAX script to STOP immediately
           e.preventDefault();
+          e.stopImmediatePropagation(); 
           
-          // Show loading state
           btn.style.cursor = 'wait';
           btn.style.opacity = '0.5';
 
           try {
-            // Check if file exists without downloading the whole thing yet
             const response = await fetch(btn.href, { method: 'HEAD' });
             
             if (response.ok) {
+              // Only open if the server says 200 OK
               window.open(btn.href, '_blank');
             } else {
+              // If 404, show alert and DO NOTHING ELSE
               alert("This EPK is currently being updated. Please contact booking@svnbirds.com for the latest version.");
             }
           } catch (err) {
             alert("This EPK is currently being updated. Please contact booking@svnbirds.com.");
           } finally {
-            // Reset button appearance
             btn.style.cursor = 'pointer';
             btn.style.opacity = '1';
           }
