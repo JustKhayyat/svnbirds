@@ -8,7 +8,8 @@
 
   <meta property="og:title" content="SVNBIRDS">
   <meta property="og:description" content="SVNBIRDS is a leading independent music ecosystem for artists in the Middle East & North Africa.">
-  <meta property="og:image" content="media/cover-image.png"> <meta property="og:url" content="https://svnbirds.com">
+  <meta property="og:image" content="media/cover-image.png"> 
+  <meta property="og:url" content="https://svnbirds.com">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:site" content="@svnbirds">
 
@@ -26,8 +27,26 @@
 
 <body>
   <div id="loading-bar"></div>
-  <div id="page-content">
 
+  <div id="artist-side-panel" class="side-panel">
+    <button class="close-panel" aria-label="Close">✕</button>
+    <div class="panel-content">
+      <div id="panel-image-container"></div>
+      <h2 id="panel-name"></h2>
+      <div id="panel-bio"></div>
+      <div class="panel-links">
+        <a id="panel-spotify" href="#" target="_blank">Spotify</a>
+        <a id="panel-instagram" href="#" target="_blank">Instagram</a>
+      </div>
+      <hr>
+      <h3>Latest Releases</h3>
+      <div id="panel-discography" class="mini-grid"></div>
+      <a id="panel-profile-link" href="#" class="view-full-profile">View Full Artist Profile</a>
+    </div>
+  </div>
+  <div id="panel-overlay"></div>
+
+  <div id="page-content">
     <section class="hero" id="hero">
       <div class="image-container">
         <img src="media/moving-light-streaks-poster.jpg" alt="SVNBIRDS Hero Background" class="hero-bg">
@@ -59,7 +78,6 @@
     <div class="clients-section">
       <img src="media/clients2.png" alt="Clients and Partners" class="clients-image">
     </div>
-
   </div>
 
   <button id="player-toggle" class="player-toggle" style="left:10px;">▼</button>
