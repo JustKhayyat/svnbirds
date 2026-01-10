@@ -35,21 +35,11 @@
   ];
 
   const allArtists = [
-    { name: "Soulja", link: "soulja", photo: "/media/artists/artist-soulja.png?v=2" },
-    { name: "Montiyago", link: "montiyago", photo: "/media/artists/artist-montiyago.png?v=2" },
-    { name: "Khayyat", link: "khayyat", photo: "/media/artists/artist-khayyat.png?v=2" },
-    { name: "77", link: "seventyseven", photo: "/media/artists/artist-77.png?v=2" },
-    { name: "Big Moe", link: "bigmoe", photo: "/media/artists/artist-bigmoe.png?v=2" }
-  ];
-
-  const allPress = [
-    { title: "GRAMMYS – 5 Independent Record Labels Bringing The Sounds Of The Middle East & North Africa", url: "https://www.grammy.com/news/5-middle-east-north-africa-independent-record-labels-to-know-beirut-red-diamond", source: "GRAMMYS" },
-    { title: "Hard Knock Radio – Suhel Nafar on Empowering Palestinian & Arab Artists", url: "https://hardknockradio.org/suhel-nafar-speaks-on-empowering-palestinian-and-arab-music-hip-hop-artists/", source: "Hard Knock Radio" },
-    { title: "SceneNoise – 77: The Egyptian Producer Bringing SWANA Together", url: "https://scenenoise.com/Features/77-The-Egyptian-Producer-Bringing-SWANA-Together-from-Malaysia", source: "SceneNoise" },
-    { title: "SceneNoise – Artist Spotlight: Soulja, Sudan's Suave Rap Star", url: "https://scenenoise.com/Features/Artist-Spotlight-Soulja-Sudan-s-Suave-Rap-Superstar", source: "SceneNoise" },
-    { title: "CairoScene – Labels & Collectives Taking Over XP Nite", url: "https://cairoscene.com/Noise/The-Labels-Collectives-Taking-Over-XP-Nite-in-Riyadh-Dec-7th-9th", source: "CairoScene" },
-    { title: "MDLBEAST – Labels at XP Nite in Riyadh", url: "https://mdlbeast.com/xp-feed/music-industry/the-labels-collectives-taking-over-xp-nite-in-riyadh-dec-7th-9th", source: "MDLBEAST" },
-    { title: "YUNG – Fresh Sounds from Sudan: 10 Releases", url: "https://thisisyungmea.com/fresh-sounds-from-sudan-10-new-releases-you-need-to-hear/", source: "YUNG" }
+    { name: "Soulja", link: "soulja", photo: "/media/artists/artist-soulja.png", spotify: "https://open.spotify.com/artist/soulja", ig: "https://www.instagram.com/souljamusic/" },
+    { name: "Montiyago", link: "montiyago", photo: "/media/artists/artist-montiyago.png?v=2", spotify: "https://open.spotify.com/artist/montiyago", ig: "https://www.instagram.com/_montiyago_/" },
+    { name: "Khayyat", link: "khayyat", photo: "/media/artists/artist-khayyat.png?v=2", spotify: "https://open.spotify.com/artist/khayyat", ig: "https://www.instagram.com/justkhayyat/" },
+    { name: "77", link: "seventyseven", photo: "/media/artists/artist-77.png?v=2", spotify: "https://open.spotify.com/artist/77", ig: "https://www.instagram.com/prodby77/" },
+    { name: "Big Moe", link: "bigmoe", photo: "/media/artists/artist-bigmoe.png?v=2", spotify: "https://open.spotify.com/artist/bigmoe", ig: "https://www.instagram.com/bigmoe.dxb/" }
   ];
 
   // =================== ELEMENT CREATORS ===================
@@ -67,9 +57,41 @@
     return a;
   };
 
+  const openArtistPanel = (artist) => {
+    const panel = document.getElementById('artist-side-panel');
+    const overlay = document.getElementById('panel-overlay');
+    if (!panel || !overlay) return;
+
+    document.getElementById('panel-name').textContent = artist.name;
+    document.getElementById('panel-image-container').innerHTML = `<img src="${artist.photo}" style="width:100%; border-radius: 10px;">`;
+    document.getElementById('panel-profile-link').href = `/${artist.link}`;
+    
+    // Update Socials
+    const spot = document.getElementById('panel-spotify');
+    const ig = document.getElementById('panel-instagram');
+    if(spot) spot.href = artist.spotify;
+    if(ig) ig.href = artist.ig;
+
+    const miniDisco = allReleases.filter(r => r.artist.includes(artist.name)).slice(0, 3);
+    const discoContainer = document.getElementById('panel-discography');
+    if (discoContainer) {
+        discoContainer.innerHTML = '';
+        miniDisco.forEach(r => discoContainer.appendChild(createReleaseElement(r)));
+    }
+
+    panel.classList.add('open');
+    overlay.classList.add('open');
+    document.body.style.overflow = 'hidden'; // Lock background scroll
+  };
+
   const createArtistElement = a => {
     const link = document.createElement('a');
     link.href = `/${a.link}`;
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      openArtistPanel(a);
+    });
+    
     const img = document.createElement('img');
     img.loading = 'lazy';
     img.src = a.photo;
@@ -81,31 +103,7 @@
     return link;
   };
 
-  const createPressElement = p => {
-    const card = document.createElement('div');
-    const link = document.createElement('a');
-    link.href = p.url;
-    link.target = "_blank";
-    link.rel = "noopener noreferrer";
-    const source = document.createElement('div');
-    source.className = 'press-source';
-    source.textContent = p.source;
-    const title = document.createElement('h3');
-    title.textContent = p.title;
-    link.appendChild(source);
-    link.appendChild(title);
-    card.appendChild(link);
-    return card;
-  };
-
   // =================== POPULATE SECTIONS ===================
-  const populateReleases = containerId => {
-    const container = document.getElementById(containerId);
-    if (!container) return;
-    container.innerHTML = '';
-    allReleases.forEach(r => container.appendChild(createReleaseElement(r)));
-  };
-
   const populateArtists = () => {
     const grid = document.getElementById('artist-grid');
     if (!grid) return;
@@ -113,21 +111,11 @@
     allArtists.forEach(a => grid.appendChild(createArtistElement(a)));
   };
 
-  const populatePress = () => {
-    const grid = document.getElementById('press-grid');
-    if (!grid) return;
-    let loaded = 0;
-    const perPage = 6;
-    const loadMore = () => {
-      if (loaded >= allPress.length) return;
-      const batch = allPress.slice(loaded, loaded + perPage);
-      batch.forEach(p => grid.appendChild(createPressElement(p)));
-      loaded += perPage;
-    };
-    loadMore();
-    window.addEventListener('scroll', () => {
-      if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 500) loadMore();
-    });
+  const populateReleases = containerId => {
+    const container = document.getElementById(containerId);
+    if (!container) return;
+    container.innerHTML = '';
+    allReleases.forEach(r => container.appendChild(createReleaseElement(r)));
   };
 
   const populateArtistDiscography = () => {
@@ -140,135 +128,48 @@
     releases.forEach(r => container.appendChild(createReleaseElement(r)));
   };
 
-  // =================== SHOPIFY AJAX HANDLING ===================
-  const populateShop = () => {
-    if (typeof window.initializeShopifyBuyButton === 'function') {
-      window.initializeShopifyBuyButton();
-    }
-  };
-
-  // =================== HERO VIDEO ===================
-  let heroVideoInitialized = false;
-  const initHeroVideo = () => {
-    const video = document.querySelector(".hero-video");
-    if (!video || heroVideoInitialized) return;
-    heroVideoInitialized = true;
-    video.muted = true;
-    video.loop = true;
-    video.playsInline = true;
-    try { video.play(); } catch (e) { /* Autoplay might be blocked */ }
-  };
-
-  // =================== PLAYER TOGGLE ===================
+  // =================== PLAYER & UI ===================
   let playerInitialized = false;
   const initPlayerToggle = () => {
     if (playerInitialized) return;
-    playerInitialized = true;
     const playerToggle = document.getElementById('player-toggle');
     const playerFrame = document.getElementById('player-frame');
     if (!playerToggle || !playerFrame) return;
-    
-    let isExpanded = true;
-    const updatePlayer = () => {
-      if (isExpanded) {
-        playerFrame.style.height = "80px";
-        playerToggle.textContent = "▼";
-        playerFrame.classList.remove('collapsed');
-        playerFrame.classList.add('expanded');
-      } else {
-        playerFrame.style.height = "30px";
-        playerToggle.textContent = "▲";
-        playerFrame.classList.remove('expanded');
-        playerFrame.classList.add('collapsed');
-      }
-    };
+    playerInitialized = true;
 
     playerToggle.addEventListener('click', () => {
-      isExpanded = !isExpanded;
-      updatePlayer();
+      playerFrame.classList.toggle('collapsed');
+      playerFrame.classList.toggle('expanded');
+      playerToggle.textContent = playerFrame.classList.contains('expanded') ? "▼" : "▲";
     });
-
-    // PRO IMPROVEMENT: Lock scroll when interacting with player
-    playerFrame.addEventListener('mouseenter', () => {
-      document.body.style.overflow = 'hidden';
-    });
-    playerFrame.addEventListener('mouseleave', () => {
-      document.body.style.overflow = '';
-    });
-
-    updatePlayer(); // Initialize
   };
 
-  // =================== PAGE INIT ===================
   const initPage = () => {
-    heroVideoInitialized = false;
-    playerInitialized = false; 
+    // Reset Scroll Lock
+    document.body.style.overflow = '';
 
-    // Reset Shopify nodes to prevent duplicate buttons on AJAX navigation
-    const oldShopNodes = document.querySelectorAll('[data-shopify-loaded="true"]');
-    oldShopNodes.forEach(node => {
-      node.removeAttribute('data-shopify-loaded');
-      node.innerHTML = '';
-    });
+    // Artist side panel close logic
+    const closePanel = () => {
+        document.getElementById('artist-side-panel')?.classList.remove('open');
+        document.getElementById('panel-overlay')?.classList.remove('open');
+        document.body.style.overflow = '';
+    };
+    document.querySelector('.close-panel')?.addEventListener('click', closePanel);
+    document.getElementById('panel-overlay')?.addEventListener('click', closePanel);
 
     const artistName = document.body.dataset.artistName;
     if (!artistName) {
-      initHeroVideo();
       populateReleases('releases');
       populateArtists();
-      populatePress();
-      populateShop(); 
     } else {
       populateArtistDiscography();
     }
 
-    // --- PRO IMPROVEMENT: ACTIVE NAV STYLING ---
+    // Active Nav Styling
     const currentPath = window.location.pathname;
-    document.querySelectorAll('.nav-btn, .artist-grid a, .nav-links a').forEach(link => {
+    document.querySelectorAll('.nav-btn, .nav-links a').forEach(link => {
       const linkPath = new URL(link.href, window.location.origin).pathname;
-      if (linkPath === currentPath) {
-        link.classList.add('active-page');
-      } else {
-        link.classList.remove('active-page');
-      }
-    });
-
-    // --- PRO IMPROVEMENT: IMAGE FADE-IN ---
-    document.querySelectorAll('img').forEach(img => {
-      if (img.complete) {
-        img.style.opacity = '1';
-      } else {
-        img.style.opacity = '0';
-        img.style.transition = 'opacity 0.5s ease-in-out';
-        img.addEventListener('load', () => img.style.opacity = '1');
-      }
-    });
-    
-    // --- PRO FIX: EPK SAFETY CHECK ---
-    document.querySelectorAll('.epk-download-btn').forEach(btn => {
-      btn.addEventListener('click', async (e) => {
-        if (btn.href.toLowerCase().endsWith('.pdf')) {
-          e.preventDefault();
-          e.stopImmediatePropagation();
-          
-          btn.style.cursor = 'wait';
-          btn.style.opacity = '0.5';
-
-          try {
-            const response = await fetch(btn.href, { method: 'HEAD' });
-            if (response.ok) {
-              window.open(btn.href, '_blank');
-            } else {
-              alert("This EPK is currently being updated. Please contact booking@svnbirds.com for the latest version.");
-            }
-          } catch (err) {
-            alert("This EPK is currently being updated. Please contact booking@svnbirds.com.");
-          } finally {
-            btn.style.cursor = 'pointer';
-            btn.style.opacity = '1';
-          }
-        }
-      });
+      link.classList.toggle('active-page', linkPath === currentPath);
     });
 
     initPlayerToggle();
@@ -278,145 +179,44 @@
   const initNavigation = () => {
     const loader = document.getElementById('loading-bar');
 
-    // PRO IMPROVEMENT: PRELOADING
-    // When a user hovers over a link, start fetching it in the background
-    document.addEventListener('mouseover', e => {
-      const link = e.target.closest('a');
-      if (link && 
-          link.href.includes(window.location.origin) && 
-          !link.target && 
-          !link.href.includes('#') &&
-          !link.href.toLowerCase().endsWith('.pdf') &&
-          !link.href.toLowerCase().match(/\.(jpg|jpeg|png|gif|mp4|webm)$/)) {
-        
-        fetch(link.href, { priority: 'low' });
-      }
-    });
-
     document.addEventListener('click', async e => {
       const link = e.target.closest('a');
+      if (!link || link.target === "_blank" || !link.href.includes(window.location.origin)) return;
       
-      if (!link) return;
-      if (link.target === "_blank" || link.href.startsWith("mailto:") || link.href.startsWith("tel:")) return;
-      if (!link.href.includes(window.location.origin)) return;
-      
+      // Don't intercept clicks that have custom listeners (like the artist quick view)
+      // The e.preventDefault() in createArtistElement handles this.
+      if (e.defaultPrevented) return;
+
       e.preventDefault();
-      
-      // Start Loading Bar
-      if (loader) {
-        loader.style.opacity = '1';
-        loader.style.width = '30%';
-      }
-      
-      const url = new URL(link.href);
+      if (loader) { loader.style.opacity = '1'; loader.style.width = '30%'; }
       
       try {
-        if (!url.pathname.includes('.') && !url.pathname.endsWith('/')) {
-          url.pathname += '/index.html';
-        }
-        
-        const response = await fetch(url.href);
-        
-        if (loader) loader.style.width = '70%'; // Update progress
-        
-        if (!response.ok) {
-          throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-        }
-        
+        const response = await fetch(link.href);
+        if (loader) loader.style.width = '70%';
         const html = await response.text();
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(html, 'text/html');
+        const doc = new DOMParser().parseFromString(html, 'text/html');
         const newContent = doc.getElementById('page-content');
         
         if (newContent) {
-          // Update the content
           document.getElementById('page-content').replaceWith(newContent);
-          
-          // Update Artist Data Attribute for dynamic styling
-          const newArtistName = doc.body.dataset.artistName;
-          if (newArtistName) {
-            document.body.dataset.artistName = newArtistName;
-          } else {
-            delete document.body.dataset.artistName;
-          }
-
-          // Update SEO: Title
-          document.title = doc.title || document.title;
-
-          // Update SEO: Meta Tags & Canonical
-          if (doc.head) {
-            const newMetaTags = doc.head.querySelectorAll('meta[name], meta[property]');
-            const processedSelectors = new Set();
-
-            newMetaTags.forEach(meta => {
-              const name = meta.getAttribute('name');
-              const property = meta.getAttribute('property');
-              let selector = null;
-
-              if (name) selector = `meta[name="${name}"]`;
-              else if (property) selector = `meta[property="${property}"]`;
-
-              if (!selector || processedSelectors.has(selector)) return;
-
-              const existing = document.head.querySelector(selector);
-              if (existing) {
-                const content = meta.getAttribute('content');
-                if (content !== null) existing.setAttribute('content', content);
-              } else {
-                document.head.appendChild(meta.cloneNode(true));
-              }
-
-              processedSelectors.add(selector);
-            });
-
-            // Update Canonical URL
-            let canonical = document.querySelector('link[rel="canonical"]');
-            if (!canonical) {
-              canonical = document.createElement('link');
-              canonical.setAttribute('rel', 'canonical');
-              document.head.appendChild(canonical);
-            }
-            canonical.setAttribute('href', window.location.href);
-          }
-
-          // Update History
-          const cleanPath = url.pathname.replace('/index.html', '');
-          window.history.pushState({}, "", cleanPath);
-
-          // Re-initialize all page logic (EPK check, image fades, etc.)
+          document.body.dataset.artistName = doc.body.dataset.artistName || "";
+          document.title = doc.title;
+          window.history.pushState({}, "", link.href);
           initPage();
-          
           window.scrollTo(0, 0);
-
-          // Finish Loading Bar
-          if (loader) {
-            loader.style.width = '100%';
-            setTimeout(() => {
-              loader.style.opacity = '0';
-              setTimeout(() => { loader.style.width = '0%'; }, 400);
-            }, 200);
-          }
-        } else {
-          window.location.href = url.href; 
         }
-      } catch (error) {
-        console.error("AJAX navigation error:", error);
-        window.location.href = url.href; 
+        if (loader) {
+          loader.style.width = '100%';
+          setTimeout(() => { loader.style.opacity = '0'; loader.style.width = '0%'; }, 400);
+        }
+      } catch (err) {
+        window.location.href = link.href;
       }
     });
-    
-    window.addEventListener('popstate', () => {
-      window.location.reload();
-    });
   };
- 
-  // =================== INITIALIZE ===================
+
   document.addEventListener('DOMContentLoaded', () => {
     initPage();
     initNavigation();
   });
 })();
-
-// Automatically update the copyright year
-const yearEl = document.getElementById('current-year');
-if(yearEl) yearEl.textContent = new Date().getFullYear();
