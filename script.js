@@ -35,11 +35,11 @@
   ];
 
   const allArtists = [
-    { name: "Soulja", link: "soulja", photo: "/media/artists/artist-soulja.png", spotify: "https://open.spotify.com/artist/soulja", ig: "https://www.instagram.com/souljamusic/" },
-    { name: "Montiyago", link: "montiyago", photo: "/media/artists/artist-montiyago.png?v=2", spotify: "https://open.spotify.com/artist/montiyago", ig: "https://www.instagram.com/_montiyago_/" },
-    { name: "Khayyat", link: "khayyat", photo: "/media/artists/artist-khayyat.png?v=2", spotify: "https://open.spotify.com/artist/khayyat", ig: "https://www.instagram.com/justkhayyat/" },
-    { name: "77", link: "seventyseven", photo: "/media/artists/artist-77.png?v=2", spotify: "https://open.spotify.com/artist/77", ig: "https://www.instagram.com/prodby77/" },
-    { name: "Big Moe", link: "bigmoe", photo: "/media/artists/artist-bigmoe.png?v=2", spotify: "https://open.spotify.com/artist/bigmoe", ig: "https://www.instagram.com/bigmoe.dxb/" }
+    { name: "Soulja", link: "soulja", photo: "/media/artists/artist-soulja.png", spotify: "https://open.spotify.com/artist/4LmdLhcTV6FR8omNKEOtuN?si=aoX6UHpER52cmX5mfNaUiA", ig: "https://www.instagram.com/souljamusic/" },
+    { name: "Montiyago", link: "montiyago", photo: "/media/artists/artist-montiyago.png?v=2", spotify: "https://open.spotify.com/artist/46MsyReAQf8kF6M4tD38Bk?si=zhKn6MEwRXOCccr7L8DguA", ig: "https://www.instagram.com/_montiyago_/" },
+    { name: "Khayyat", link: "khayyat", photo: "/media/artists/artist-khayyat.png?v=2", spotify: "https://open.spotify.com/artist/0ZymXKuHy9Sqg2X5IEwLut?si=TsxhLAZjR4WawQfm5mmY8A", ig: "https://www.instagram.com/justkhayyat/" },
+    { name: "77", link: "seventyseven", photo: "/media/artists/artist-77.png?v=2", spotify: "https://open.spotify.com/artist/2yOrzp26sCzukpaG23nI9U?si=ja2fV5OpSA6XlVmas7RH8Q", ig: "https://www.instagram.com/prodby77/" },
+    { name: "Big Moe", link: "bigmoe", photo: "/media/artists/artist-bigmoe.png?v=2", spotify: "https://open.spotify.com/artist/6sBqHpSlcT0xxekqD15BTn?si=RzCzAmaSRhOiywh8-_ZY9w", ig: "https://www.instagram.com/bigmoe.dxb/" }
   ];
 
   const allPress = [
@@ -70,10 +70,6 @@
   const createArtistElement = a => {
     const link = document.createElement('a');
     link.href = `/${a.link}`;
-    link.addEventListener('click', (e) => {
-      e.preventDefault(); // Stop navigation, open panel instead
-      openArtistPanel(a);
-    });
     const img = document.createElement('img');
     img.loading = 'lazy';
     img.src = a.photo;
@@ -120,7 +116,7 @@
   const populatePress = () => {
     const grid = document.getElementById('press-grid');
     if (!grid) return;
-    grid.innerHTML = ''; // Clear previous if any
+    grid.innerHTML = '';
     let loaded = 0;
     const perPage = 6;
     const loadMore = () => {
@@ -161,41 +157,7 @@
     video.muted = true;
     video.loop = true;
     video.playsInline = true;
-    try { video.play(); } catch (e) { /* Autoplay might be blocked */ }
-  };
-
-  // =================== PANEL LOGIC ===================
-  const openArtistPanel = (artist) => {
-    const panel = document.getElementById('artist-side-panel');
-    const overlay = document.getElementById('panel-overlay');
-    if(!panel || !overlay) return;
-    
-    document.getElementById('panel-name').textContent = artist.name;
-    document.getElementById('panel-image-container').innerHTML = `<img src="${artist.photo}" style="width:100%">`;
-    document.getElementById('panel-profile-link').href = `/${artist.link}`;
-    
-    // Links
-    const spot = document.getElementById('panel-spotify');
-    const insta = document.getElementById('panel-instagram');
-    if(spot) spot.href = artist.spotify;
-    if(insta) insta.href = artist.ig;
-
-    const miniDisco = allReleases.filter(r => r.artist.includes(artist.name)).slice(0, 3);
-    const discoContainer = document.getElementById('panel-discography');
-    if(discoContainer) {
-      discoContainer.innerHTML = '';
-      miniDisco.forEach(r => discoContainer.appendChild(createReleaseElement(r)));
-    }
-
-    panel.classList.add('open');
-    overlay.classList.add('open');
-    document.body.style.overflow = 'hidden';
-  };
-
-  const closePanel = () => {
-    document.getElementById('artist-side-panel')?.classList.remove('open');
-    document.getElementById('panel-overlay')?.classList.remove('open');
-    document.body.style.overflow = '';
+    try { video.play(); } catch (e) { /* Autoplay blocked */ }
   };
 
   // =================== PLAYER TOGGLE ===================
@@ -238,7 +200,6 @@
     heroVideoInitialized = false;
     playerInitialized = false; 
 
-    // Reset Shopify nodes
     const oldShopNodes = document.querySelectorAll('[data-shopify-loaded="true"]');
     oldShopNodes.forEach(node => {
       node.removeAttribute('data-shopify-loaded');
@@ -256,14 +217,12 @@
       populateArtistDiscography();
     }
 
-    // ACTIVE NAV STYLING
     const currentPath = window.location.pathname;
     document.querySelectorAll('.nav-btn, .artist-grid a, .nav-links a').forEach(link => {
       const linkPath = new URL(link.href, window.location.origin).pathname;
       link.classList.toggle('active-page', linkPath === currentPath);
     });
 
-    // IMAGE FADE-IN
     document.querySelectorAll('img').forEach(img => {
       if (img.complete) { img.style.opacity = '1'; } 
       else {
@@ -273,7 +232,6 @@
       }
     });
     
-    // EPK SAFETY CHECK
     document.querySelectorAll('.epk-download-btn').forEach(btn => {
       btn.addEventListener('click', async (e) => {
         if (btn.href.toLowerCase().endsWith('.pdf')) {
@@ -292,10 +250,6 @@
         }
       });
     });
-
-    // Panel Events
-    document.querySelector('.close-panel')?.addEventListener('click', closePanel);
-    document.getElementById('panel-overlay')?.addEventListener('click', closePanel);
     
     initPlayerToggle();
   };
@@ -353,7 +307,6 @@
     initPage();
     initNavigation();
     
-    // Update Copyright
     const yearEl = document.getElementById('current-year');
     if(yearEl) yearEl.textContent = new Date().getFullYear();
   });
