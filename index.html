@@ -28,24 +28,6 @@
 <body>
   <div id="loading-bar"></div>
 
-  <div id="artist-side-panel" class="side-panel">
-    <button class="close-panel" aria-label="Close">✕</button>
-    <div class="panel-content">
-      <div id="panel-image-container"></div>
-      <h2 id="panel-name"></h2>
-      <div id="panel-bio"></div>
-      <div class="panel-links">
-        <a id="panel-spotify" href="#" target="_blank">Spotify</a>
-        <a id="panel-instagram" href="#" target="_blank">Instagram</a>
-      </div>
-      <hr>
-      <h3>Latest Releases</h3>
-      <div id="panel-discography" class="mini-grid"></div>
-      <a id="panel-profile-link" href="#" class="view-full-profile">View Full Artist Profile</a>
-    </div>
-  </div>
-  <div id="panel-overlay"></div>
-
   <div id="page-content">
     <section class="hero" id="hero">
       <div class="image-container">
@@ -78,26 +60,26 @@
     <div class="clients-section">
       <img src="media/clients2.png" alt="Clients and Partners" class="clients-image">
     </div>
+
+    <footer>
+      <div class="footer-content">
+        <div class="footer-section contact">
+          <h3>Contact Us</h3>
+          <p>For booking and general inquiries:</p>
+          <p><a href="mailto:booking@svnbirds.com">booking@svnbirds.com</a></p>
+          <a href="https://www.instagram.com/svnbirdspro/" target="_blank" aria-label="Instagram">
+            <img src="/media/icons/instagram-icon.svg" alt="Instagram Icon" style="width:24px;height:24px;">
+          </a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; <span id="current-year"></span> SVNBIRDS. All Rights Reserved.</p>
+      </div>
+    </footer>
   </div>
 
   <button id="player-toggle" class="player-toggle" style="left:10px;">▼</button>
   <iframe src="/player.html" id="player-frame" scrolling="no"></iframe>
-
-  <footer>
-    <div class="footer-content">
-      <div class="footer-section contact">
-        <h3>Contact Us</h3>
-        <p>For booking and general inquiries:</p>
-        <p><a href="mailto:booking@svnbirds.com">booking@svnbirds.com</a></p>
-        <a href="https://www.instagram.com/svnbirdspro/" target="_blank" aria-label="Instagram">
-          <img src="/media/icons/instagram-icon.svg" alt="Instagram Icon" style="width:24px;height:24px;">
-        </a>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <p>&copy; <span id="current-year"></span> SVNBIRDS. All Rights Reserved.</p>
-    </div>
-  </footer>
 
   <script src="shopify.js"></script>
   <script src="script.js"></script>
