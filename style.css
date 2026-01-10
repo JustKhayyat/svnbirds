@@ -746,3 +746,63 @@ img {
     height: 120px; /* Slightly taller for mobile controls */
   }
 }
+
+/* --- SIDE PANEL --- */
+.side-panel {
+  position: fixed;
+  top: 0;
+  right: -100%; /* Hidden by default */
+  width: 400px;
+  max-width: 90vw;
+  height: 100%;
+  background: #000;
+  z-index: 1001;
+  transition: right 0.5s cubic-bezier(0.77, 0, 0.175, 1);
+  padding: 40px 20px;
+  overflow-y: auto;
+  border-left: 1px solid #333;
+}
+
+.side-panel.open {
+  right: 0;
+}
+
+#panel-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.7);
+  backdrop-filter: blur(5px);
+  z-index: 1000;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.5s ease;
+}
+
+#panel-overlay.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.close-panel {
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 24px;
+  cursor: pointer;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+
+.panel-content h2 { font-size: 2.5rem; margin-top: 20px; }
+.view-full-profile { 
+  display: block; 
+  margin-top: 30px; 
+  padding: 10px; 
+  border: 1px solid #fff; 
+  text-align: center;
+}
+
