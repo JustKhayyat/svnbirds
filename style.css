@@ -747,38 +747,44 @@ img {
   }
 }
 
-.hero-content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: 0 20px; /* Prevents text from hitting edges on mobile */
-}
+    /* Updated Styling for Single-Line Bio */
+    .hero-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      width: 100%;
+    }
+    .main-hero-logo {
+      max-width: 280px; /* Slightly reduced to give bio more prominence */
+      height: auto;
+    }
+    .hero-bio {
+      color: #ffffff;
+      font-size: 0.95rem; /* Slightly smaller to help it fit one line */
+      margin-top: 15px;
+      width: 100%;
+      max-width: 800px; /* Increased width to prevent wrapping */
+      font-weight: 300;
+      letter-spacing: 0.1em; /* Increased spacing for a more premium look */
+      line-height: 1;
+      text-transform: uppercase;
+      white-space: nowrap; /* Forces the text to stay on one line */
+      opacity: 0.85;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.6);
+    }
 
-.hero-bio {
-  color: #ffffff;
-  font-size: 1.2rem;
-  margin-top: 20px;
-  max-width: 600px;
-  font-weight: 300;
-  letter-spacing: 1px;
-  text-transform: uppercase; /* Optional: matches the "label" aesthetic */
-  text-shadow: 0 2px 4px rgba(0,0,0,0.5); /* Helps readability over the background image */
-  animation: fadeIn 2s ease-in-out; /* Optional: smooth fade in */
-}
-
-/* Optional animation if you want it to feel premium */
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* Mobile Adjustment */
-@media (max-width: 768px) {
-  .hero-bio {
-    font-size: 1rem;
-    max-width: 90%;
+    /* Mobile Adjustment: On very small screens, it HAS to wrap or it will cut off */
+    @media (max-width: 768px) {
+      .hero-bio {
+        font-size: 0.75rem;
+        white-space: normal; /* Allows wrapping only on mobile so it doesn't break the layout */
+        max-width: 90%;
+        letter-spacing: 0.05em;
+      }
+    }
+  </style>
   }
 }
 
