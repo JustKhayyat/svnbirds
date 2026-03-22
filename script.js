@@ -3,6 +3,7 @@
 (() => {
   // =================== DATA ===================
   const allReleases = [
+    { title: "1999", link: "https://music.empi.re/1999", cover: "/covers/1999.jpg", artist: "Montiyago" },
     { title: "Batta", link: "https://music.empi.re/batta", cover: "/covers/batta.jpg", artist: "Soulja" },
     { title: "Dayman", link: "https://www.youtube.com/watch?v=colTpB12FbQ&list=RDcolTpB12FbQ", cover: "/covers/dayman.jpg", artist: "Soulja" },
     { title: "Location", link: "https://www.youtube.com/watch?v=QTudgVCBS5Q&list=RDQTudgVCBS5Q", cover: "/covers/location.jpg", artist: "Soulja" },
