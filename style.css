@@ -747,3 +747,38 @@ img {
   }
 }
 
+.hero-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 0 20px; /* Prevents text from hitting edges on mobile */
+}
+
+.hero-bio {
+  color: #ffffff;
+  font-size: 1.2rem;
+  margin-top: 20px;
+  max-width: 600px;
+  font-weight: 300;
+  letter-spacing: 1px;
+  text-transform: uppercase; /* Optional: matches the "label" aesthetic */
+  text-shadow: 0 2px 4px rgba(0,0,0,0.5); /* Helps readability over the background image */
+  animation: fadeIn 2s ease-in-out; /* Optional: smooth fade in */
+}
+
+/* Optional animation if you want it to feel premium */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Mobile Adjustment */
+@media (max-width: 768px) {
+  .hero-bio {
+    font-size: 1rem;
+    max-width: 90%;
+  }
+}
+
