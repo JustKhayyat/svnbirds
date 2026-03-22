@@ -16,6 +16,39 @@
   <link rel="icon" href="favicon.png" type="image/png"/>
   <link rel="stylesheet" href="style.css">
 
+  <style>
+    /* Styling for the new bio line */
+    .hero-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+    .main-hero-logo {
+      max-width: 300px; /* Adjust based on your existing layout */
+      height: auto;
+    }
+    .hero-bio {
+      color: #ffffff;
+      font-size: 1.1rem;
+      margin-top: 25px;
+      max-width: 500px;
+      font-weight: 300;
+      letter-spacing: 0.05em;
+      line-height: 1.5;
+      text-transform: uppercase;
+      opacity: 0.9;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+    }
+    @media (max-width: 768px) {
+      .hero-bio {
+        font-size: 0.9rem;
+        padding: 0 20px;
+      }
+    }
+  </style>
+
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-D9H159KTJ7"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -35,6 +68,7 @@
       </div>
       <div class="hero-content">
         <img src="media/cover-image.png" alt="SVNBIRDS Logo" class="main-hero-logo">
+        <p class="hero-bio">A Creative Platform for World-Class Talent and Cultural Innovation.</p>
       </div>
     </section>
 
@@ -73,7 +107,7 @@
         </div>
       </div>
       <div class="footer-bottom">
-        <p>&copy; <span id="current-year"></span> SVNBIRDS. All Rights Reserved.</p>
+        <p>© <span id="current-year"></span> SVNBIRDS. All Rights Reserved.</p>
       </div>
     </footer>
   </div>
